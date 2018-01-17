@@ -3,12 +3,19 @@ package io.gmartin.deofertas.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.activities.ResultsActivity;
+import io.gmartin.deofertas.models.Item;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,7 +26,7 @@ import io.gmartin.deofertas.R;
  * create an instance of this fragment.
  */
 public class DetailFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
+    /*// TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -34,14 +41,14 @@ public class DetailFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
+    *//**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
      * @return A new instance of fragment DetailFragment.
-     */
+     *//*
     // TODO: Rename and change types and number of parameters
     public static DetailFragment newInstance(String param1, String param2) {
         DetailFragment fragment = new DetailFragment();
@@ -92,7 +99,7 @@ public class DetailFragment extends Fragment {
         mListener = null;
     }
 
-    /**
+    *//**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
@@ -101,9 +108,58 @@ public class DetailFragment extends Fragment {
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
-     */
+     *//*
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }*/
+
+    private static View mRoot;
+    private static Integer mPos = null;
+    private static Item mItem = null;
+
+    public DetailFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mItem != null) {
+            setItem(mItem);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        if (mRoot == null) {
+            mRoot = inflater.inflate(R.layout.fragment_detail, container, false);
+        }
+
+        Button accept = (Button) mRoot.findViewById(R.id.btnAccept);
+
+        accept.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        return mRoot;
+    }
+
+    private void setItem(Item item) {
+        if (mRoot != null) {
+            TextView desc = (TextView) mRoot.findViewById(R.id.txtDesc);
+            TextView store = (TextView) mRoot.findViewById(R.id.txtStore);
+            TextView price = (TextView) mRoot.findViewById(R.id.txtPrice);
+
+            desc.setText(item.getDesc());
+            store.setText(item.getStore());
+            price.setText(String.format("$d",item.getPrice()));
+        }
     }
 }
