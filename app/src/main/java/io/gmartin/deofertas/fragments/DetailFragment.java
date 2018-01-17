@@ -153,9 +153,9 @@ public class DetailFragment extends Fragment {
 
     private void setItem(Item item) {
         if (mRoot != null) {
-            TextView desc = (TextView) mRoot.findViewById(R.id.txtDesc);
-            TextView store = (TextView) mRoot.findViewById(R.id.txtStore);
-            TextView price = (TextView) mRoot.findViewById(R.id.txtPrice);
+            TextView desc = mRoot.findViewById(R.id.txtDesc);
+            TextView store = mRoot.findViewById(R.id.txtStore);
+            TextView price = mRoot.findViewById(R.id.txtPrice);
 
             desc.setText(item.getDesc());
             store.setText(item.getStore());
