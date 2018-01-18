@@ -11,19 +11,19 @@
 
         <TextView
             android:id="@+id/txtDesc"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/article_description_label" />
 
         <TextView
             android:id="@+id/txtStore"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/article_store_label" />
 
         <TextView
             android:id="@+id/txtPrice"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/article_price_label" />
 
@@ -33,10 +33,11 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/btnAccept"
+            android:id="@+id/btnClose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/article_accept_button_label"/>
+            android:text="@string/article_close_button_label"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

@@ -1,5 +1,6 @@
 package io.gmartin.deofertas.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.gmartin.deofertas.R;
@@ -17,14 +19,7 @@ import io.gmartin.deofertas.activities.ResultsActivity;
 import io.gmartin.deofertas.adapters.ItemAdapter;
 import io.gmartin.deofertas.models.Item;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ListFragment extends Fragment {
     /*// TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,54 +63,15 @@ public class ListFragment extends Fragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list, container, false);
+    */
+
+    private View mRoot;
+    private OnOffersListInteractionListener mListener;
+    private Context mContext;
+
+    public interface OnOffersListInteractionListener {
+        void onSelectedItem(Object item);
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    *//**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     *//*
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }*/
-
-    static ItemAdapter mAdapter = null;
-    View mRoot;
 
     public ListFragment() {
         // Required empty public constructor
@@ -129,12 +85,50 @@ public class ListFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+
+        if (mContext instanceof OnOffersListInteractionListener) {
+            mListener = (OnOffersListInteractionListener) mContext;
+        } else {
+            throw new RuntimeException(mContext.toString()
+                    + " must implement OnOffersListInteractionListener");
+        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if (mAdapter == null) {
+        /*if (mAdapter == null) {
             mAdapter = new ItemAdapter(getActivity());
-        }
+            //TODO: remove hardcode list and replace with a real data provided by a service.
+            List<Item> items = new ArrayList<Item>();
+
+            Item item = new Item();
+            item.setId(1);
+            item.setDesc("Prueba 1");
+            item.setStore("Garbarino");
+            item.setPrice(100);
+
+            items.add(item);
+
+            item = new Item();
+            item.setId(1);
+            item.setDesc("Prueba 2");
+            item.setStore("Musimundo");
+            item.setPrice(350);
+
+            items.add(item);
+
+            mAdapter.setItemList(items);
+        }*/
 
         mRoot = inflater.inflate(R.layout.fragment_list, container, false);
         //Button fab = (Button) root.findViewById(R.id.btnAdd);
@@ -155,13 +149,13 @@ public class ListFragment extends Fragment {
         }*/
 
         ListView list = (ListView) mRoot.findViewById(R.id.listOffers);
-        list.setAdapter(mAdapter);
+        list.setAdapter(ItemAdapter.getInstance(mContext));
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    ((ResultsActivity) getActivity()).selectItem(mAdapter.getItem(position), position);
+                    mListener.onSelectedItem(ItemAdapter.getInstance(mContext).getItem(position));
                 }catch(Exception e){
 
                 }
@@ -232,4 +226,10 @@ public class ListFragment extends Fragment {
             mAdapter.setItemList(items);
         }
     }*/
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 }

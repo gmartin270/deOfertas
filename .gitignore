@@ -57,5 +57,3 @@ freeline_project_description.json
 .idea/markdown-navigator/
 .idea/runConfigurations.xml
 app/libs/
-app/src/main/java/
-app/src/main/res/drawable/

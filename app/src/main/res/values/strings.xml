@@ -5,5 +5,8 @@
     <string name="article_description_label">Description</string>
     <string name="article_store_label">Store</string>
     <string name="article_price_label">Price</string>
-    <string name="article_accept_button_label">Price</string>
+    <string name="article_close_button_label">Close</string>
+
+    <!-- API Client -->
+    <string name="api_client_error_connection">There is no Internet conection.</string>
 </resources>
