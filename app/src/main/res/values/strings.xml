@@ -9,4 +9,8 @@
 
     <!-- API Client -->
     <string name="api_client_error_connection">There is no Internet conection.</string>
+
+    <!-- Search -->
+    <string name="search_default_text"></string>
+    <string name="button_search_text">Search</string>
 </resources>

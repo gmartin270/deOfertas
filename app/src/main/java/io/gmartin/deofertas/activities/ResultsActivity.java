@@ -20,9 +20,9 @@ public class ResultsActivity extends Activity
                             implements ListFragment.OnOffersListInteractionListener,
                                        DetailFragment.OnDetailInteractionListener {
 
-    FragmentManager mManager;
-    ListFragment mList = new ListFragment();
-    DetailFragment mDetail = new DetailFragment();
+    private FragmentManager mManager;
+    private ListFragment mList = new ListFragment();
+    private DetailFragment mDetail = new DetailFragment();
     private Boolean mIsPort = null;
     private APIClientService.APIBinder mBinder;
 
@@ -49,8 +49,10 @@ public class ResultsActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-        Intent i = new Intent(this, APIClientService.class);
-        bindService(i, mConnection, BIND_AUTO_CREATE);
+        Intent intentSearch = getIntent();
+
+        Intent intentService = new Intent(this, APIClientService.class);
+        bindService(intentService, mConnection, BIND_AUTO_CREATE);
 
         View container = findViewById(R.id.container);
         mIsPort = container!=null;
