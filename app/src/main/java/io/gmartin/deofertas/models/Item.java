@@ -1,5 +1,7 @@
 package io.gmartin.deofertas.models;
 
+import java.util.List;
+
 /**
  * Created by guille on 16/01/18.
  */
@@ -7,9 +9,11 @@ package io.gmartin.deofertas.models;
 public class Item {
 
     private long id;
+    private String hashId;
     private String desc;
     private String store;
     private double price;
+    private boolean favorite;
 
     public long getId() {
         return id;
@@ -43,4 +47,19 @@ public class Item {
         this.price = price;
     }
 
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public String getHashId() {
+        return hashId;
+    }
+
+    public void setHashId(String hashId) {
+        this.hashId = hashId;
+    }
 }

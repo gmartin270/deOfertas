@@ -75,12 +75,12 @@ public class DetailFragment extends Fragment {
         }
     }
 
-    public void setItem(Item item) {
-        mItem = item;
+    public void setItem(String hashId) {
+        /*mItem = item;
 
         if (mRoot != null) {
             updateItem();
-        }
+        }*/
     }
 
     private void updateItem(){

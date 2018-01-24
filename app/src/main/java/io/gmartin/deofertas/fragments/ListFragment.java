@@ -2,7 +2,6 @@ package io.gmartin.deofertas.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +9,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.concurrent.ExecutionException;
+import java.util.List;
 
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.adapters.ItemAdapter;
+import io.gmartin.deofertas.models.Item;
 
 
 public class ListFragment extends Fragment {
@@ -22,15 +22,19 @@ public class ListFragment extends Fragment {
     private OnOffersListInteractionListener mListener;
     private Context mContext;
     private ListView mList;
+    private ItemAdapter mAdapter;
 
     public interface OnOffersListInteractionListener {
-        void onSelectedItem(Object item);
+        void onSelectedItem(String hashId);
     }
 
     public ListFragment() {
         // Required empty public constructor
     }
 
+    public void setItems(List<Item> items) {
+        mAdapter.setItemList(items);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -55,15 +59,16 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         mRoot = inflater.inflate(R.layout.fragment_list, container, false);
+        mAdapter = new ItemAdapter(mContext);
 
         mList = mRoot.findViewById(R.id.listOffers);
-        mList.setAdapter(ItemAdapter.getInstance(mContext));
+        mList.setAdapter(mAdapter);
         mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    mListener.onSelectedItem(ItemAdapter.getInstance(mContext).getItem(position));
+                    mListener.onSelectedItem(mAdapter.getItemHash(position));
                 }catch(Exception e){
 
                 }
@@ -76,27 +81,6 @@ public class ListFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        new Thread() {
-            public void run() {
-
-                try {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mList.invalidateViews();
-                        }
-                    });
-                } catch (Exception e) {
-
-                }
-            }
-        }.start();
     }
 
     @Override

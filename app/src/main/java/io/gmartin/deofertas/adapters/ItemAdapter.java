@@ -6,10 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.controllers.OffersController;
 import io.gmartin.deofertas.controllers.RestClient;
 import io.gmartin.deofertas.models.Item;
 
@@ -18,31 +23,50 @@ public class ItemAdapter extends BaseAdapter {
     private List<Item> mItemList;
     private Context mContext;
     private RestClient.Result mResultHandler = null;
-    private static ItemAdapter mInstance;
+    private static String mURL = "http://192.168.0.159:8080/deofertas/offer";
 
-    /*public ItemAdapter (){
-        this(null, null);
+    public ItemAdapter (){
+        this(null);
     }
 
     public ItemAdapter (Context context){
-        this(context, null);
+        mContext = context;
+        RestClient.setContext(context);
+        mResultHandler = new RestClient.Result(){
+            @Override
+            public void onError(String message){
+                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResult(Object result) {
+                fetchOffers();
+            }
+        };
+
+        fetchOffers();
     }
 
-    public ItemAdapter (Context context, List<Item> itemList){
-        mContext = context;
-        mItemList = itemList;
-    }*/
+    public void fetchOffers(){
 
-    private ItemAdapter (Context context) {
-        mContext = context;
-    }
+        try {
+            RestClient.get(mURL, new RestClient.Result() {
 
-    public static ItemAdapter getInstance(Context context){
-        if (mInstance == null) {
-            mInstance = new ItemAdapter(context);
+                @Override
+                public void onResult(Object result) {
+                    //usrs = (JSONArray) result;
+
+                    JSONArray offers = new JSONArray();
+                }
+
+                @Override
+                public void onError(String message) {
+                    Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
-        return mInstance;
     }
 
     public void setItemList(List<Item> mItemList) {
@@ -72,6 +96,10 @@ public class ItemAdapter extends BaseAdapter {
     @Override
     public long getItemId(int i) {
         return mItemList.get(i).getId();
+    }
+
+    public String getItemHash(int i) {
+        return mItemList.get(i).getHashId();
     }
 
     @Override

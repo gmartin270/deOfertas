@@ -22,14 +22,13 @@ import io.gmartin.deofertas.models.Item;
 
 public class APIClientService extends Service {
     APIBinder mBinder = new APIBinder();
-    ItemAdapter mAdapter = null;
+    //ItemAdapter mAdapter = null;
     public static String mURL = "http://tm5-agmoyano.rhcloud.com/";//"http://192.168.1.18:8080/ws/";
     private Timer timer = new Timer();
 
     public APIClientService(){}
 
     public class APIBinder extends Binder{
-        //private MainActivity mActivity = null;
         private Context mContext;
 
         RestClient.Result resultHandler = new RestClient.Result() {
@@ -44,17 +43,12 @@ public class APIClientService extends Service {
             }
         };
 
-        /*public void setActivity(MainActivity activity) {
-            mActivity = activity;
-            RestClient.context = activity;
-        }*/
-
         public void setContext(Context context) {
             mContext = context;
             RestClient.setContext(mContext);
         }
 
-        public void searchOffers(){
+        public List<Item> searchOffers(){
             //TODO: remove hardcode and implement a real REST operation
             /*try{
                 if(mContext != null) {
@@ -94,19 +88,21 @@ public class APIClientService extends Service {
 
             items.add(item);
 
-            mAdapter = ItemAdapter.getInstance(mContext);
-            mAdapter.setItemList(items);
+            /*mAdapter = ItemAdapter.getInstance(mContext);
+            mAdapter.setItemList(items);*/
+
+            return items;
         }
     }
 
     @Override
     public void onCreate() {
-        timer.schedule(new TimerTask(){
+        /*timer.schedule(new TimerTask(){
             @Override
             public void run() {
                 mBinder.searchOffers();
             }
-        }, 0, 5000);
+        }, 0, 5000);*/
     }
 
     @Override
