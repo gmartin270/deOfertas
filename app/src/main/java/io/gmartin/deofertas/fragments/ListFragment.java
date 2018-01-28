@@ -9,11 +9,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.List;
-
 import io.gmartin.deofertas.R;
-import io.gmartin.deofertas.adapters.ItemAdapter;
-import io.gmartin.deofertas.models.Item;
+import io.gmartin.deofertas.adapters.OfferAdapter;
+import io.gmartin.deofertas.models.Offer;
 
 
 public class ListFragment extends Fragment {
@@ -22,18 +20,14 @@ public class ListFragment extends Fragment {
     private OnOffersListInteractionListener mListener;
     private Context mContext;
     private ListView mList;
-    private ItemAdapter mAdapter;
+    private OfferAdapter mAdapter;
 
     public interface OnOffersListInteractionListener {
-        void onSelectedItem(String hashId);
+        void onSelectedOffer(Offer offer);
     }
 
     public ListFragment() {
         // Required empty public constructor
-    }
-
-    public void setItems(List<Item> items) {
-        mAdapter.setItemList(items);
     }
 
     @Override
@@ -59,7 +53,7 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         mRoot = inflater.inflate(R.layout.fragment_list, container, false);
-        mAdapter = new ItemAdapter(mContext);
+        mAdapter = new OfferAdapter(mContext);
 
         mList = mRoot.findViewById(R.id.listOffers);
         mList.setAdapter(mAdapter);
@@ -68,7 +62,7 @@ public class ListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    mListener.onSelectedItem(mAdapter.getItemHash(position));
+                    mListener.onSelectedOffer((Offer)mAdapter.getItem(position));
                 }catch(Exception e){
 
                 }

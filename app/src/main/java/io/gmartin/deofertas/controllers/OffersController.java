@@ -1,12 +1,6 @@
 package io.gmartin.deofertas.controllers;
 
 import android.content.Context;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.gmartin.deofertas.models.Item;
 
 public class OffersController {
 

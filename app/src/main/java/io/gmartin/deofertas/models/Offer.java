@@ -1,18 +1,30 @@
 package io.gmartin.deofertas.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
-/**
- * Created by guille on 16/01/18.
- */
+public class Offer {
 
-public class Item {
-
+    @SerializedName("id")
     private long id;
+
+    @SerializedName("hash_id")
     private String hashId;
+
+    @SerializedName("desc")
     private String desc;
-    private String store;
+
+    @SerializedName("store_id")
+    private String storeId;
+
+    @SerializedName("store_name")
+    private String storeName;
+
+    @SerializedName("price")
     private double price;
+
+    @SerializedName("favorite")
     private boolean favorite;
 
     public long getId() {
@@ -29,14 +41,6 @@ public class Item {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public String getStore() {
-        return store;
-    }
-
-    public void setStore(String store) {
-        this.store = store;
     }
 
     public double getPrice() {
@@ -61,5 +65,21 @@ public class Item {
 
     public void setHashId(String hashId) {
         this.hashId = hashId;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 }

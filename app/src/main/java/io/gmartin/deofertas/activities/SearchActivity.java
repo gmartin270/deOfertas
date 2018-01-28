@@ -8,11 +8,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.models.Search;
 
 public class SearchActivity extends Activity {
 
+    public final static String EXTRA_SEARCH = "io.gmartin.deofertas.activities.SEARCH";
     private EditText mSearchEV;
     private Button mSearchBtn;
+    private Search mSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +33,9 @@ public class SearchActivity extends Activity {
         });
     }
 
-
     private void searchOffers() {
         Intent intent = new Intent(this, ResultsActivity.class);
+        intent.putExtra(EXTRA_SEARCH, mSearch);
         startActivity(intent);
     }
 }

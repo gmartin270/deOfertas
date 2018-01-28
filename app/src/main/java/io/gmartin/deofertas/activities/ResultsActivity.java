@@ -10,7 +10,8 @@ import android.view.View;
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.fragments.DetailFragment;
 import io.gmartin.deofertas.fragments.ListFragment;
-import io.gmartin.deofertas.models.Item;
+import io.gmartin.deofertas.models.Offer;
+import io.gmartin.deofertas.models.Search;
 
 public class ResultsActivity extends Activity
                             implements ListFragment.OnOffersListInteractionListener,
@@ -30,8 +31,8 @@ public class ResultsActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-        //TODO: handle the searchs parameters.
         Intent intentSearch = getIntent();
+        Search search = (Search) intentSearch.getSerializableExtra(SearchActivity.EXTRA_SEARCH);
 
         View container = findViewById(R.id.container);
         mIsPort = container!=null;
@@ -55,15 +56,15 @@ public class ResultsActivity extends Activity
     }
 
     @Override
-    public void onSelectedItem(String hashId) {
+    public void onSelectedOffer(Offer offer) {
         if (mIsPort) {
             FragmentTransaction transaction = mManager.beginTransaction();
             transaction.replace(R.id.container, mDetail);
             transaction.commit();
         }
 
-        if (hashId != null) {
-            mDetail.setItem(hashId);
+        if (offer != null) {
+            mDetail.setOffer(offer);
         }
     }
 

@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.activities.ResultsActivity;
-import io.gmartin.deofertas.models.Item;
+import io.gmartin.deofertas.models.Offer;
 
 public class DetailFragment extends Fragment {
 
     private static View mRoot;
-    private Item mItem = null;
+    private Offer mOffer = null;
     private OnDetailInteractionListener mListener;
     private Button mCloseBtn;
 
@@ -28,9 +28,9 @@ public class DetailFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (mItem != null) {
+        if (mOffer != null) {
             if (mRoot != null) {
-                updateItem();
+                updateOffer();
             }
         }
     }
@@ -75,26 +75,25 @@ public class DetailFragment extends Fragment {
         }
     }
 
-    public void setItem(String hashId) {
-        /*mItem = item;
+    public void setOffer(Offer offer) {
+        mOffer = offer;
 
         if (mRoot != null) {
-            updateItem();
-        }*/
+            updateOffer();
+        }
     }
 
-    private void updateItem(){
+    private void updateOffer(){
         TextView desc = mRoot.findViewById(R.id.txtDesc);
         TextView store = mRoot.findViewById(R.id.txtStore);
         TextView price = mRoot.findViewById(R.id.txtPrice);
 
-        desc.setText(mItem.getDesc());
-        store.setText(mItem.getStore());
-        price.setText(String.format("%.2f",mItem.getPrice()));
+        desc.setText(mOffer.getDesc());
+        store.setText(mOffer.getStoreName());
+        price.setText(String.format("%.2f", mOffer.getPrice()));
     }
 
     public interface OnDetailInteractionListener {
-
         void onCloseButtonClick();
     }
 }

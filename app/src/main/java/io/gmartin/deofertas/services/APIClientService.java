@@ -7,22 +7,16 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
-import io.gmartin.deofertas.adapters.ItemAdapter;
 import io.gmartin.deofertas.controllers.RestClient;
-import io.gmartin.deofertas.models.Item;
+import io.gmartin.deofertas.models.Offer;
 
 public class APIClientService extends Service {
     APIBinder mBinder = new APIBinder();
-    //ItemAdapter mAdapter = null;
+    //OfferAdapter mAdapter = null;
     public static String mURL = "http://tm5-agmoyano.rhcloud.com/";//"http://192.168.1.18:8080/ws/";
     private Timer timer = new Timer();
 
@@ -48,7 +42,7 @@ public class APIClientService extends Service {
             RestClient.setContext(mContext);
         }
 
-        public List<Item> searchOffers(){
+        public List<Offer> searchOffers(){
             //TODO: remove hardcode and implement a real REST operation
             /*try{
                 if(mContext != null) {
@@ -70,28 +64,28 @@ public class APIClientService extends Service {
                 Toast.makeText(APIClientService.this, e.getMessage(), Toast.LENGTH_SHORT);
             }*/
 
-            List<Item> items = new ArrayList<Item>();
+            List<Offer> offers = new ArrayList<Offer>();
 
-            Item item = new Item();
-            item.setId(1);
-            item.setDesc("Prueba 1");
-            item.setStore("Garbarino");
-            item.setPrice(100);
+            Offer offer = new Offer();
+            offer.setId(1);
+            offer.setDesc("Prueba 1");
+            offer.setStoreName("Garbarino");
+            offer.setPrice(100);
 
-            items.add(item);
+            offers.add(offer);
 
-            item = new Item();
-            item.setId(1);
-            item.setDesc("Prueba 2");
-            item.setStore("Musimundo");
-            item.setPrice(350);
+            offer = new Offer();
+            offer.setId(1);
+            offer.setDesc("Prueba 2");
+            offer.setStoreName("Musimundo");
+            offer.setPrice(350);
 
-            items.add(item);
+            offers.add(offer);
 
-            /*mAdapter = ItemAdapter.getInstance(mContext);
-            mAdapter.setItemList(items);*/
+            /*mAdapter = OfferAdapter.getInstance(mContext);
+            mAdapter.setItemList(offers);*/
 
-            return items;
+            return offers;
         }
     }
 
