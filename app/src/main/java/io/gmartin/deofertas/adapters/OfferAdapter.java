@@ -24,8 +24,8 @@ public class OfferAdapter extends BaseAdapter {
 
     private List<Offer> mOfferList;
     private Context mContext;
-    private RestClient.Result mResultHandler = null;
-    private static String mURL = "http://192.168.2.103:8080/deofertas/offer";
+    /*private RestClient.Result mResultHandler = null;
+    private static String mURL = "http://192.168.2.103:8080/deofertas/offer";*/
 
     public OfferAdapter(){
         this(null);
@@ -33,58 +33,7 @@ public class OfferAdapter extends BaseAdapter {
 
     public OfferAdapter(Context context){
         mContext = context;
-        RestClient.setContext(context);
-        mResultHandler = new RestClient.Result(){
-            @Override
-            public void onError(String message){
-                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResult(Object result) {
-                fetchOffers();
-            }
-        };
-
-        fetchOffers();
     }
-
-    public void fetchOffers(){
-        try {
-            RestClient.get(mURL, new RestClient.Result() {
-
-                @Override
-                public void onResult(Object result) {
-                    mOfferList = new ArrayList<>();
-                    JSONArray offersJSON = (JSONArray) result;
-                    JSONObject offerJSON;
-                    Gson gson = new Gson();
-
-                    for(int i=0; i < offersJSON.length(); i++) {
-                        try {
-                            offerJSON = offersJSON.getJSONObject(i);
-                            mOfferList.add(gson.fromJson(offerJSON.toString(), Offer.class));
-                        } catch (Exception e) {
-
-                        }
-                    }
-
-                    notifyDataSetChanged();
-                }
-
-                @Override
-                public void onError(String message) {
-                    Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    /*public void setItemList(List<Offer> mItemList) {
-        this.mOfferList = mItemList;
-    }*/
 
     public void setContext(Context mContext) {
         this.mContext = mContext;
@@ -133,5 +82,10 @@ public class OfferAdapter extends BaseAdapter {
         price.setText(String.format("$%.2f", offer.getPrice()));
 
         return view;
+    }
+
+    public void updateList(List<Offer> offers) {
+        mOfferList = offers;
+        notifyDataSetChanged();
     }
 }

@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.List;
+
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.controllers.OffersController;
 import io.gmartin.deofertas.fragments.DetailFragment;
 import io.gmartin.deofertas.fragments.ListFragment;
 import io.gmartin.deofertas.models.Offer;
@@ -15,12 +18,19 @@ import io.gmartin.deofertas.models.Search;
 
 public class ResultsActivity extends Activity
                             implements ListFragment.OnOffersListInteractionListener,
-                                       DetailFragment.OnDetailInteractionListener {
+                                       DetailFragment.OnDetailInteractionListener,
+                                       OffersController.OfferControllerListener{
 
     private FragmentManager mManager;
     private ListFragment mList = new ListFragment();
     private DetailFragment mDetail = new DetailFragment();
     private Boolean mIsPort = null;
+    private List<Offer> mOffers;
+    private OffersController mController;
+
+    public List<Offer> getOfferList(){
+        return mOffers;
+    }
 
     public Boolean getIsPort() {
         return mIsPort;
@@ -39,6 +49,13 @@ public class ResultsActivity extends Activity
         mManager = getFragmentManager();
 
         FragmentTransaction transaction = mManager.beginTransaction();
+
+        if(mOffers == null) {
+            mController = new OffersController(this);
+            mController.fetchOffers(search);
+        }else{
+            mList.setOfferList(mOffers);
+        }
 
         if(mIsPort) {
             transaction.replace(R.id.container, mList);
@@ -63,18 +80,24 @@ public class ResultsActivity extends Activity
             transaction.commit();
         }
 
-        if (offer != null) {
-            mDetail.setOffer(offer);
-        }
+        mDetail.setOffer(offer);
     }
 
     @Override
     public void onCloseButtonClick() {
+        mList.setOfferList(mOffers);
+
         if(mIsPort) {
             FragmentTransaction transaction = mManager.beginTransaction();
             transaction.replace(R.id.container, mList);
             transaction.commit();
         }
+    }
+
+    @Override
+    public void onDataReceived(Object object) {
+        mOffers = (List<Offer>)object;
+        mList.setOfferList(mOffers);
     }
 
     @Override

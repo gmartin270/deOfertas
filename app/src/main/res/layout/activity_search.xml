@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="@string/button_search_text"
         tools:layout_editor_absoluteY="0dp"
-        app:layout_constraintLeft_toRightOf="@+id/search_box"
+        app:layout_constraintLeft_toRightOf="@id/search_box"
         android:layout_marginLeft="8dp" />
 
 </android.support.constraint.ConstraintLayout>

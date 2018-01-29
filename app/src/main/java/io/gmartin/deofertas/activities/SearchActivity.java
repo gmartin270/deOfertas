@@ -34,6 +34,8 @@ public class SearchActivity extends Activity {
     }
 
     private void searchOffers() {
+        mSearch = new Search();
+        mSearch.setText(((EditText)findViewById(R.id.search_box)).getText().toString());
         Intent intent = new Intent(this, ResultsActivity.class);
         intent.putExtra(EXTRA_SEARCH, mSearch);
         startActivity(intent);

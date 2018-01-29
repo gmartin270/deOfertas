@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.List;
+
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.activities.ResultsActivity;
 import io.gmartin.deofertas.adapters.OfferAdapter;
 import io.gmartin.deofertas.models.Offer;
 
@@ -81,5 +84,16 @@ public class ListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.updateList(((ResultsActivity)mContext).getOfferList());
+    }
+
+    public void setOfferList(List<Offer> offers) {
+        //mOffers = offers;
+        mAdapter.updateList(offers);
     }
 }
