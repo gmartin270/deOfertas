@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class ResultsActivity extends Activity
     private Boolean mIsPort = null;
     private List<Offer> mOffers;
     private OffersController mController;
+    private int mReturn;
+    private Intent mIntent;
 
     public List<Offer> getOfferList(){
         return mOffers;
@@ -41,8 +44,8 @@ public class ResultsActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-        Intent intentSearch = getIntent();
-        Search search = (Search) intentSearch.getSerializableExtra(SearchActivity.EXTRA_SEARCH);
+        mIntent = getIntent();
+        Search search = (Search) mIntent.getSerializableExtra(SearchActivity.EXTRA_SEARCH);
 
         View container = findViewById(R.id.container);
         mIsPort = container!=null;
@@ -97,7 +100,14 @@ public class ResultsActivity extends Activity
     @Override
     public void onDataReceived(Object object) {
         mOffers = (List<Offer>)object;
-        mList.setOfferList(mOffers);
+
+        if (mOffers != null && mOffers.size() > 0) {
+            mList.setOfferList(mOffers);
+        } else {
+            Toast toast = Toast.makeText(this, getResources().getString(R.string.no_data_result), Toast.LENGTH_LONG);
+            toast.show();
+            finish();
+        }
     }
 
     @Override

@@ -13,4 +13,6 @@
     <!-- Search -->
     <string name="search_default_text"></string>
     <string name="button_search_text">Search</string>
+    <string name="no_data_result">The search has not produced any results.</string>
+    <string name="no_internet_connection">There is no Internet connection.</string>
 </resources>

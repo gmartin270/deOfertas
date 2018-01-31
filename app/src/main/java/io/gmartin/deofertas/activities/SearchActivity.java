@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.models.Search;
@@ -36,6 +37,7 @@ public class SearchActivity extends Activity {
     private void searchOffers() {
         mSearch = new Search();
         mSearch.setText(((EditText)findViewById(R.id.search_box)).getText().toString());
+
         Intent intent = new Intent(this, ResultsActivity.class);
         intent.putExtra(EXTRA_SEARCH, mSearch);
         startActivity(intent);

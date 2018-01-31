@@ -7,4 +7,10 @@
 
     <!-- API Client -->
     <string name="api_client_error_connection">There is no Internet conection.</string>
+
+    <!-- Search -->
+    <string name="search_default_text"></string>
+    <string name="button_search_text">Bucar</string>
+    <string name="no_data_result">La busqueda no ha producido resultados.</string>
+    <string name="no_internet_connection">No hay conexión a Internet.</string>
 </resources>
