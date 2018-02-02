@@ -61,12 +61,12 @@ public class SearchActivity extends Activity {
         mSearch.setText(mSearchEV.getQuery().toString());
 
         if (mPriceFrom.getText().toString().length() > 0) {
-            priceFrom = new Double(mPriceFrom.getText().toString());
+            priceFrom = Double.valueOf(mPriceFrom.getText().toString());
             mSearch.setPriceFrom(priceFrom);
         }
 
         if (mPriceTo.getText().toString().length() > 0) {
-            priceTo = new Double(mPriceTo.getText().toString());
+            priceTo = Double.valueOf(mPriceTo.getText().toString());
             mSearch.setPriceTo(priceTo);
         }
 
