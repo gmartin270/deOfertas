@@ -7,9 +7,9 @@
     android:layout_height="match_parent"
     tools:context="io.gmartin.deofertas.activities.SearchActivity">
 
-    <EditText
+    <SearchView
         android:id="@+id/search_box"
-        android:layout_width="@dimen/search_box_width"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="6dp"
@@ -24,16 +24,65 @@
         android:layout_height="wrap_content"
         android:text="@string/button_search_text"
         tools:layout_editor_absoluteY="0dp"
-        app:layout_constraintLeft_toRightOf="@id/search_box"
+        app:layout_constraintLeft_toRightOf="@+id/search_box"
         android:layout_marginStart="8dp" />
 
     <Button
         android:id="@+id/button_advanced_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="advanced search"
-        tools:layout_editor_absoluteX="92dp"
-        android:layout_marginTop="74dp"
+        android:text="@string/button_advanced_search_text"
+        tools:layout_editor_absoluteX="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/search_box" />
+
+    <LinearLayout
+        android:id="@+id/advanced_search_layout"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:layout_editor_absoluteX="-3dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/button_advanced_search">
+
+        <TextView
+            android:id="@+id/label_price_from"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/label_price_from_text" />
+
+        <EditText
+            android:id="@+id/edit_price_from"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/label_price_to"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/label_price_from_to" />
+
+        <EditText
+            android:id="@+id/edit_price_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/label_stores"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/label_stores" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Search implements Serializable{
-    private long id;
+    private Long id;
 
     @SerializedName("text")
     private String text;
@@ -15,10 +15,12 @@ public class Search implements Serializable{
     private List<Store> stores;
 
     @SerializedName("price_from")
-    private double priceFrom;
+    private Double priceFrom;
 
     @SerializedName("price_to")
-    private double priceTo;
+    private Double priceTo;
+
+    private boolean advanced;
 
     public String getText() {
         return text;
@@ -28,19 +30,43 @@ public class Search implements Serializable{
         this.text = text;
     }
 
-    public double getPriceFrom() {
+    public Double getPriceFrom() {
         return priceFrom;
     }
 
-    public void setPriceFrom(double priceFrom) {
+    public void setPriceFrom(Double priceFrom) {
         this.priceFrom = priceFrom;
     }
 
-    public double getPriceTo() {
+    public Double getPriceTo() {
         return priceTo;
     }
 
-    public void setPriceTo(double priceTo) {
+    public void setPriceTo(Double priceTo) {
         this.priceTo = priceTo;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<Store> getStores() {
+        return stores;
+    }
+
+    public void setStores(List<Store> stores) {
+        this.stores = stores;
+    }
+
+    public boolean isAdvanced() {
+        return advanced;
+    }
+
+    public void setAdvanced(boolean advanced) {
+        this.advanced = advanced;
     }
 }

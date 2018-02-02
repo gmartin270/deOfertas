@@ -13,6 +13,7 @@ import java.util.List;
 
 import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.Search;
+import io.gmartin.deofertas.models.Store;
 
 public class OffersController {
 
@@ -88,6 +89,24 @@ public class OffersController {
         if (search != null) {
             if (search.getText() != null && search.getText().length() > 0) {
                 params.add("desc=" + search.getText());
+            }
+
+            if (search.getPriceFrom() != null) {
+                params.add("price_from=" + search.getPriceFrom().toString());
+            }
+
+            if (search.getPriceTo() != null) {
+                params.add("price_to=" + search.getPriceTo().toString());
+            }
+
+            if (search.getStores() != null && search.getStores().size() > 0) {
+                String storeStr = "stores=";
+                for (Store store: search.getStores()) {
+                    storeStr += store.getId() + ",";
+                }
+
+                storeStr = storeStr.substring(0, storeStr.length() - 1);
+                params.add(storeStr);
             }
         }
 
