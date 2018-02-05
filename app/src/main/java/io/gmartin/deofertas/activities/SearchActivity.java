@@ -10,10 +10,16 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import io.gmartin.deofertas.R;
-import io.gmartin.deofertas.models.Search;
+import java.util.ArrayList;
+import java.util.List;
 
-public class SearchActivity extends Activity {
+import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.controllers.SearchController;
+import io.gmartin.deofertas.models.Search;
+import io.gmartin.deofertas.models.Store;
+import io.gmartin.deofertas.widget.MultiSelectionSpinner;
+
+public class SearchActivity extends Activity implements SearchController.SearchControllerListener{
 
     public final static String EXTRA_SEARCH = "io.gmartin.deofertas.activities.SEARCH";
     private SearchView mSearchEV;
@@ -22,12 +28,18 @@ public class SearchActivity extends Activity {
     private Button mSearchBtn;
     private Button mAdvSearchBtn;
     private Search mSearch;
+    private MultiSelectionSpinner mStoreSpinner;
     private LinearLayout mAdvancedSearchLayout;
     private boolean mIsAdvancedSearch = false;
+    private List<Store> mStoreList;
+    private SearchController mSearchController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSearchController = new SearchController(this);
+        mSearchController.fetchStores();
+
         setContentView(R.layout.activity_search);
 
         mSearchEV = findViewById(R.id.search_box);
@@ -37,6 +49,7 @@ public class SearchActivity extends Activity {
         mSearchBtn = findViewById(R.id.button_search);
         mAdvSearchBtn = findViewById(R.id.button_advanced_search);
         mAdvancedSearchLayout = findViewById(R.id.advanced_search_layout);
+        mStoreSpinner = findViewById(R.id.store_spinner);
 
         mSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +69,8 @@ public class SearchActivity extends Activity {
     private void searchOffers() {
         Double priceFrom = null;
         Double priceTo = null;
+        List<Store> storesSelected;
+        List<Integer> storesIndexes;
         mSearch = new Search();
 
         mSearch.setText(mSearchEV.getQuery().toString());
@@ -68,6 +83,18 @@ public class SearchActivity extends Activity {
         if (mPriceTo.getText().toString().length() > 0) {
             priceTo = Double.valueOf(mPriceTo.getText().toString());
             mSearch.setPriceTo(priceTo);
+        }
+
+        storesIndexes = mStoreSpinner.getSelectedIndexes();
+
+        if (storesIndexes != null && storesIndexes.size() > 0) {
+            storesSelected = new ArrayList<>();
+
+            for (Integer index: storesIndexes) {
+                storesSelected.add(mStoreList.get(index));
+            }
+
+            mSearch.setStores(storesSelected);
         }
 
         if (priceFrom != null && priceTo != null && priceFrom > priceTo) {
@@ -91,5 +118,13 @@ public class SearchActivity extends Activity {
         }
 
         mIsAdvancedSearch = !mIsAdvancedSearch;
+    }
+
+    @Override
+    public void onDataReceived(Object data) {
+        if (data != null) {
+            mStoreList = (List<Store>) data;
+            mStoreSpinner.setItems(mSearchController.storeToString(mStoreList));
+        }
     }
 }

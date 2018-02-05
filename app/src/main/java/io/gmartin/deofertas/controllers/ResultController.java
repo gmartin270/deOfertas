@@ -15,7 +15,7 @@ import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.Search;
 import io.gmartin.deofertas.models.Store;
 
-public class OffersController {
+public class ResultController {
 
     private Context mContext;
     private static String mURL = "http://192.168.0.159:8080/deofertas";
@@ -23,11 +23,11 @@ public class OffersController {
     private RestClient.Result mResultHandler = null;
     private OfferControllerListener mOfferListener;
 
-    public OffersController(Context context){
+    public ResultController(Context context){
         mContext = context;
 
-        if (context instanceof OffersController.OfferControllerListener) {
-            mOfferListener = (OffersController.OfferControllerListener) context;
+        if (context instanceof ResultController.OfferControllerListener) {
+            mOfferListener = (ResultController.OfferControllerListener) context;
         }
 
         RestClient.setContext(context);

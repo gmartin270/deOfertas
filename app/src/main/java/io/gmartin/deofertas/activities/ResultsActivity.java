@@ -11,7 +11,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import io.gmartin.deofertas.R;
-import io.gmartin.deofertas.controllers.OffersController;
+import io.gmartin.deofertas.controllers.ResultController;
 import io.gmartin.deofertas.fragments.DetailFragment;
 import io.gmartin.deofertas.fragments.ListFragment;
 import io.gmartin.deofertas.models.Offer;
@@ -20,14 +20,14 @@ import io.gmartin.deofertas.models.Search;
 public class ResultsActivity extends Activity
                             implements ListFragment.OnOffersListInteractionListener,
                                        DetailFragment.OnDetailInteractionListener,
-                                       OffersController.OfferControllerListener{
+                                       ResultController.OfferControllerListener{
 
     private FragmentManager mManager;
     private ListFragment mList = new ListFragment();
     private DetailFragment mDetail = new DetailFragment();
     private Boolean mIsPort = null;
     private List<Offer> mOffers;
-    private OffersController mController;
+    private ResultController mController;
     private int mReturn;
     private Intent mIntent;
 
@@ -54,7 +54,7 @@ public class ResultsActivity extends Activity
         FragmentTransaction transaction = mManager.beginTransaction();
 
         if(mOffers == null) {
-            mController = new OffersController(this);
+            mController = new ResultController(this);
             mController.fetchOffers(search);
         }else{
             mList.setOfferList(mOffers);
