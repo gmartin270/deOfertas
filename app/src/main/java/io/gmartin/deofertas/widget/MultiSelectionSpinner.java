@@ -202,4 +202,14 @@ public class MultiSelectionSpinner extends AppCompatSpinner implements
         }
         return sb.toString();
     }
+
+    public int getCountItemsSelected() {
+        int result = 0;
+
+        if (_items != null) {
+            result = _items.length;
+        }
+
+        return result;
+    }
 }

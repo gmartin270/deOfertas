@@ -1,60 +1,87 @@
-package io.gmartin.deofertas.activities;
+package io.gmartin.deofertas.fragments;
 
-import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.SearchView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SearchView;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.activities.ResultsActivity;
 import io.gmartin.deofertas.controllers.SearchController;
 import io.gmartin.deofertas.models.Search;
 import io.gmartin.deofertas.models.Store;
 import io.gmartin.deofertas.widget.MultiSelectionSpinner;
 
-public class SearchActivity extends NavigationActivity implements SearchController.SearchControllerListener{
+public class SearchFragment extends Fragment implements SearchController.SearchControllerListener{
 
     public final static String EXTRA_SEARCH = "io.gmartin.deofertas.activities.SEARCH";
-    private SearchView mSearchEV;
-    private EditText mPriceFrom;
-    private EditText mPriceTo;
-    private Button mSearchBtn;
-    private Button mAdvSearchBtn;
+    private SearchView mSearchBox;
+    private AppCompatEditText mPriceFrom;
+    private AppCompatEditText mPriceTo;
+    private AppCompatButton mSearchBtn;
+    private AppCompatButton mAdvSearchBtn;
     private Search mSearch;
     private MultiSelectionSpinner mStoreSpinner;
-    private LinearLayout mAdvancedSearchLayout;
+    private LinearLayoutCompat mAdvancedSearchLayout;
     private boolean mIsAdvancedSearch = false;
     private List<Store> mStoreList;
     private SearchController mSearchController;
+    private Context mContext;
+    private OnSearchInteractionListener mListener;
+    private View mRoot;
+
+    public interface OnSearchInteractionListener {
+        void onSearchButtonClick(Search search);
+    }
+
+    public SearchFragment(){}
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+
+        if (mContext instanceof OnSearchInteractionListener) {
+            mListener = (OnSearchInteractionListener) mContext;
+        } else {
+            throw new RuntimeException(mContext.toString()
+                    + " must implement OnSearchInteractionListener");
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSearchController = new SearchController(this);
+
+        mSearchController = new SearchController(this.getActivity());
         mSearchController.fetchStores();
+    }
 
-        setContentView(R.layout.activity_search);
-        mDrawerLayout = findViewById(R.id.drawer_search_layout);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        initUI();
+        mRoot = inflater.inflate(R.layout.fragment_search, container, false);
 
-        mSearchEV = findViewById(R.id.search_box);
-        mSearchEV.setSubmitButtonEnabled(true);
-        mPriceFrom = findViewById(R.id.edit_price_from);
-        mPriceTo = findViewById(R.id.edit_price_to);
-        mSearchBtn = findViewById(R.id.button_search);
-        mAdvSearchBtn = findViewById(R.id.button_advanced_search);
-        mAdvancedSearchLayout = findViewById(R.id.advanced_search_layout);
-        mStoreSpinner = findViewById(R.id.store_spinner);
+        mSearchBox = mRoot.findViewById(R.id.search_box);
+        mSearchBox.setSubmitButtonEnabled(true);
+        mPriceFrom = mRoot.findViewById(R.id.edit_price_from);
+        mPriceTo = mRoot.findViewById(R.id.edit_price_to);
+        mSearchBtn = mRoot.findViewById(R.id.button_search);
+        mAdvSearchBtn = mRoot.findViewById(R.id.button_advanced_search);
+        mAdvancedSearchLayout = mRoot.findViewById(R.id.advanced_search_layout);
+        mStoreSpinner = mRoot.findViewById(R.id.store_spinner);
 
         mSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +96,8 @@ public class SearchActivity extends NavigationActivity implements SearchControll
                 advancedSearchOffers();
             }
         });
+
+        return mRoot;
     }
 
     private void searchOffers() {
@@ -78,7 +107,7 @@ public class SearchActivity extends NavigationActivity implements SearchControll
         List<Integer> storesIndexes;
         mSearch = new Search();
 
-        mSearch.setText(mSearchEV.getQuery().toString());
+        mSearch.setText(mSearchBox.getQuery().toString());
 
         if (mPriceFrom.getText().toString().length() > 0) {
             priceFrom = Double.valueOf(mPriceFrom.getText().toString());
@@ -90,22 +119,23 @@ public class SearchActivity extends NavigationActivity implements SearchControll
             mSearch.setPriceTo(priceTo);
         }
 
-        storesIndexes = mStoreSpinner.getSelectedIndexes();
+        if (mStoreSpinner.getCountItemsSelected() > 0) {
+            storesIndexes = mStoreSpinner.getSelectedIndexes();
 
-        if (storesIndexes != null && storesIndexes.size() > 0) {
             storesSelected = new ArrayList<>();
 
-            for (Integer index: storesIndexes) {
+            for (Integer index : storesIndexes) {
                 storesSelected.add(mStoreList.get(index));
             }
 
             mSearch.setStores(storesSelected);
         }
 
+        //TODO: change call activity to send messages to fragment_results
         if (priceFrom != null && priceTo != null && priceFrom > priceTo) {
-            Toast.makeText(this, getResources().getString(R.string.price_from_greater_to), Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, getResources().getString(R.string.price_from_greater_to), Toast.LENGTH_LONG).show();
         } else {
-            Intent intent = new Intent(this, ResultsActivity.class);
+            Intent intent = new Intent(mContext, ResultsActivity.class);
             intent.putExtra(EXTRA_SEARCH, mSearch);
             startActivity(intent);
         }

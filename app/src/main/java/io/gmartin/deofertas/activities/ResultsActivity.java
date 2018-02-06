@@ -14,10 +14,11 @@ import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.controllers.ResultController;
 import io.gmartin.deofertas.fragments.DetailFragment;
 import io.gmartin.deofertas.fragments.ListFragment;
+import io.gmartin.deofertas.fragments.SearchFragment;
 import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.Search;
 
-public class ResultsActivity extends NavigationActivity
+public class ResultsActivity extends Activity
                             implements ListFragment.OnOffersListInteractionListener,
                                        DetailFragment.OnDetailInteractionListener,
                                        ResultController.OfferControllerListener{
@@ -44,14 +45,10 @@ public class ResultsActivity extends NavigationActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-        mDrawerLayout = findViewById(R.id.drawer_result_layout);
-
-        initUI();
-
         mIntent = getIntent();
-        Search search = (Search) mIntent.getSerializableExtra(SearchActivity.EXTRA_SEARCH);
+        Search search = (Search) mIntent.getSerializableExtra(SearchFragment.EXTRA_SEARCH);
 
-        View container = findViewById(R.id.container);
+        View container = findViewById(R.id.containerResult);
         mIsPort = container!=null;
         mManager = getFragmentManager();
 
@@ -65,7 +62,7 @@ public class ResultsActivity extends NavigationActivity
         }
 
         if(mIsPort) {
-            transaction.replace(R.id.container, mList);
+            transaction.replace(R.id.containerResult, mList);
             transaction.commit();
         } else {
             transaction.replace(R.id.listContainer, mList);
