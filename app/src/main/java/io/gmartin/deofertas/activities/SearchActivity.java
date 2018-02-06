@@ -3,10 +3,12 @@ package io.gmartin.deofertas.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -19,7 +21,7 @@ import io.gmartin.deofertas.models.Search;
 import io.gmartin.deofertas.models.Store;
 import io.gmartin.deofertas.widget.MultiSelectionSpinner;
 
-public class SearchActivity extends Activity implements SearchController.SearchControllerListener{
+public class SearchActivity extends NavigationActivity implements SearchController.SearchControllerListener{
 
     public final static String EXTRA_SEARCH = "io.gmartin.deofertas.activities.SEARCH";
     private SearchView mSearchEV;
@@ -35,12 +37,15 @@ public class SearchActivity extends Activity implements SearchController.SearchC
     private SearchController mSearchController;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSearchController = new SearchController(this);
         mSearchController.fetchStores();
 
         setContentView(R.layout.activity_search);
+        mDrawerLayout = findViewById(R.id.drawer_search_layout);
+
+        initUI();
 
         mSearchEV = findViewById(R.id.search_box);
         mSearchEV.setSubmitButtonEnabled(true);

@@ -17,7 +17,7 @@ import io.gmartin.deofertas.models.Store;
 public class SearchController {
 
     private Context mContext;
-    private static String mURL = "http://192.168.2.104:8080/deofertas";
+    private static String mURL = "http://192.168.0.159:8080/deofertas";
     private RestClient.Result mResultHandler = null;
     private SearchControllerListener mSearchListener;
 

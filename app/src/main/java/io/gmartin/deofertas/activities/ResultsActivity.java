@@ -17,7 +17,7 @@ import io.gmartin.deofertas.fragments.ListFragment;
 import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.Search;
 
-public class ResultsActivity extends Activity
+public class ResultsActivity extends NavigationActivity
                             implements ListFragment.OnOffersListInteractionListener,
                                        DetailFragment.OnDetailInteractionListener,
                                        ResultController.OfferControllerListener{
@@ -44,6 +44,10 @@ public class ResultsActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
+        mDrawerLayout = findViewById(R.id.drawer_result_layout);
+
+        initUI();
+
         mIntent = getIntent();
         Search search = (Search) mIntent.getSerializableExtra(SearchActivity.EXTRA_SEARCH);
 
@@ -68,11 +72,6 @@ public class ResultsActivity extends Activity
             transaction.replace(R.id.detailContainer, mDetail);
             transaction.commit();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -108,10 +107,5 @@ public class ResultsActivity extends Activity
             toast.show();
             finish();
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }
