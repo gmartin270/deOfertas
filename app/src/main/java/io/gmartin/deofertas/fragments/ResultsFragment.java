@@ -1,27 +1,26 @@
-package io.gmartin.deofertas.activities;
+package io.gmartin.deofertas.fragments;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.List;
 
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.controllers.ResultController;
-import io.gmartin.deofertas.fragments.DetailFragment;
-import io.gmartin.deofertas.fragments.ListFragment;
-import io.gmartin.deofertas.fragments.SearchFragment;
 import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.Search;
 
-public class ResultsActivity extends Activity
-                            implements ListFragment.OnOffersListInteractionListener,
-                                       DetailFragment.OnDetailInteractionListener,
-                                       ResultController.OfferControllerListener{
+public class ResultsFragment extends Fragment
+        implements ListFragment.OnOffersListInteractionListener,
+        DetailFragment.OnDetailInteractionListener,
+        ResultController.OfferControllerListener{
 
     private FragmentManager mManager;
     private ListFragment mList = new ListFragment();
@@ -29,8 +28,11 @@ public class ResultsActivity extends Activity
     private Boolean mIsPort = null;
     private List<Offer> mOffers;
     private ResultController mController;
-    private int mReturn;
-    private Intent mIntent;
+    private Context mContext;
+    private View mRoot;
+    private Search mSearch;
+
+    public ResultsFragment(){}
 
     public List<Offer> getOfferList(){
         return mOffers;
@@ -41,29 +43,41 @@ public class ResultsActivity extends Activity
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_results);
-
-        mIntent = getIntent();
-        Search search = (Search) mIntent.getSerializableExtra(SearchFragment.EXTRA_SEARCH);
-
-        View container = findViewById(R.id.containerResult);
-        mIsPort = container!=null;
-        mManager = getFragmentManager();
-
-        FragmentTransaction transaction = mManager.beginTransaction();
 
         if(mOffers == null) {
-            mController = new ResultController(this);
-            mController.fetchOffers(search);
+            mController = new ResultController(this.getActivity(), this);
+            mController.fetchOffers(mSearch);
         }else{
             mList.setOfferList(mOffers);
         }
+    }
 
+    public void getData(Search search){
+        mSearch = search;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        mRoot = inflater.inflate(R.layout.fragment_results, container, false);
+        return mRoot;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+
+        View container = this.getActivity().findViewById(R.id.container);
+        mIsPort = container!=null;
+        mManager = getChildFragmentManager();
+
+        FragmentTransaction transaction = mManager.beginTransaction();
         if(mIsPort) {
-            transaction.replace(R.id.containerResult, mList);
-            transaction.commit();
+            transaction.replace(R.id.containerResult, mList).commit();
         } else {
             transaction.replace(R.id.listContainer, mList);
             transaction.replace(R.id.detailContainer, mDetail);
@@ -75,7 +89,7 @@ public class ResultsActivity extends Activity
     public void onSelectedOffer(Offer offer) {
         if (mIsPort) {
             FragmentTransaction transaction = mManager.beginTransaction();
-            transaction.replace(R.id.container, mDetail);
+            transaction.replace(R.id.containerResult, mDetail);
             transaction.commit();
         }
 
@@ -88,7 +102,7 @@ public class ResultsActivity extends Activity
 
         if(mIsPort) {
             FragmentTransaction transaction = mManager.beginTransaction();
-            transaction.replace(R.id.container, mList);
+            transaction.replace(R.id.containerResult, mList);
             transaction.commit();
         }
     }
@@ -100,9 +114,10 @@ public class ResultsActivity extends Activity
         if (mOffers != null && mOffers.size() > 0) {
             mList.setOfferList(mOffers);
         } else {
-            Toast toast = Toast.makeText(this, getResources().getString(R.string.no_data_result), Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(mContext, getResources().getString(R.string.no_data_result), Toast.LENGTH_LONG);
             toast.show();
-            finish();
+
+            this.getActivity().onBackPressed();
         }
     }
 }

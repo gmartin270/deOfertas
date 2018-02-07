@@ -2,7 +2,6 @@ package io.gmartin.deofertas.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.gmartin.deofertas.R;
-import io.gmartin.deofertas.activities.ResultsActivity;
 import io.gmartin.deofertas.controllers.SearchController;
 import io.gmartin.deofertas.models.Search;
 import io.gmartin.deofertas.models.Store;
@@ -64,7 +62,7 @@ public class SearchFragment extends Fragment implements SearchController.SearchC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSearchController = new SearchController(this.getActivity());
+        mSearchController = new SearchController(this.getActivity(), this);
         mSearchController.fetchStores();
     }
 
@@ -131,13 +129,10 @@ public class SearchFragment extends Fragment implements SearchController.SearchC
             mSearch.setStores(storesSelected);
         }
 
-        //TODO: change call activity to send messages to fragment_results
         if (priceFrom != null && priceTo != null && priceFrom > priceTo) {
             Toast.makeText(mContext, getResources().getString(R.string.price_from_greater_to), Toast.LENGTH_LONG).show();
         } else {
-            Intent intent = new Intent(mContext, ResultsActivity.class);
-            intent.putExtra(EXTRA_SEARCH, mSearch);
-            startActivity(intent);
+            mListener.onSearchButtonClick(mSearch);
         }
     }
 

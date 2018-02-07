@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import io.gmartin.deofertas.R;
-import io.gmartin.deofertas.activities.ResultsActivity;
 import io.gmartin.deofertas.models.Offer;
 
 public class DetailFragment extends Fragment {
@@ -19,6 +18,7 @@ public class DetailFragment extends Fragment {
     private Offer mOffer = null;
     private OnDetailInteractionListener mListener;
     private Button mCloseBtn;
+    private Context mContext;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -44,7 +44,7 @@ public class DetailFragment extends Fragment {
 
         mCloseBtn = mRoot.findViewById(R.id.btnClose);
 
-        if (((ResultsActivity)getActivity()).getIsPort()) {
+        if (((ResultsFragment)getParentFragment()).getIsPort()) {
             mCloseBtn.setVisibility(View.VISIBLE);
         } else {
             mCloseBtn.setVisibility(View.GONE);
@@ -61,18 +61,20 @@ public class DetailFragment extends Fragment {
             }
         });
 
+        if (this.getParentFragment() instanceof OnDetailInteractionListener) {
+            mListener = (OnDetailInteractionListener) this.getParentFragment();
+        } else {
+            throw new RuntimeException(mContext.toString()
+                    + " must implement OnDetailInteractionListener");
+        }
+
         return mRoot;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnDetailInteractionListener) {
-            mListener = (OnDetailInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnDetailInteractionListener");
-        }
+        mContext = context;
     }
 
     public void setOffer(Offer offer) {

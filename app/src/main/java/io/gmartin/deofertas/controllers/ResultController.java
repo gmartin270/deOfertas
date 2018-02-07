@@ -1,5 +1,6 @@
 package io.gmartin.deofertas.controllers;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -22,12 +23,14 @@ public class ResultController {
     private List<Offer> mOfferList;
     private RestClient.Result mResultHandler = null;
     private OfferControllerListener mOfferListener;
+    private Fragment mFragment;
 
-    public ResultController(Context context){
+    public ResultController(Context context, Fragment fragment){
         mContext = context;
+        mFragment = fragment;
 
-        if (context instanceof ResultController.OfferControllerListener) {
-            mOfferListener = (ResultController.OfferControllerListener) context;
+        if (mFragment instanceof ResultController.OfferControllerListener) {
+            mOfferListener = (ResultController.OfferControllerListener) mFragment;
         }
 
         RestClient.setContext(context);

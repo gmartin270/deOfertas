@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.fragments.ResultsFragment;
 import io.gmartin.deofertas.fragments.SearchFragment;
 import io.gmartin.deofertas.models.Search;
 
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity
 
     private FragmentManager mManager;
     private SearchFragment mSearch = new SearchFragment();
+    private ResultsFragment mResults = new ResultsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSearchButtonClick(Search search) {
-        //TODO: implements comunication with result fragment
+        mResults.getData(search);
+
+        FragmentTransaction transaction = mManager.beginTransaction();
+        transaction.replace(R.id.container, mResults);
+        transaction.commit();
     }
 }

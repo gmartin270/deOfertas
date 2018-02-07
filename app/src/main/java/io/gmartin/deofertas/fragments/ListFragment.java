@@ -3,6 +3,8 @@ package io.gmartin.deofertas.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.ListViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,6 @@ import android.widget.ListView;
 import java.util.List;
 
 import io.gmartin.deofertas.R;
-import io.gmartin.deofertas.activities.ResultsActivity;
 import io.gmartin.deofertas.adapters.OfferAdapter;
 import io.gmartin.deofertas.models.Offer;
 
@@ -22,8 +23,9 @@ public class ListFragment extends Fragment {
     private View mRoot;
     private OnOffersListInteractionListener mListener;
     private Context mContext;
-    private ListView mList;
+    private ListViewCompat mList;
     private OfferAdapter mAdapter;
+    private Fragment mFragmentParent;
 
     public interface OnOffersListInteractionListener {
         void onSelectedOffer(Offer offer);
@@ -37,13 +39,6 @@ public class ListFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-
-        if (mContext instanceof OnOffersListInteractionListener) {
-            mListener = (OnOffersListInteractionListener) mContext;
-        } else {
-            throw new RuntimeException(mContext.toString()
-                    + " must implement OnOffersListInteractionListener");
-        }
     }
 
     @Override
@@ -51,7 +46,19 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         mRoot = inflater.inflate(R.layout.fragment_list, container, false);
-        mAdapter = new OfferAdapter(mContext);
+
+        if (mAdapter == null) {
+            mAdapter = new OfferAdapter(mContext);
+        }
+
+        mFragmentParent = getParentFragment();
+
+        if (this.getParentFragment() instanceof OnOffersListInteractionListener) {
+            mListener = (OnOffersListInteractionListener) this.getParentFragment();
+        } else {
+            throw new RuntimeException(mContext.toString()
+                    + " must implement OnOffersListInteractionListener");
+        }
 
         mList = mRoot.findViewById(R.id.listOffers);
         mList.setAdapter(mAdapter);
@@ -71,8 +78,15 @@ public class ListFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mAdapter.updateList(((ResultsFragment)getParentFragment()).getOfferList());
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        mAdapter.updateList(((ResultsFragment)getParentFragment()).getOfferList());
     }
 
     @Override
@@ -84,11 +98,13 @@ public class ListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mAdapter.updateList(((ResultsActivity)mContext).getOfferList());
+        mAdapter.updateList(((ResultsFragment)getParentFragment()).getOfferList());
     }
 
     public void setOfferList(List<Offer> offers) {
-        //mOffers = offers;
+        if (mAdapter == null) {
+            mAdapter = new OfferAdapter(mContext);
+        }
         mAdapter.updateList(offers);
     }
 }

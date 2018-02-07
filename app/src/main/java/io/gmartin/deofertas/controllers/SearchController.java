@@ -1,5 +1,6 @@
 package io.gmartin.deofertas.controllers;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -17,15 +18,17 @@ import io.gmartin.deofertas.models.Store;
 public class SearchController {
 
     private Context mContext;
+    private Fragment mFragment;
     private static String mURL = "http://192.168.0.159:8080/deofertas";
     private RestClient.Result mResultHandler = null;
     private SearchControllerListener mSearchListener;
 
-    public SearchController(Context context){
+    public SearchController(Context context, Fragment fragment){
         mContext = context;
+        mFragment = fragment;
 
-        if (context instanceof SearchController.SearchControllerListener) {
-            mSearchListener = (SearchController.SearchControllerListener) context;
+        if (mFragment instanceof SearchController.SearchControllerListener) {
+            mSearchListener = (SearchController.SearchControllerListener) mFragment;
         }
 
         RestClient.setContext(context);

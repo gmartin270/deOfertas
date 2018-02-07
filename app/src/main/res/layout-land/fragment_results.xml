@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="io.gmartin.deofertas.fragments.ResultsFragment"
+    android:id="@+id/containerResult">
+
+    <android.support.v7.widget.ContentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="match_parent"
+        android:layout_width="298dp"
+        android:id="@+id/listContainer" />
+
+    <android.support.v7.widget.ContentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="match_parent"
+        android:layout_width="304dp"
+        android:id="@+id/detailContainer" />
+
+</android.support.constraint.ConstraintLayout>
