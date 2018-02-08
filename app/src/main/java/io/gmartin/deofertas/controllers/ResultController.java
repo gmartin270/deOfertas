@@ -23,14 +23,12 @@ public class ResultController {
     private List<Offer> mOfferList;
     private RestClient.Result mResultHandler = null;
     private OfferControllerListener mOfferListener;
-    private Fragment mFragment;
 
-    public ResultController(Context context, Fragment fragment){
+    public ResultController(Context context){
         mContext = context;
-        mFragment = fragment;
 
-        if (mFragment instanceof ResultController.OfferControllerListener) {
-            mOfferListener = (ResultController.OfferControllerListener) mFragment;
+        if (mContext instanceof ResultController.OfferControllerListener) {
+            mOfferListener = (ResultController.OfferControllerListener) mContext;
         }
 
         RestClient.setContext(context);
