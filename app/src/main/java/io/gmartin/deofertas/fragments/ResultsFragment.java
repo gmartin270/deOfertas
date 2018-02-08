@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.activities.MainActivity;
 import io.gmartin.deofertas.controllers.ResultController;
 import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.Search;
@@ -73,9 +74,12 @@ public class ResultsFragment extends Fragment
 
         View container = this.getActivity().findViewById(R.id.container);
         mIsPort = container!=null;
+
+        //mIsPort = ((MainActivity)this.getActivity()).getIsPort();
         mManager = getChildFragmentManager();
 
         FragmentTransaction transaction = mManager.beginTransaction();
+
         if(mIsPort) {
             transaction.replace(R.id.containerResult, mList).commit();
         } else {

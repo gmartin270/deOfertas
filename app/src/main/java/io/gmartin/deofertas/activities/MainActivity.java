@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.fragments.ResultsFragment;
@@ -21,14 +22,29 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
                    SearchFragment.OnSearchInteractionListener {
 
+    public static final String SEARCH_STATE = "io.gmartin.deofertas.activities.search_state";
+    public static final String RESULT_STATE = "io.gmartin.deofertas.activities.result_state";
     private FragmentManager mManager;
     private SearchFragment mSearch = new SearchFragment();
     private ResultsFragment mResults = new ResultsFragment();
+    private String mState;
+    private Boolean mIsPort = null;
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("state", mState);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mState = savedInstanceState.getString("state");
+        }
+
         setContentView(R.layout.activity_main);
+        View container = findViewById(R.id.container);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -41,9 +57,18 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        mIsPort = container!=null;
+
         mManager = getFragmentManager();
         FragmentTransaction transaction = mManager.beginTransaction();
-        transaction.replace(R.id.container, mSearch);
+
+        if (mState == null || mState.equals(SEARCH_STATE)) {
+            mState = SEARCH_STATE;
+            transaction.replace(R.id.container, mSearch);
+        } else if(mState.equals(RESULT_STATE)) {
+            transaction.replace(R.id.container, mResults);
+        }
+
         transaction.commit();
     }
 
@@ -108,8 +133,13 @@ public class MainActivity extends AppCompatActivity
     public void onSearchButtonClick(Search search) {
         mResults.getData(search);
 
+        mState = RESULT_STATE;
         FragmentTransaction transaction = mManager.beginTransaction();
         transaction.replace(R.id.container, mResults);
         transaction.commit();
+    }
+
+    public Boolean getIsPort() {
+        return mIsPort;
     }
 }
