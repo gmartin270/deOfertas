@@ -1,7 +1,9 @@
 package io.gmartin.deofertas.activities;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity
     private ResultsFragment mResults = new ResultsFragment();
     private String mState;
     private Boolean mIsPort = null;
+    private int mContainer;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -44,7 +47,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         setContentView(R.layout.activity_main);
-        View container = findViewById(R.id.container);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -57,18 +59,26 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mIsPort = container!=null;
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mIsPort = true;
+            mContainer = R.id.container;
+        } else {
+            mIsPort = false;
+            mContainer = R.id.container_land;
+        }
 
+        Fragment fragment = null;
         mManager = getFragmentManager();
         FragmentTransaction transaction = mManager.beginTransaction();
 
         if (mState == null || mState.equals(SEARCH_STATE)) {
             mState = SEARCH_STATE;
-            transaction.replace(R.id.container, mSearch);
+            fragment = mSearch;
         } else if(mState.equals(RESULT_STATE)) {
-            transaction.replace(R.id.container, mResults);
+            fragment = mResults;
         }
 
+        transaction.replace(mContainer, fragment);
         transaction.commit();
     }
 
@@ -135,7 +145,7 @@ public class MainActivity extends AppCompatActivity
 
         mState = RESULT_STATE;
         FragmentTransaction transaction = mManager.beginTransaction();
-        transaction.replace(R.id.container, mResults);
+        transaction.replace(mContainer, mResults);
         transaction.commit();
     }
 
