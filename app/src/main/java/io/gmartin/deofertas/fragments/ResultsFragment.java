@@ -14,7 +14,6 @@ import android.widget.Toast;
 import java.util.List;
 
 import io.gmartin.deofertas.R;
-import io.gmartin.deofertas.activities.MainActivity;
 import io.gmartin.deofertas.controllers.ResultController;
 import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.Search;
@@ -49,7 +48,7 @@ public class ResultsFragment extends Fragment
         super.onCreate(savedInstanceState);
 
         if(mOffers == null) {
-            mController = new ResultController(this.getActivity(), this);
+            //mController = new ResultController(this.getActivity(), this);
             mController.fetchOffers(mSearch);
         }else{
             mList.setOfferList(mOffers);
@@ -64,7 +63,7 @@ public class ResultsFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mRoot = inflater.inflate(R.layout.fragment_results, container, false);
+        mRoot = inflater.inflate(R.layout.result_main, container, false);
         return mRoot;
     }
 

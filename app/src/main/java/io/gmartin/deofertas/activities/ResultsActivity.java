@@ -19,7 +19,8 @@ import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.Search;
 
 public class ResultsActivity extends NavigationActivity
-                            implements DetailFragment.OnDetailInteractionListener,
+                            implements ListFragment.OnOffersListInteractionListener,
+                                       DetailFragment.OnDetailInteractionListener,
                                        ResultController.OfferControllerListener{
 
     private FragmentManager mManager;
@@ -28,8 +29,6 @@ public class ResultsActivity extends NavigationActivity
     private Boolean mIsPort = null;
     private List<Offer> mOffers;
     private ResultController mController;
-    private int mReturn;
-    private Intent mIntent;
 
     public List<Offer> getOfferList(){
         return mOffers;
@@ -38,12 +37,12 @@ public class ResultsActivity extends NavigationActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_results);
+        setContentView(R.layout.result_main);
 
         initUI();
 
-        mIntent = getIntent();
-        Search search = (Search) mIntent.getSerializableExtra(SearchFragment.EXTRA_SEARCH);
+        Intent intent = getIntent();
+        Search search = (Search) intent.getSerializableExtra(SearchFragment.EXTRA_SEARCH);
 
         mManager = getFragmentManager();
         FragmentTransaction transaction = mManager.beginTransaction();
@@ -65,6 +64,7 @@ public class ResultsActivity extends NavigationActivity
         }
     }
 
+    @Override
     public void onSelectedOffer(Offer offer) {
         if (mIsPort) {
             FragmentTransaction transaction = mManager.beginTransaction();

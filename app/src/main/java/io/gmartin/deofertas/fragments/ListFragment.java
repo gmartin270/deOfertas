@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import java.util.List;
 
@@ -25,7 +24,6 @@ public class ListFragment extends Fragment {
     private Context mContext;
     private ListViewCompat mList;
     private OfferAdapter mAdapter;
-    private Fragment mFragmentParent;
 
     public interface OnOffersListInteractionListener {
         void onSelectedOffer(Offer offer);
@@ -51,10 +49,8 @@ public class ListFragment extends Fragment {
             mAdapter = new OfferAdapter(mContext);
         }
 
-        mFragmentParent = getParentFragment();
-
-        if (this.getParentFragment() instanceof OnOffersListInteractionListener) {
-            mListener = (OnOffersListInteractionListener) this.getParentFragment();
+        if (mContext instanceof OnOffersListInteractionListener) {
+            mListener = (OnOffersListInteractionListener) mContext;
         } else {
             throw new RuntimeException(mContext.toString()
                     + " must implement OnOffersListInteractionListener");

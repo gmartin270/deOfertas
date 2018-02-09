@@ -3,6 +3,7 @@ package io.gmartin.deofertas.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.fragments.SearchFragment;
@@ -12,6 +13,7 @@ public class MainActivity extends NavigationActivity
         implements SearchFragment.OnSearchInteractionListener {
 
     private static final String SEARCH_STATE = "io.gmartin.deofertas.activities.search_state";
+    private static final String SEARCH_INTENT_EXTRA = "io.gmartin.deofertas.activities.search_intent_extra";
     private FragmentManager mManager;
     private SearchFragment mSearch = new SearchFragment();
     private int mContainer;
@@ -49,12 +51,9 @@ public class MainActivity extends NavigationActivity
 
     @Override
     public void onSearchButtonClick(Search search) {
-//        mResults.getData(search);
-//
-//        mState = RESULT_STATE;
-//        FragmentTransaction transaction = mManager.beginTransaction();
-//        transaction.replace(mContainer, mResults);
-//        transaction.commit();
+        Intent intent = new Intent(this, ResultsActivity.class);
+        intent.putExtra(SEARCH_INTENT_EXTRA, search);
+        startActivity(intent);
     }
 
     public Boolean isPort() {
