@@ -12,8 +12,7 @@ import io.gmartin.deofertas.models.Search;
 public class MainActivity extends NavigationActivity
         implements SearchFragment.OnSearchInteractionListener {
 
-    private static final String SEARCH_STATE = "io.gmartin.deofertas.activities.search_state";
-    private static final String SEARCH_INTENT_EXTRA = "io.gmartin.deofertas.activities.search_intent_extra";
+    public static final String SEARCH_INTENT_EXTRA = "io.gmartin.deofertas.activities.search_intent_extra";
     private FragmentManager mManager;
     private SearchFragment mSearch = new SearchFragment();
     private int mContainer;
@@ -28,12 +27,18 @@ public class MainActivity extends NavigationActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAction = SEARCH_ACTION;
         initUI();
 
-        if (mIsPort) {
+        if (getIsPort()) {
             mContainer = R.id.container;
         } else {
             mContainer = R.id.container_land;
+        }
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            mState = intent.getStringExtra(NAVIGATION_INTENT_EXTRA);
         }
 
         Fragment fragment = null;
@@ -54,9 +59,5 @@ public class MainActivity extends NavigationActivity
         Intent intent = new Intent(this, ResultsActivity.class);
         intent.putExtra(SEARCH_INTENT_EXTRA, search);
         startActivity(intent);
-    }
-
-    public Boolean isPort() {
-        return mIsPort;
     }
 }

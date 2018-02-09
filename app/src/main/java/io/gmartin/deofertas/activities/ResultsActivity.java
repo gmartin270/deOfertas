@@ -1,11 +1,9 @@
 package io.gmartin.deofertas.activities;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import java.util.List;
@@ -26,7 +24,6 @@ public class ResultsActivity extends NavigationActivity
     private FragmentManager mManager;
     private ListFragment mList = new ListFragment();
     private DetailFragment mDetail = new DetailFragment();
-    private Boolean mIsPort = null;
     private List<Offer> mOffers;
     private ResultController mController;
 
@@ -38,14 +35,11 @@ public class ResultsActivity extends NavigationActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.result_main);
-
+        mAction = RESULTS_ACTION;
         initUI();
 
         Intent intent = getIntent();
-        Search search = (Search) intent.getSerializableExtra(SearchFragment.EXTRA_SEARCH);
-
-        mManager = getFragmentManager();
-        FragmentTransaction transaction = mManager.beginTransaction();
+        Search search = (Search) intent.getSerializableExtra(MainActivity.SEARCH_INTENT_EXTRA);
 
         if(mOffers == null) {
             mController = new ResultController(this);
@@ -54,8 +48,11 @@ public class ResultsActivity extends NavigationActivity
             mList.setOfferList(mOffers);
         }
 
-        if(mIsPort) {
-            transaction.replace(R.id.containerResult, mList);
+        mManager = getFragmentManager();
+        FragmentTransaction transaction = mManager.beginTransaction();
+
+        if(getIsPort()) {
+            transaction.replace(R.id.container_result, mList);
             transaction.commit();
         } else {
             transaction.replace(R.id.listContainer, mList);
@@ -66,9 +63,9 @@ public class ResultsActivity extends NavigationActivity
 
     @Override
     public void onSelectedOffer(Offer offer) {
-        if (mIsPort) {
+        if (getIsPort()) {
             FragmentTransaction transaction = mManager.beginTransaction();
-            transaction.replace(R.id.containerResult, mDetail);
+            transaction.replace(R.id.container_result, mDetail);
             transaction.commit();
         }
 
@@ -79,9 +76,9 @@ public class ResultsActivity extends NavigationActivity
     public void onCloseButtonClick() {
         mList.setOfferList(mOffers);
 
-        if(mIsPort) {
+        if(getIsPort()) {
             FragmentTransaction transaction = mManager.beginTransaction();
-            transaction.replace(R.id.container, mList);
+            transaction.replace(R.id.container_result, mList);
             transaction.commit();
         }
     }

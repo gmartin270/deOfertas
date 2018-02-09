@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import java.util.List;
 
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.activities.ResultsActivity;
 import io.gmartin.deofertas.adapters.OfferAdapter;
 import io.gmartin.deofertas.models.Offer;
 
@@ -76,13 +77,13 @@ public class ListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAdapter.updateList(((ResultsFragment)getParentFragment()).getOfferList());
+        mAdapter.updateList(((ResultsActivity)mContext).getOfferList());
     }
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        mAdapter.updateList(((ResultsFragment)getParentFragment()).getOfferList());
+        mAdapter.updateList(((ResultsActivity)mContext).getOfferList());
     }
 
     @Override
@@ -94,7 +95,7 @@ public class ListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mAdapter.updateList(((ResultsFragment)getParentFragment()).getOfferList());
+        mAdapter.updateList(((ResultsActivity)mContext  ).getOfferList());
     }
 
     public void setOfferList(List<Offer> offers) {

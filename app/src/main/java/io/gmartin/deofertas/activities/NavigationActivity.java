@@ -1,5 +1,6 @@
 package io.gmartin.deofertas.activities;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -16,8 +17,13 @@ import io.gmartin.deofertas.R;
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    protected static final String SEARCH_ACTION = "io.gmartin.deofertas.activities.search_action";
+    protected static final String RESULTS_ACTION = "io.gmartin.deofertas.activities.result_action";
+    protected static final String SEARCH_STATE = "io.gmartin.deofertas.activities.search_state";
+    protected static final String NAVIGATION_INTENT_EXTRA = "io.gmartin.deofertas.activities.navigation_intent_extra";
     protected String mState;
-    protected Boolean mIsPort = null;
+    protected String mAction;
+    private Boolean mIsPort = null;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -30,12 +36,6 @@ public class NavigationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             mState = savedInstanceState.getString("state");
-        }
-
-        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            mIsPort = true;
-        } else {
-            mIsPort = false;
         }
     }
 
@@ -91,17 +91,13 @@ public class NavigationActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_search) {
+            handleSearchNav();
+        } else if (id == R.id.nav_saved_search) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_favorites) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_settings) {
 
         }
 
@@ -111,6 +107,24 @@ public class NavigationActivity extends AppCompatActivity
     }
 
     public Boolean getIsPort() {
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mIsPort = true;
+        } else {
+            mIsPort = false;
+        }
+
         return mIsPort;
+    }
+
+    private void handleSearchNav() {
+        if (mAction.equals(SEARCH_ACTION)) {
+            if(mState.equals(SEARCH_STATE)) {
+
+            }
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(NAVIGATION_INTENT_EXTRA, SEARCH_STATE);
+            startActivity(intent);
+        }
     }
 }

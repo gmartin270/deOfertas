@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.activities.ResultsActivity;
 import io.gmartin.deofertas.models.Offer;
 
 public class DetailFragment extends Fragment {
@@ -44,7 +45,7 @@ public class DetailFragment extends Fragment {
 
         mCloseBtn = mRoot.findViewById(R.id.btnClose);
 
-        if (((ResultsFragment)getParentFragment()).getIsPort()) {
+        if (((ResultsActivity)mContext).getIsPort()) {
             mCloseBtn.setVisibility(View.VISIBLE);
         } else {
             mCloseBtn.setVisibility(View.GONE);
@@ -61,8 +62,8 @@ public class DetailFragment extends Fragment {
             }
         });
 
-        if (this.getParentFragment() instanceof OnDetailInteractionListener) {
-            mListener = (OnDetailInteractionListener) this.getParentFragment();
+        if (mContext instanceof OnDetailInteractionListener) {
+            mListener = (OnDetailInteractionListener) mContext;
         } else {
             throw new RuntimeException(mContext.toString()
                     + " must implement OnDetailInteractionListener");
