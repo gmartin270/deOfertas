@@ -1,5 +1,7 @@
 package io.gmartin.deofertas.activities;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,21 +15,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.fragments.SearchFragment;
+import io.gmartin.deofertas.fragments.SettingsFragment;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    protected static final String MAIN_ACTIVITY = "io.gmartin.deofertas.activities.main_activity";
+    protected static final String RESULTS_ACTIVITY = "io.gmartin.deofertas.activities.results_activity";
     protected static final String SEARCH_ACTION = "io.gmartin.deofertas.activities.search_action";
     protected static final String RESULTS_ACTION = "io.gmartin.deofertas.activities.result_action";
-    protected static final String SEARCH_STATE = "io.gmartin.deofertas.activities.search_state";
+    protected static final String SETTINGS_ACTION = "io.gmartin.deofertas.activities.settings_action";
     protected static final String NAVIGATION_INTENT_EXTRA = "io.gmartin.deofertas.activities.navigation_intent_extra";
-    protected String mState;
     protected String mAction;
+    protected String mActivity;
     private Boolean mIsPort = null;
+    private FragmentManager mFragmentManager;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("state", mState);
+        outState.putString("action", mAction);
         super.onSaveInstanceState(outState);
     }
 
@@ -35,8 +42,10 @@ public class NavigationActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            mState = savedInstanceState.getString("state");
+            mAction = savedInstanceState.getString("action");
         }
+
+        mFragmentManager = getFragmentManager();
     }
 
     protected void initUI(){
@@ -79,6 +88,7 @@ public class NavigationActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            handleSettingNav();
             return true;
         }
 
@@ -98,7 +108,7 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_favorites) {
 
         } else if (id == R.id.nav_settings) {
-
+            handleSettingNav();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -117,13 +127,33 @@ public class NavigationActivity extends AppCompatActivity
     }
 
     private void handleSearchNav() {
-        if (mAction.equals(SEARCH_ACTION)) {
-            if(mState.equals(SEARCH_STATE)) {
-
+        if (mActivity.equals(MAIN_ACTIVITY)) {
+            if(!mAction.equals(SEARCH_ACTION)) {
+                SearchFragment search = new SearchFragment();
+                FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                transaction.replace(R.id.container, search);
+                transaction.commit();
             }
         } else {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(NAVIGATION_INTENT_EXTRA, SEARCH_STATE);
+            intent.putExtra(NAVIGATION_INTENT_EXTRA, SEARCH_ACTION);
+            startActivity(intent);
+        }
+    }
+
+    private void handleSettingNav() {
+        if (mActivity.equals(MAIN_ACTIVITY)) {
+            if(!mAction.equals(SETTINGS_ACTION)) {
+                SettingsFragment settings = new SettingsFragment();
+                FragmentTransaction transaction = mFragmentManager.beginTransaction();
+
+                transaction.replace(R.id.container, settings);
+                transaction.addToBackStack("settings");
+                transaction.commit();
+            }
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(NAVIGATION_INTENT_EXTRA, SETTINGS_ACTION);
             startActivity(intent);
         }
     }

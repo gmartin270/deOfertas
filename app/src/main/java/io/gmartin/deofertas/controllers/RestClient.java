@@ -1,9 +1,11 @@
 package io.gmartin.deofertas.controllers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
@@ -20,10 +22,6 @@ import io.gmartin.deofertas.R;
 public class RestClient {
 
     private static Context mContext;
-
-    public static Context getContext() {
-        return mContext;
-    }
 
     public static void setContext(Context mContext) {
         RestClient.mContext = mContext;

@@ -32,4 +32,7 @@
     <string name="menu_nav_saved_search">Saved Search</string>
     <string name="menu_nav_favorites">Favorites</string>
     <string name="menu_nav_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

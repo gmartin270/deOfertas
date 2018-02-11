@@ -16,12 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.controllers.BaseController;
 import io.gmartin.deofertas.controllers.SearchController;
 import io.gmartin.deofertas.models.Search;
 import io.gmartin.deofertas.models.Store;
 import io.gmartin.deofertas.widget.MultiSelectionSpinner;
 
-public class SearchFragment extends Fragment implements SearchController.SearchControllerListener{
+public class SearchFragment extends Fragment implements BaseController.BaseControllerListener{
 
     public final static String EXTRA_SEARCH = "io.gmartin.deofertas.activities.SEARCH";
     private SearchView mSearchBox;

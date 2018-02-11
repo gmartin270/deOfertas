@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class Search implements Serializable{
+public class Search implements Serializable {
     private Long id;
 
     @SerializedName("text")

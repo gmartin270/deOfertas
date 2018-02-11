@@ -15,34 +15,17 @@ import java.util.List;
 import io.gmartin.deofertas.models.Store;
 
 
-public class SearchController {
+public class SearchController extends BaseController {
 
-    private Context mContext;
     private Fragment mFragment;
-    private static String mURL = "http://192.168.0.159:8080/deofertas";
-    private RestClient.Result mResultHandler = null;
-    private SearchControllerListener mSearchListener;
 
     public SearchController(Context context, Fragment fragment){
-        mContext = context;
+        super(context);
         mFragment = fragment;
 
-        if (mFragment instanceof SearchController.SearchControllerListener) {
-            mSearchListener = (SearchController.SearchControllerListener) mFragment;
+        if (mFragment instanceof BaseControllerListener) {
+            mListener = (BaseControllerListener) mFragment;
         }
-
-        RestClient.setContext(context);
-        mResultHandler = new RestClient.Result(){
-            @Override
-            public void onError(String message){
-                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResult(Object result) {
-
-            }
-        };
     }
 
     public void fetchStores(){
@@ -70,7 +53,7 @@ public class SearchController {
                         }
                     }
 
-                    mSearchListener.onDataReceived(storeList);
+                    mListener.onDataReceived(storeList);
                 }
 
                 @Override
@@ -99,9 +82,5 @@ public class SearchController {
         String query = "";
 
         return query;
-    }
-
-    public interface SearchControllerListener {
-        void onDataReceived(Object data);
     }
 }

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.fragments.SearchFragment;
+import io.gmartin.deofertas.fragments.SettingsFragment;
 import io.gmartin.deofertas.models.Search;
 
 public class MainActivity extends NavigationActivity
@@ -15,11 +16,12 @@ public class MainActivity extends NavigationActivity
     public static final String SEARCH_INTENT_EXTRA = "io.gmartin.deofertas.activities.search_intent_extra";
     private FragmentManager mManager;
     private SearchFragment mSearch = new SearchFragment();
+    private SettingsFragment mSettings = new SettingsFragment();
     private int mContainer;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("state", mState);
+        outState.putString("action", mAction);
         super.onSaveInstanceState(outState);
     }
 
@@ -27,7 +29,7 @@ public class MainActivity extends NavigationActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mAction = SEARCH_ACTION;
+        mActivity = MAIN_ACTIVITY;
         initUI();
 
         if (getIsPort()) {
@@ -38,16 +40,18 @@ public class MainActivity extends NavigationActivity
 
         Intent intent = getIntent();
         if (intent != null) {
-            mState = intent.getStringExtra(NAVIGATION_INTENT_EXTRA);
+            mAction = intent.getStringExtra(NAVIGATION_INTENT_EXTRA);
         }
 
         Fragment fragment = null;
         mManager = getFragmentManager();
         FragmentTransaction transaction = mManager.beginTransaction();
 
-        if (mState == null || mState.equals(SEARCH_STATE)) {
-            mState = SEARCH_STATE;
+        if (mAction == null || mAction.equals(SEARCH_ACTION)) {
+            mAction = SEARCH_ACTION;
             fragment = mSearch;
+        } else if (mAction.equals(SETTINGS_ACTION)) {
+            fragment = mSettings;
         }
 
         transaction.replace(mContainer, fragment);

@@ -9,6 +9,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.controllers.BaseController;
 import io.gmartin.deofertas.controllers.ResultController;
 import io.gmartin.deofertas.fragments.DetailFragment;
 import io.gmartin.deofertas.fragments.ListFragment;
@@ -19,7 +20,7 @@ import io.gmartin.deofertas.models.Search;
 public class ResultsActivity extends NavigationActivity
                             implements ListFragment.OnOffersListInteractionListener,
                                        DetailFragment.OnDetailInteractionListener,
-                                       ResultController.OfferControllerListener{
+                                       BaseController.BaseControllerListener{
 
     private FragmentManager mManager;
     private ListFragment mList = new ListFragment();
@@ -35,7 +36,7 @@ public class ResultsActivity extends NavigationActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.result_main);
-        mAction = RESULTS_ACTION;
+        mActivity = RESULTS_ACTIVITY;
         initUI();
 
         Intent intent = getIntent();

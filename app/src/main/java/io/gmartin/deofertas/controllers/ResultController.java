@@ -16,33 +16,16 @@ import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.Search;
 import io.gmartin.deofertas.models.Store;
 
-public class ResultController {
+public class ResultController extends BaseController {
 
-    private Context mContext;
-    private static String mURL = "http://192.168.0.159:8080/deofertas";
     private List<Offer> mOfferList;
-    private RestClient.Result mResultHandler = null;
-    private OfferControllerListener mOfferListener;
 
     public ResultController(Context context){
-        mContext = context;
+        super(context);
 
-        if (mContext instanceof ResultController.OfferControllerListener) {
-            mOfferListener = (ResultController.OfferControllerListener) mContext;
+        if (mContext instanceof BaseControllerListener) {
+            mListener = (BaseControllerListener) mContext;
         }
-
-        RestClient.setContext(context);
-        mResultHandler = new RestClient.Result(){
-            @Override
-            public void onError(String message){
-                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResult(Object result) {
-
-            }
-        };
     }
 
     public void fetchOffers(Search search){
@@ -70,7 +53,7 @@ public class ResultController {
                         }
                     }
 
-                    mOfferListener.onDataReceived(mOfferList);
+                    mListener.onDataReceived(mOfferList);
                 }
 
                 @Override
@@ -122,9 +105,5 @@ public class ResultController {
         }
 
         return query;
-    }
-
-    public interface OfferControllerListener {
-        void onDataReceived(Object data);
     }
 }
