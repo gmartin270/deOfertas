@@ -25,8 +25,7 @@ public class BaseController implements SharedPreferences.OnSharedPreferenceChang
         mResultHandler = new RestClient.Result(){
             @Override
             public void onError(String message){
-                //TODO: manage error text
-                //Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                mListener.onErrorEvent(message);
             }
 
             @Override
@@ -49,5 +48,7 @@ public class BaseController implements SharedPreferences.OnSharedPreferenceChang
 
     public interface BaseControllerListener {
         void onDataReceived(Object data);
+
+        void onErrorEvent(String message);
     }
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import io.gmartin.deofertas.R;
@@ -15,10 +16,11 @@ import io.gmartin.deofertas.models.Offer;
 
 public class DetailFragment extends Fragment {
 
-    private static View mRoot;
+    private View mRoot;
     private Offer mOffer = null;
     private OnDetailInteractionListener mListener;
     private Button mCloseBtn;
+    private ImageView mFavoriteButton;
     private Context mContext;
 
     public DetailFragment() {
@@ -62,6 +64,20 @@ public class DetailFragment extends Fragment {
             }
         });
 
+        mFavoriteButton = mRoot.findViewById(R.id.favorite_button);
+
+        mFavoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    mOffer.setFavorite(true);
+                    mListener.onFavoriteButtonClick(mOffer);
+                }catch (Exception e){
+
+                }
+            }
+        });
+
         if (mContext instanceof OnDetailInteractionListener) {
             mListener = (OnDetailInteractionListener) mContext;
         } else {
@@ -98,5 +114,7 @@ public class DetailFragment extends Fragment {
 
     public interface OnDetailInteractionListener {
         void onCloseButtonClick();
+
+        void onFavoriteButtonClick(Offer offer);
     }
 }

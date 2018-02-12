@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +26,6 @@ public class OfferAdapter extends BaseAdapter {
 
     private List<Offer> mOfferList;
     private Context mContext;
-    /*private RestClient.Result mResultHandler = null;
-    private static String mURL = "http://192.168.2.103:8080/deofertas/offer";*/
-
-    public OfferAdapter(){
-        this(null);
-    }
 
     public OfferAdapter(Context context){
         mContext = context;
@@ -43,7 +39,7 @@ public class OfferAdapter extends BaseAdapter {
     public int getCount() {
         int count = 0;
 
-        if (mOfferList != null && mOfferList != null) {
+        if (mOfferList != null) {
             count = mOfferList.size();
         }
 
@@ -76,6 +72,7 @@ public class OfferAdapter extends BaseAdapter {
         TextView store = view.findViewById(R.id.txtStore);
         TextView price = view.findViewById(R.id.txtPrice);
         TextView desc = view.findViewById(R.id.txtDesc);
+        ImageView favoriteImage = view.findViewById(R.id.favorite_image);
 
         store.setText(offer.getStoreName());
         desc.setText(offer.getDesc());

@@ -20,12 +20,6 @@ public class MainActivity extends NavigationActivity
     private int mContainer;
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("action", mAction);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

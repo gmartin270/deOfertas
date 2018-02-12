@@ -27,6 +27,7 @@ public class NavigationActivity extends AppCompatActivity
     protected static final String RESULTS_ACTION = "io.gmartin.deofertas.activities.result_action";
     protected static final String SETTINGS_ACTION = "io.gmartin.deofertas.activities.settings_action";
     protected static final String NAVIGATION_INTENT_EXTRA = "io.gmartin.deofertas.activities.navigation_intent_extra";
+    protected static final String ACTION = "action";
     protected String mAction;
     protected String mActivity;
     private Boolean mIsPort = null;
@@ -34,7 +35,7 @@ public class NavigationActivity extends AppCompatActivity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("action", mAction);
+        outState.putString(ACTION, mAction);
         super.onSaveInstanceState(outState);
     }
 
@@ -42,7 +43,7 @@ public class NavigationActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            mAction = savedInstanceState.getString("action");
+            mAction = savedInstanceState.getString(ACTION);
         }
 
         mFragmentManager = getFragmentManager();
@@ -117,18 +118,14 @@ public class NavigationActivity extends AppCompatActivity
     }
 
     public Boolean getIsPort() {
-        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            mIsPort = true;
-        } else {
-            mIsPort = false;
-        }
-
+        mIsPort = this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
         return mIsPort;
     }
 
     private void handleSearchNav() {
         if (mActivity.equals(MAIN_ACTIVITY)) {
             if(!mAction.equals(SEARCH_ACTION)) {
+                mAction = SEARCH_ACTION;
                 SearchFragment search = new SearchFragment();
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
                 transaction.replace(R.id.container, search);
@@ -144,6 +141,7 @@ public class NavigationActivity extends AppCompatActivity
     private void handleSettingNav() {
         if (mActivity.equals(MAIN_ACTIVITY)) {
             if(!mAction.equals(SETTINGS_ACTION)) {
+                mAction = SETTINGS_ACTION;
                 SettingsFragment settings = new SettingsFragment();
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
 

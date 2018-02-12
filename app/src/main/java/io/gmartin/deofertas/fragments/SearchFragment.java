@@ -64,7 +64,7 @@ public class SearchFragment extends Fragment implements BaseController.BaseContr
         super.onCreate(savedInstanceState);
 
         mSearchController = new SearchController(this.getActivity(), this);
-        mSearchController.fetchStores();
+        //mSearchController.fetchStores();
     }
 
     @Override
@@ -97,6 +97,13 @@ public class SearchFragment extends Fragment implements BaseController.BaseContr
         });
 
         return mRoot;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mSearchController.fetchStores();
     }
 
     private void searchOffers() {
@@ -157,5 +164,10 @@ public class SearchFragment extends Fragment implements BaseController.BaseContr
             mStoreList = (List<Store>) data;
             mStoreSpinner.setItems(mSearchController.storeToString(mStoreList));
         }
+    }
+
+    @Override
+    public void onErrorEvent(String message) {
+        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
     }
 }

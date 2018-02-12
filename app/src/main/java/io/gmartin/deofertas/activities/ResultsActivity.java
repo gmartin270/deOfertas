@@ -85,6 +85,17 @@ public class ResultsActivity extends NavigationActivity
     }
 
     @Override
+    public void onFavoriteButtonClick(Offer offer) {
+        if (offer.isFavorite()) {
+            mController.saveFavorite(offer);
+        } else {
+            mController.removeFavorite(offer.getId());
+        }
+
+        Toast.makeText(this, "FAVORITE", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void onDataReceived(Object object) {
         mOffers = (List<Offer>)object;
 
@@ -95,5 +106,10 @@ public class ResultsActivity extends NavigationActivity
             toast.show();
             finish();
         }
+    }
+
+    @Override
+    public void onErrorEvent(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }

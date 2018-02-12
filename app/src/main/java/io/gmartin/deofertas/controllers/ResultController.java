@@ -1,8 +1,6 @@
 package io.gmartin.deofertas.controllers;
 
-import android.app.Fragment;
 import android.content.Context;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -43,11 +41,16 @@ public class ResultController extends BaseController {
                     JSONArray offersJSON = (JSONArray) result;
                     JSONObject offerJSON;
                     Gson gson = new Gson();
+                    Offer offer;
 
                     for(int i=0; i < offersJSON.length(); i++) {
                         try {
                             offerJSON = offersJSON.getJSONObject(i);
-                            mOfferList.add(gson.fromJson(offerJSON.toString(), Offer.class));
+                            offer = gson.fromJson(offerJSON.toString(), Offer.class);
+
+                            //TODO: set favorite
+
+                            mOfferList.add(offer);
                         } catch (Exception e) {
 
                         }
@@ -58,7 +61,7 @@ public class ResultController extends BaseController {
 
                 @Override
                 public void onError(String message) {
-                    Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                    mListener.onErrorEvent(message);
                 }
             });
         }catch (Exception e){
@@ -105,5 +108,13 @@ public class ResultController extends BaseController {
         }
 
         return query;
+    }
+
+    public void saveFavorite(Offer offer) {
+
+    }
+
+    public void removeFavorite(long id) {
+
     }
 }

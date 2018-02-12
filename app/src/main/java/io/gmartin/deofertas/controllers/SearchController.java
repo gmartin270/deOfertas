@@ -58,7 +58,7 @@ public class SearchController extends BaseController {
 
                 @Override
                 public void onError(String message) {
-                    Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                    mListener.onErrorEvent(message);
                 }
             });
         }catch (Exception e){
