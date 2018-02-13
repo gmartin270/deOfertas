@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ public class DetailFragment extends Fragment {
     private Offer mOffer = null;
     private OnDetailInteractionListener mListener;
     private Button mCloseBtn;
-    private ImageView mFavoriteButton;
+    private ImageButton mFavoriteButton;
     private Context mContext;
 
     public DetailFragment() {
@@ -70,7 +71,7 @@ public class DetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 try {
-                    mOffer.setFavorite(true);
+                    mOffer.setFavorite(!mOffer.isFavorite());
                     mListener.onFavoriteButtonClick(mOffer);
                 }catch (Exception e){
 

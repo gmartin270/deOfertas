@@ -26,6 +26,8 @@ public class MainActivity extends NavigationActivity
         mActivity = MAIN_ACTIVITY;
         initUI();
 
+        String title = "";
+
         if (getIsPort()) {
             mContainer = R.id.container;
         } else {
@@ -46,6 +48,7 @@ public class MainActivity extends NavigationActivity
             fragment = mSearch;
         } else if (mAction.equals(SETTINGS_ACTION)) {
             fragment = mSettings;
+            getSupportActionBar().setTitle(R.string.menu_nav_settings);
         }
 
         transaction.replace(mContainer, fragment);
@@ -56,6 +59,7 @@ public class MainActivity extends NavigationActivity
     public void onSearchButtonClick(Search search) {
         Intent intent = new Intent(this, ResultsActivity.class);
         intent.putExtra(SEARCH_INTENT_EXTRA, search);
+        intent.putExtra(NAVIGATION_INTENT_EXTRA, RESULTS_ACTION);
         startActivity(intent);
     }
 }

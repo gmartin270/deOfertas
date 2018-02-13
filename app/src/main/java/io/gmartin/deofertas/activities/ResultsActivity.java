@@ -11,6 +11,7 @@ import java.util.List;
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.controllers.BaseController;
 import io.gmartin.deofertas.controllers.ResultController;
+import io.gmartin.deofertas.dao.OfferDBHelper;
 import io.gmartin.deofertas.fragments.DetailFragment;
 import io.gmartin.deofertas.fragments.ListFragment;
 import io.gmartin.deofertas.fragments.SearchFragment;
@@ -27,6 +28,7 @@ public class ResultsActivity extends NavigationActivity
     private DetailFragment mDetail = new DetailFragment();
     private List<Offer> mOffers;
     private ResultController mController;
+    private Search mSearch;
 
     public List<Offer> getOfferList(){
         return mOffers;
@@ -40,26 +42,34 @@ public class ResultsActivity extends NavigationActivity
         initUI();
 
         Intent intent = getIntent();
-        Search search = (Search) intent.getSerializableExtra(MainActivity.SEARCH_INTENT_EXTRA);
-
-        if(mOffers == null) {
-            mController = new ResultController(this);
-            mController.fetchOffers(search);
-        }else{
-            mList.setOfferList(mOffers);
-        }
+        mSearch = (Search) intent.getSerializableExtra(MainActivity.SEARCH_INTENT_EXTRA);
+        mAction = intent.getStringExtra(NAVIGATION_INTENT_EXTRA);
 
         mManager = getFragmentManager();
         FragmentTransaction transaction = mManager.beginTransaction();
 
+        if(mOffers == null) {
+            mController = new ResultController(this);
+
+            if (mAction.equals(RESULTS_ACTION)) {
+                mController.fetchOffers(mSearch);
+                getSupportActionBar().setTitle(R.string.menu_nav_results);
+            } else if (mAction.equals(FAVORITES_ACTION)) {
+                mOffers = mController.getFavorites();
+                getSupportActionBar().setTitle(R.string.menu_nav_favorites);
+            }
+        }else{
+            mList.setOfferList(mOffers);
+        }
+
         if(getIsPort()) {
             transaction.replace(R.id.container_result, mList);
-            transaction.commit();
         } else {
             transaction.replace(R.id.listContainer, mList);
             transaction.replace(R.id.detailContainer, mDetail);
-            transaction.commit();
         }
+
+        transaction.commit();
     }
 
     @Override
@@ -90,9 +100,12 @@ public class ResultsActivity extends NavigationActivity
             mController.saveFavorite(offer);
         } else {
             mController.removeFavorite(offer.getId());
-        }
 
-        Toast.makeText(this, "FAVORITE", Toast.LENGTH_LONG).show();
+            if (mAction.equals(FAVORITES_ACTION)) {
+                mOffers.remove(offer);
+                mList.setOfferList(mOffers);
+            }
+        }
     }
 
     @Override

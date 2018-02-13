@@ -2,16 +2,15 @@ package io.gmartin.deofertas.dao;
 
 import android.provider.BaseColumns;
 
-public class OfferContract {
+public class DeOfertasContract {
 
     public static final String DBNAME = "deOfertasDB";
     public static final Integer VERSION = 1;
 
-    public OfferContract(){};
+    public DeOfertasContract(){};
 
     public static abstract class OfferTable implements BaseColumns{
         public static final String TABLE_NAME = "offer";
-        public static final String ID = "id";
         public static final String HASH_ID = "hash_id";
         public static final String DESC = "desc";
         public static final String STORE_ID = "store_id";
@@ -21,7 +20,6 @@ public class OfferContract {
 
         public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + " ( " +
                 _ID + " INTEGER PRIMARY KEY, " +
-                ID + " INTEGER, " +
                 HASH_ID + " TEXT, " +
                 DESC + " TEXT, " +
                 STORE_ID + " INTEGER, " +

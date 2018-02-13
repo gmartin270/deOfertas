@@ -25,7 +25,7 @@ public class APIClientService extends Service {
     public class APIBinder extends Binder{
         private Context mContext;
 
-        RestClient.Result resultHandler = new RestClient.Result() {
+        /*RestClient.Result resultHandler = new RestClient.Result() {
             @Override
             public void onResult(Object result) {
                 searchOffers();
@@ -40,11 +40,11 @@ public class APIClientService extends Service {
         public void setContext(Context context) {
             mContext = context;
             RestClient.setContext(mContext);
-        }
+        }*/
 
-        public List<Offer> searchOffers(){
+        /*public List<Offer> searchOffers(){
             //TODO: remove hardcode and implement a real REST operation
-            /*try{
+            try{
                 if(mContext != null) {
                     RestClient.get(mURL, new RestClient.Result() {
                         @Override
@@ -62,31 +62,11 @@ public class APIClientService extends Service {
                 }
             }catch(IOException e){
                 Toast.makeText(APIClientService.this, e.getMessage(), Toast.LENGTH_SHORT);
-            }*/
+            }
 
-            List<Offer> offers = new ArrayList<Offer>();
-
-            Offer offer = new Offer();
-            offer.setId(1);
-            offer.setDesc("Prueba 1");
-            offer.setStoreName("Garbarino");
-            offer.setPrice(100);
-
-            offers.add(offer);
-
-            offer = new Offer();
-            offer.setId(1);
-            offer.setDesc("Prueba 2");
-            offer.setStoreName("Musimundo");
-            offer.setPrice(350);
-
-            offers.add(offer);
-
-            /*mAdapter = OfferAdapter.getInstance(mContext);
-            mAdapter.setItemList(offers);*/
 
             return offers;
-        }
+        }*/
     }
 
     @Override

@@ -95,7 +95,7 @@ public class ListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mAdapter.updateList(((ResultsActivity)mContext  ).getOfferList());
+        mAdapter.updateList(((ResultsActivity)mContext).getOfferList());
     }
 
     public void setOfferList(List<Offer> offers) {

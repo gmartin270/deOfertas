@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.gmartin.deofertas.dao.OfferDBHelper;
 import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.Search;
 import io.gmartin.deofertas.models.Store;
@@ -17,9 +18,12 @@ import io.gmartin.deofertas.models.Store;
 public class ResultController extends BaseController {
 
     private List<Offer> mOfferList;
+    private OfferDBHelper mDB;
 
     public ResultController(Context context){
         super(context);
+
+        mDB = OfferDBHelper.getInstance(mContext);
 
         if (mContext instanceof BaseControllerListener) {
             mListener = (BaseControllerListener) mContext;
@@ -48,7 +52,9 @@ public class ResultController extends BaseController {
                             offerJSON = offersJSON.getJSONObject(i);
                             offer = gson.fromJson(offerJSON.toString(), Offer.class);
 
-                            //TODO: set favorite
+                            if (getFavorite(offer.getId()) != null){
+                                offer.setFavorite(true);
+                            }
 
                             mOfferList.add(offer);
                         } catch (Exception e) {
@@ -111,10 +117,28 @@ public class ResultController extends BaseController {
     }
 
     public void saveFavorite(Offer offer) {
-
+        mDB.insertOffer(offer);
     }
 
     public void removeFavorite(long id) {
+        mDB.deleteOffer(id);
+    }
 
+    public Offer getFavorite (Long id) {
+        try {
+            return mDB.getOffer(id);
+        } catch (Exception e) {
+            mListener.onErrorEvent(e.getMessage());
+            return null;
+        }
+    }
+
+    public List<Offer> getFavorites() {
+        try {
+            return mDB.readAllOffers();
+        } catch (Exception e) {
+            mListener.onErrorEvent(e.getMessage());
+            return null;
+        }
     }
 }

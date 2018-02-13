@@ -3,7 +3,6 @@ package io.gmartin.deofertas.controllers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 public class BaseController implements SharedPreferences.OnSharedPreferenceChangeListener {
 

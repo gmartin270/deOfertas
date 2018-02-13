@@ -7,7 +7,7 @@ import java.util.List;
 public class Offer {
 
     @SerializedName("id")
-    private long id;
+    private Long id;
 
     @SerializedName("hash_id")
     private String hashId;
@@ -16,7 +16,7 @@ public class Offer {
     private String desc;
 
     @SerializedName("store_id")
-    private String storeId;
+    private Long storeId;
 
     @SerializedName("store_name")
     private String storeName;
@@ -27,11 +27,11 @@ public class Offer {
     @SerializedName("favorite")
     private boolean favorite;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -67,11 +67,11 @@ public class Offer {
         this.hashId = hashId;
     }
 
-    public String getStoreId() {
+    public Long getStoreId() {
         return storeId;
     }
 
-    public void setStoreId(String storeId) {
+    public void setStoreId(Long storeId) {
         this.storeId = storeId;
     }
 

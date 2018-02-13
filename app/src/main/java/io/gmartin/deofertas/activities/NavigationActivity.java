@@ -25,13 +25,16 @@ public class NavigationActivity extends AppCompatActivity
     protected static final String RESULTS_ACTIVITY = "io.gmartin.deofertas.activities.results_activity";
     protected static final String SEARCH_ACTION = "io.gmartin.deofertas.activities.search_action";
     protected static final String RESULTS_ACTION = "io.gmartin.deofertas.activities.result_action";
+    protected static final String FAVORITES_ACTION = "io.gmartin.deofertas.activities.favorites_action";
     protected static final String SETTINGS_ACTION = "io.gmartin.deofertas.activities.settings_action";
     protected static final String NAVIGATION_INTENT_EXTRA = "io.gmartin.deofertas.activities.navigation_intent_extra";
     protected static final String ACTION = "action";
+    protected static final String TITLE_EXTRA = "io.gmartin.deofertas.activities.title_extra";
     protected String mAction;
     protected String mActivity;
     private Boolean mIsPort = null;
     private FragmentManager mFragmentManager;
+    protected Toolbar mToolbar;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -50,12 +53,12 @@ public class NavigationActivity extends AppCompatActivity
     }
 
     protected void initUI(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -107,7 +110,7 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_saved_search) {
 
         } else if (id == R.id.nav_favorites) {
-
+            handleFavoritesNav();
         } else if (id == R.id.nav_settings) {
             handleSettingNav();
         }
@@ -126,6 +129,8 @@ public class NavigationActivity extends AppCompatActivity
         if (mActivity.equals(MAIN_ACTIVITY)) {
             if(!mAction.equals(SEARCH_ACTION)) {
                 mAction = SEARCH_ACTION;
+                getSupportActionBar().setTitle(R.string.menu_nav_search);
+
                 SearchFragment search = new SearchFragment();
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
                 transaction.replace(R.id.container, search);
@@ -142,6 +147,8 @@ public class NavigationActivity extends AppCompatActivity
         if (mActivity.equals(MAIN_ACTIVITY)) {
             if(!mAction.equals(SETTINGS_ACTION)) {
                 mAction = SETTINGS_ACTION;
+                getSupportActionBar().setTitle(R.string.menu_nav_settings);
+
                 SettingsFragment settings = new SettingsFragment();
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
@@ -152,6 +159,22 @@ public class NavigationActivity extends AppCompatActivity
         } else {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra(NAVIGATION_INTENT_EXTRA, SETTINGS_ACTION);
+            startActivity(intent);
+        }
+    }
+
+    private void handleFavoritesNav() {
+        if (mActivity.equals(RESULTS_ACTIVITY)) {
+            if(!mAction.equals(FAVORITES_ACTION)) {
+                mAction = FAVORITES_ACTION;
+
+                Intent intent = new Intent(this, ResultsActivity.class);
+                intent.putExtra(NAVIGATION_INTENT_EXTRA, FAVORITES_ACTION);
+                startActivity(intent);
+            }
+        } else {
+            Intent intent = new Intent(this, ResultsActivity.class);
+            intent.putExtra(NAVIGATION_INTENT_EXTRA, FAVORITES_ACTION);
             startActivity(intent);
         }
     }
