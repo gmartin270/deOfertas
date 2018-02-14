@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.List;
@@ -48,20 +49,6 @@ public class ResultsActivity extends NavigationActivity
         mManager = getFragmentManager();
         FragmentTransaction transaction = mManager.beginTransaction();
 
-        if(mOffers == null) {
-            mController = new ResultController(this);
-
-            if (mAction.equals(RESULTS_ACTION)) {
-                mController.fetchOffers(mSearch);
-                getSupportActionBar().setTitle(R.string.menu_nav_results);
-            } else if (mAction.equals(FAVORITES_ACTION)) {
-                mOffers = mController.getFavorites();
-                getSupportActionBar().setTitle(R.string.menu_nav_favorites);
-            }
-        }else{
-            mList.setOfferList(mOffers);
-        }
-
         if(getIsPort()) {
             transaction.replace(R.id.container_result, mList);
         } else {
@@ -70,6 +57,23 @@ public class ResultsActivity extends NavigationActivity
         }
 
         transaction.commit();
+
+//        if(mOffers == null) {
+//            mController = new ResultController(this);
+//
+//            if (mAction.equals(RESULTS_ACTION)) {
+//                mList.setProgressBarVisibility(View.VISIBLE);
+//                mController.fetchOffers(mSearch);
+//                getSupportActionBar().setTitle(R.string.menu_nav_results);
+//            } else if (mAction.equals(FAVORITES_ACTION)) {
+//                mOffers = mController.getFavorites();
+//                getSupportActionBar().setTitle(R.string.menu_nav_favorites);
+//            }
+//        }else{
+//            mList.setOfferList(mOffers);
+//        }
+
+
     }
 
     @Override
@@ -109,11 +113,30 @@ public class ResultsActivity extends NavigationActivity
     }
 
     @Override
+    public void onDataRequested() {
+        if(mOffers == null) {
+            mList.setProgressBarVisibility(View.VISIBLE);
+            mController = new ResultController(this);
+
+            if (mAction.equals(RESULTS_ACTION)) {
+                mController.fetchOffers(mSearch);
+                getSupportActionBar().setTitle(R.string.menu_nav_results);
+            } else if (mAction.equals(FAVORITES_ACTION)) {
+                mController.getFavorites();
+                getSupportActionBar().setTitle(R.string.menu_nav_favorites);
+            }
+        }else{
+            mList.setOfferList(mOffers);
+        }
+    }
+
+    @Override
     public void onDataReceived(Object object) {
         mOffers = (List<Offer>)object;
 
         if (mOffers != null && mOffers.size() > 0) {
             mList.setOfferList(mOffers);
+            mList.setProgressBarVisibility(View.GONE);
         } else {
             Toast toast = Toast.makeText(this, getResources().getString(R.string.no_data_result), Toast.LENGTH_LONG);
             toast.show();

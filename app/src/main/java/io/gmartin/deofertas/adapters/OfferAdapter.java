@@ -74,6 +74,10 @@ public class OfferAdapter extends BaseAdapter {
         TextView desc = view.findViewById(R.id.txtDesc);
         ImageView favoriteImage = view.findViewById(R.id.favorite_image);
 
+        if (offer.isFavorite()) {
+            favoriteImage.setVisibility(View.VISIBLE);
+        }
+
         store.setText(offer.getStoreName());
         desc.setText(offer.getDesc());
         price.setText(String.format("$%.2f", offer.getPrice()));

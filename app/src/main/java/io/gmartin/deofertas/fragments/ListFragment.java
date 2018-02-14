@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -25,9 +26,12 @@ public class ListFragment extends Fragment {
     private Context mContext;
     private ListViewCompat mList;
     private OfferAdapter mAdapter;
+    private ProgressBar mProgressBar;
 
     public interface OnOffersListInteractionListener {
         void onSelectedOffer(Offer offer);
+
+        void onDataRequested();
     }
 
     public ListFragment() {
@@ -57,6 +61,7 @@ public class ListFragment extends Fragment {
                     + " must implement OnOffersListInteractionListener");
         }
 
+        mProgressBar = mRoot.findViewById(R.id.progressBar);
         mList = mRoot.findViewById(R.id.listOffers);
         mList.setAdapter(mAdapter);
         mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,7 +82,8 @@ public class ListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAdapter.updateList(((ResultsActivity)mContext).getOfferList());
+        //mAdapter.updateList(((ResultsActivity)mContext).getOfferList());
+        mListener.onDataRequested();
     }
 
     @Override
@@ -103,5 +109,10 @@ public class ListFragment extends Fragment {
             mAdapter = new OfferAdapter(mContext);
         }
         mAdapter.updateList(offers);
+
+    }
+
+    public void setProgressBarVisibility(int visibility) {
+        mProgressBar.setVisibility(visibility);
     }
 }

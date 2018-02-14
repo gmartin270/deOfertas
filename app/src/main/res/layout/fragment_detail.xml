@@ -1,43 +1,44 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/layout_detail_margin"
     tools:context="io.gmartin.deofertas.fragments.DetailFragment">
 
-    <LinearLayout
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/data_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/txtDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/article_description_label" />
-
-        <TextView
-            android:id="@+id/txtStore"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/article_store_label" />
+            android:text="@string/article_description_label"
+            android:textStyle="bold"
+            android:textSize="@dimen/detail_desc_text_size"/>
 
         <TextView
             android:id="@+id/txtPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/article_price_label" />
+            android:text="@string/article_price_label"
+            android:textSize="@dimen/detail_price_text_size"/>
+
+        <TextView
+            android:id="@+id/txtStore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/article_store_label"
+            app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
 
         <ImageView
             android:id="@+id/imgArticle"
-            android:layout_width="match_parent"
+            android:layout_width="352dp"
             android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/btnClose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/article_close_button_label"
-            android:visibility="gone"/>
 
         <ImageButton
             android:id="@+id/favorite_button"
@@ -45,7 +46,16 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_menu_camera"/>
 
-    </LinearLayout>
+    </android.support.v7.widget.LinearLayoutCompat>
 
-</FrameLayout>
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/article_close_button_label"
+        android:visibility="visible"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
 

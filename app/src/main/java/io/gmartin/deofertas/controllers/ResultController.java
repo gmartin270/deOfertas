@@ -133,12 +133,11 @@ public class ResultController extends BaseController {
         }
     }
 
-    public List<Offer> getFavorites() {
+    public void getFavorites() {
         try {
-            return mDB.readAllOffers();
+            mListener.onDataReceived(mDB.readAllOffers());
         } catch (Exception e) {
             mListener.onErrorEvent(e.getMessage());
-            return null;
         }
     }
 }

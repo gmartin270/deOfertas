@@ -8,4 +8,24 @@
     <dimen name="nav_header_height">200dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <!-- Fragment Offers List -->
+    <dimen name="layout_list_margin">8dp</dimen>
+
+    <!-- Item Offer layout -->
+    <dimen name="item_layout_height">125dp</dimen>
+    <dimen name="item_margin_top">4dp</dimen>
+    <dimen name="item_margin_bottom">4dp</dimen>
+    <dimen name="item_margin_left">4dp</dimen>
+    <dimen name="item_image_width">125dp</dimen>
+    <dimen name="item_image_height">125dp</dimen>
+    <dimen name="item_favorite_image_dimen">25dp</dimen>
+    <dimen name="item_image_margin">5dp</dimen>
+    <dimen name="item_desc_text_size">17dp</dimen>
+    <dimen name="item_price_text_size">14dp</dimen>
+
+    <!-- Detail Offer layout -->
+    <dimen name="layout_detail_margin">8dp</dimen>
+    <dimen name="detail_desc_text_size">17dp</dimen>
+    <dimen name="detail_price_text_size">14dp</dimen>
 </resources>
