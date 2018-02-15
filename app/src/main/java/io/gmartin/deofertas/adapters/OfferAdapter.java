@@ -1,12 +1,16 @@
 package io.gmartin.deofertas.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,18 +73,26 @@ public class OfferAdapter extends BaseAdapter {
             view = li.inflate(R.layout.offer_layout, null);
         }
 
-        TextView store = view.findViewById(R.id.txtStore);
+        TextView desc = view.findViewById(R.id.txtTitle);
         TextView price = view.findViewById(R.id.txtPrice);
-        TextView desc = view.findViewById(R.id.txtDesc);
+        TextView store = view.findViewById(R.id.txtStore);
+        ImageView offerImage = view.findViewById(R.id.offer_image);
         ImageView favoriteImage = view.findViewById(R.id.favorite_image);
 
         if (offer.isFavorite()) {
             favoriteImage.setVisibility(View.VISIBLE);
         }
 
-        store.setText(offer.getStoreName());
-        desc.setText(offer.getDesc());
+        desc.setText(offer.getTitle());
         price.setText(String.format("$%.2f", offer.getPrice()));
+        store.setText(offer.getStoreName());
+
+        if (offer.getImageStr() != null && offer.getImageStr().length() > 0) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(offer.getImage(), 0, offer.getImage().length);
+            offerImage.setImageBitmap(bitmap);
+        } else {
+            offerImage.setImageResource(R.mipmap.ic_no_image_available);
+        }
 
         return view;
     }

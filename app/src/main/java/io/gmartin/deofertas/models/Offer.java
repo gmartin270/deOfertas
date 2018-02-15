@@ -1,8 +1,8 @@
 package io.gmartin.deofertas.models;
 
-import com.google.gson.annotations.SerializedName;
+import android.util.Base64;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 public class Offer {
 
@@ -11,6 +11,9 @@ public class Offer {
 
     @SerializedName("hash_id")
     private String hashId;
+
+    @SerializedName("title")
+    private String title;
 
     @SerializedName("desc")
     private String desc;
@@ -26,6 +29,9 @@ public class Offer {
 
     @SerializedName("favorite")
     private boolean favorite;
+
+    @SerializedName("image")
+    private String imageStr;
 
     public Long getId() {
         return id;
@@ -81,5 +87,21 @@ public class Offer {
 
     public void setStoreName(String storeName) {
         this.storeName = storeName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImageStr() {
+        return imageStr;
+    }
+
+    public byte[] getImage() {
+        return Base64.decode(imageStr, android.util.Base64.DEFAULT);
     }
 }

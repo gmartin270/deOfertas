@@ -104,13 +104,13 @@ public class DetailFragment extends Fragment {
     }
 
     private void updateOffer(){
-        TextView desc = mRoot.findViewById(R.id.txtDesc);
+        TextView title = mRoot.findViewById(R.id.txtTitle);
         TextView store = mRoot.findViewById(R.id.txtStore);
         TextView price = mRoot.findViewById(R.id.txtPrice);
 
-        desc.setText(mOffer.getDesc());
-        store.setText(mOffer.getStoreName());
+        title.setText(mOffer.getTitle());
         price.setText(String.format("%.2f", mOffer.getPrice()));
+        store.setText(mOffer.getStoreName());
     }
 
     public interface OnDetailInteractionListener {

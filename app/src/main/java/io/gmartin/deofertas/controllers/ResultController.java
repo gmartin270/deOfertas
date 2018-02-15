@@ -58,7 +58,7 @@ public class ResultController extends BaseController {
 
                             mOfferList.add(offer);
                         } catch (Exception e) {
-
+                            mListener.onErrorEvent(e.getMessage());
                         }
                     }
 
@@ -75,13 +75,56 @@ public class ResultController extends BaseController {
         }
     }
 
+//    public void fetchOffersImages(Long offer_id){
+//        String endPoint = "/offerImage/" + offer_id.toString();
+//        String query;
+//
+//        try {
+//            RestClient.get(mURL + endPoint, new RestClient.Result() {
+//
+//                @Override
+//                public void onResult(Object result) {
+//                    mOfferList = new ArrayList<>();
+//                    JSONArray offersJSON = (JSONArray) result;
+//                    JSONObject offerJSON;
+//                    Gson gson = new Gson();
+//                    Offer offer;
+//
+//                    for(int i=0; i < offersJSON.length(); i++) {
+//                        try {
+//                            offerJSON = offersJSON.getJSONObject(i);
+//                            offer = gson.fromJson(offerJSON.toString(), Offer.class);
+//
+//                            if (getFavorite(offer.getId()) != null){
+//                                offer.setFavorite(true);
+//                            }
+//
+//                            mOfferList.add(offer);
+//                        } catch (Exception e) {
+//
+//                        }
+//                    }
+//
+//                    mListener.onDataReceived(mOfferList);
+//                }
+//
+//                @Override
+//                public void onError(String message) {
+//                    mListener.onErrorEvent(message);
+//                }
+//            });
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
+
     private String makeQuery(Search search) {
         List<String> params = new ArrayList<>();
         String query = "";
 
         if (search != null) {
             if (search.getText() != null && search.getText().length() > 0) {
-                params.add("desc=" + search.getText());
+                params.add("title=" + search.getText());
             }
 
             if (search.getPriceFrom() != null) {

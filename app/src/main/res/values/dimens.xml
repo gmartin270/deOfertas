@@ -13,7 +13,7 @@
     <dimen name="layout_list_margin">8dp</dimen>
 
     <!-- Item Offer layout -->
-    <dimen name="item_layout_height">125dp</dimen>
+    <dimen name="item_layout_height">120dp</dimen>
     <dimen name="item_margin_top">4dp</dimen>
     <dimen name="item_margin_bottom">4dp</dimen>
     <dimen name="item_margin_left">4dp</dimen>
