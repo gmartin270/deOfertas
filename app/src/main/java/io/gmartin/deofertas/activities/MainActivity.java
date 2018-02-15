@@ -8,6 +8,7 @@ import android.os.Bundle;
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.fragments.SearchFragment;
 import io.gmartin.deofertas.fragments.SettingsFragment;
+import io.gmartin.deofertas.fragments.SuggestedFragment;
 import io.gmartin.deofertas.models.Search;
 
 public class MainActivity extends NavigationActivity
@@ -61,5 +62,13 @@ public class MainActivity extends NavigationActivity
         intent.putExtra(SEARCH_INTENT_EXTRA, search);
         intent.putExtra(NAVIGATION_INTENT_EXTRA, RESULTS_ACTION);
         startActivity(intent);
+    }
+
+    @Override
+    public void onSuggestedButtonClick() {
+        mManager = getFragmentManager();
+        FragmentTransaction transaction = mManager.beginTransaction();
+        transaction.replace(mContainer, new SuggestedFragment());
+        transaction.commit();
     }
 }

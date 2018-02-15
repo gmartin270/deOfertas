@@ -10,6 +10,7 @@ import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -42,6 +43,8 @@ public class SearchFragment extends Fragment implements BaseController.BaseContr
 
     public interface OnSearchInteractionListener {
         void onSearchButtonClick(Search search);
+
+        void onSuggestedButtonClick();
     }
 
     public SearchFragment(){}
@@ -64,7 +67,6 @@ public class SearchFragment extends Fragment implements BaseController.BaseContr
         super.onCreate(savedInstanceState);
 
         mSearchController = new SearchController(this.getActivity(), this);
-        //mSearchController.fetchStores();
     }
 
     @Override
@@ -93,6 +95,16 @@ public class SearchFragment extends Fragment implements BaseController.BaseContr
             @Override
             public void onClick(View view) {
                 advancedSearchOffers();
+            }
+        });
+
+        //TODO: Delete this button when implemented correctly the suggested fragment
+        Button suggested = mRoot.findViewById(R.id.button_suggested);
+
+        suggested.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onSuggestedButtonClick();
             }
         });
 

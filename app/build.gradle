@@ -31,14 +31,6 @@ allprojects {
     }
 }
 
-
-
-
-
-
-
-
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -52,5 +44,7 @@ dependencies {
     compile 'me.gujun.android.taggroup:library:1.4@aar'
     compile 'com.android.support:design:26.+'
     compile 'com.android.support:recyclerview-v7:26.+'
+    compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
+
     testCompile 'junit:junit:4.12'
 }

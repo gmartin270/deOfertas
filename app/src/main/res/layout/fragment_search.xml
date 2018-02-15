@@ -86,4 +86,13 @@
 
     </android.support.v7.widget.LinearLayoutCompat>
 
+    <Button
+        android:id="@+id/button_suggested"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Suggested"
+        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp" />
+
 </android.support.constraint.ConstraintLayout>
