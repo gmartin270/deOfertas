@@ -46,7 +46,6 @@ public class OfferDBHelper extends SQLiteOpenHelper {
         values.put(DeOfertasContract.OfferTable.STORE_ID, offer.getStoreId());
         values.put(DeOfertasContract.OfferTable.STORE_NAME, offer.getStoreName());
         values.put(DeOfertasContract.OfferTable.PRICE, offer.getPrice());
-        //values.put(DeOfertasContract.OfferTable.FAVORITE, offer.isFavorite());
 
         db.insert(DeOfertasContract.OfferTable.TABLE_NAME, null, values);
         db.close();
@@ -77,6 +76,8 @@ public class OfferDBHelper extends SQLiteOpenHelper {
                 offers = new ArrayList<>();
             }
             cursor.moveToFirst();
+
+            //TODO: iterate the cursor to get all the records.
             offer = rowToOffer(cursor);
             offers.add(offer);
         }

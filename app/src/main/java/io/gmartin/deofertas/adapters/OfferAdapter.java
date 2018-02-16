@@ -3,7 +3,10 @@ package io.gmartin.deofertas.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +29,40 @@ import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.controllers.RestClient;
 import io.gmartin.deofertas.models.Offer;
 
-public class OfferAdapter extends BaseAdapter {
+public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHolder> {
+
+    public interface ItemClickListener {
+        void onClick(View view, int position);
+    }
+
+    public class OfferViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        CardView mOfferCardView;
+        ImageView mOfferImage;
+        ImageView mFavoriteImage;
+        AppCompatTextView mTitle;
+        AppCompatTextView mPrice;
+        AppCompatTextView mStore;
+
+        public OfferViewHolder(View itemView) {
+            super(itemView);
+            mOfferCardView = itemView.findViewById(R.id.offer_card_view);
+            mOfferImage = itemView.findViewById(R.id.offer_image);
+            mFavoriteImage = itemView.findViewById(R.id.favorite_image);
+            mTitle = itemView.findViewById(R.id.txtTitle);
+            mPrice = itemView.findViewById(R.id.txtPrice);
+            mStore = itemView.findViewById(R.id.txtStore);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getAdapterPosition());
+        }
+    }
 
     private List<Offer> mOfferList;
     private Context mContext;
+    private ItemClickListener clickListener;
 
     public OfferAdapter(Context context){
         mContext = context;
@@ -39,8 +72,12 @@ public class OfferAdapter extends BaseAdapter {
         this.mContext = mContext;
     }
 
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+
     @Override
-    public int getCount() {
+    public int getItemCount() {
         int count = 0;
 
         if (mOfferList != null) {
@@ -51,6 +88,41 @@ public class OfferAdapter extends BaseAdapter {
     }
 
     @Override
+    public OfferViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.offer_layout, viewGroup, false);
+        OfferViewHolder offerViewHolder = new OfferViewHolder(view);
+        return offerViewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(OfferViewHolder offerViewHolder, int i) {
+        offerViewHolder.mTitle.setText(mOfferList.get(i).getTitle());
+        offerViewHolder.mPrice.setText(String.format("$%.2f", mOfferList.get(i).getPrice()));
+        offerViewHolder.mStore.setText(mOfferList.get(i).getStoreName());
+
+        if (mOfferList.get(i).isFavorite()) {
+            offerViewHolder.mFavoriteImage.setVisibility(View.VISIBLE);
+        }
+
+
+        if (mOfferList.get(i).getImageStr() != null && mOfferList.get(i).getImageStr().length() > 0) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(mOfferList.get(i).getImage(), 0, mOfferList.get(i).getImage().length);
+            offerViewHolder.mOfferImage.setImageBitmap(bitmap);
+        } else {
+            offerViewHolder.mOfferImage.setImageResource(R.mipmap.ic_no_image_available);
+        }
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public Object getItem(int i) {
+        return mOfferList.get(i);
+    }
+
+    /*@Override
     public Object getItem(int i) {
         return mOfferList.get(i);
     }
@@ -95,7 +167,7 @@ public class OfferAdapter extends BaseAdapter {
         }
 
         return view;
-    }
+    }*/
 
     public void updateList(List<Offer> offers) {
         mOfferList = offers;

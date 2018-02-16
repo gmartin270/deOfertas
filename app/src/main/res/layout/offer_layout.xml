@@ -3,56 +3,73 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
-    <ImageView
-        android:id="@+id/offer_image"
-        android:layout_width="@dimen/item_image_width"
-        android:layout_height="@dimen/item_image_height"
-        android:layout_margin="@dimen/item_image_margin"/>
-
-    <android.support.v7.widget.LinearLayoutCompat
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="top">
+        android:id="@+id/offer_card_view">
 
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/item_margin_bottom">
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <ImageView
-                android:id="@+id/favorite_image"
-                android:layout_width="@dimen/item_favorite_image_dimen"
-                android:layout_height="@dimen/item_favorite_image_dimen"
-                android:src="@drawable/ic_menu_camera"
-                android:visibility="gone"/>
+                android:id="@+id/offer_image"
+                android:layout_width="@dimen/item_image_width"
+                android:layout_height="@dimen/item_image_height"
+                android:layout_margin="@dimen/item_image_margin"/>
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/txtTitle"
+            <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/item_margin_left"
-                android:textSize="@dimen/item_desc_text_size"
-                android:textStyle="bold"
-                android:text="@string/article_description_label"/>
+                android:orientation="vertical"
+                android:gravity="top">
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/item_margin_bottom">
+
+                    <ImageView
+                        android:id="@+id/favorite_image"
+                        android:layout_width="@dimen/item_favorite_image_dimen"
+                        android:layout_height="@dimen/item_favorite_image_dimen"
+                        android:src="@drawable/ic_menu_camera"
+                        android:visibility="gone"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/item_margin_left"
+                        android:textSize="@dimen/item_desc_text_size"
+                        android:textStyle="bold"
+                        android:text="@string/article_description_label"/>
+                </android.support.v7.widget.LinearLayoutCompat>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/item_margin_bottom"
+                    android:textSize="@dimen/item_price_text_size"
+                    android:text="@string/article_price_label" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtStore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/article_store_label" />
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
         </android.support.v7.widget.LinearLayoutCompat>
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/txtPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/item_margin_bottom"
-            android:textSize="@dimen/item_price_text_size"
-            android:text="@string/article_price_label" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/txtStore"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/article_store_label" />
-
-    </android.support.v7.widget.LinearLayoutCompat>
+    </android.support.v7.widget.CardView>
 
 </android.support.v7.widget.LinearLayoutCompat>

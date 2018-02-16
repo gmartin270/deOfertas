@@ -4,7 +4,9 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.ListViewCompat;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +21,7 @@ import io.gmartin.deofertas.adapters.OfferAdapter;
 import io.gmartin.deofertas.models.Offer;
 
 
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment implements OfferAdapter.ItemClickListener {
 
     private View mRoot;
     private OnOffersListInteractionListener mListener;
@@ -48,21 +50,27 @@ public class ListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        if (mContext instanceof OnOffersListInteractionListener) {
+            mListener = (OnOffersListInteractionListener) mContext;
+        }
+
         mRoot = inflater.inflate(R.layout.fragment_list, container, false);
+        mProgressBar = mRoot.findViewById(R.id.progressBar);
+
+        /*RecyclerView recyclerView = getActivity().findViewById(R.id.listOffers);
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        recyclerView.setLayoutManager(layoutManager);
 
         if (mAdapter == null) {
             mAdapter = new OfferAdapter(mContext);
         }
 
-        if (mContext instanceof OnOffersListInteractionListener) {
-            mListener = (OnOffersListInteractionListener) mContext;
-        } else {
-            throw new RuntimeException(mContext.toString()
-                    + " must implement OnOffersListInteractionListener");
-        }
+        recyclerView.setAdapter(mAdapter);*/
 
-        mProgressBar = mRoot.findViewById(R.id.progressBar);
-        mList = mRoot.findViewById(R.id.listOffers);
+
+        /*mList = mRoot.findViewById(R.id.listOffers);
         mList.setAdapter(mAdapter);
         mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -74,7 +82,9 @@ public class ListFragment extends Fragment {
 
                 }
             }
-        });
+        });*/
+
+
 
         return mRoot;
     }
@@ -84,6 +94,19 @@ public class ListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //mAdapter.updateList(((ResultsActivity)mContext).getOfferList());
         mListener.onDataRequested();
+
+        RecyclerView recyclerView = getActivity().findViewById(R.id.listOffers);
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        recyclerView.setLayoutManager(layoutManager);
+
+        if (mAdapter == null) {
+            mAdapter = new OfferAdapter(mContext);
+        }
+
+        recyclerView.setAdapter(mAdapter);
+        mAdapter.setClickListener(this);
     }
 
     @Override
@@ -114,5 +137,10 @@ public class ListFragment extends Fragment {
 
     public void setProgressBarVisibility(int visibility) {
         mProgressBar.setVisibility(visibility);
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        mListener.onSelectedOffer((Offer)mAdapter.getItem(position));
     }
 }

@@ -4,7 +4,7 @@ import android.provider.BaseColumns;
 
 public class DeOfertasContract {
 
-    public static final String DBNAME = "deOfertasDB";
+    public static final String DBNAME = "deOfertasDB4";
     public static final Integer VERSION = 1;
 
     public DeOfertasContract(){};
@@ -22,7 +22,7 @@ public class DeOfertasContract {
         public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + " ( " +
                 _ID + " INTEGER PRIMARY KEY, " +
                 HASH_ID + " TEXT, " +
-                TITLE + " TEXT " +
+                TITLE + " TEXT, " +
                 DESC + " TEXT, " +
                 STORE_ID + " INTEGER, " +
                 STORE_NAME + " TEXT, " +
