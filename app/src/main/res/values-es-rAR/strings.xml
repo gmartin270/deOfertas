@@ -13,24 +13,28 @@
     <string name="button_search_text">Buscar</string>
     <string name="button_advanced_search_text">Búsqueda Avanzada</string>
     <string name="button_basic_search_text">Búsqueda Básica</string>
-    <string name="label_price_from_text">Price From</string>
-    <string name="label_price_from_to">Price To</string>
-    <string name="label_stores">Stores</string>
-    <string name="no_data_result">The search has not produced any results.</string>
-    <string name="no_internet_connection">There is no Internet connection.</string>
-    <string name="price_from_greater_to">The price range is invalid.</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="label_price_from_text">Precio desde</string>
+    <string name="label_price_from_to">Precio hasta</string>
+    <string name="label_stores">Tiendas</string>
+    <string name="no_data_result">La búsqueda no ha obtenido ningún resultado.</string>
+    <string name="no_internet_connection">No hay conexión a Internet.</string>
+    <string name="price_from_greater_to">El rango de precios es inválido.</string>
+    <string name="search_advanced_content_description">Muestra los campos de búsqueda avanzada.</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!-- Navigation draw -->
+    <string name="navigation_drawer_open">Abrir menú de navegación</string>
+    <string name="navigation_drawer_close">Cerrar menú de navegación</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configuración</string>
 
-    <string name="menu_nav_search">Search</string>
-    <string name="menu_nav_saved_search">Saved Search</string>
-    <string name="menu_nav_favorites">Favorites</string>
-    <string name="menu_nav_settings">Settings</string>
-    <string name="menu_nav_results">Search results</string>
-    <string name="menu_nav_advanced_search">Advanced Search</string>
+    <string name="menu_nav_search">Búsqueda</string>
+    <string name="menu_nav_saved_search">Búsquedas guardadas</string>
+    <string name="menu_nav_favorites">Favoritos</string>
+    <string name="menu_nav_settings">Configuración</string>
+    <string name="menu_nav_results">Resultados de búsqueda</string>
+    <string name="menu_nav_advanced_search">Búsqueda avanzada</string>
+
+    <!-- Detail fragment -->
+    <string name="favorite_content_description">Add or delete favorite</string>
 
 </resources>

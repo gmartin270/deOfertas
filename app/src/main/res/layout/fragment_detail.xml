@@ -17,34 +17,67 @@
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/detail_text_margin_bottom"
+            android:layout_marginStart="@dimen/detail_text_margin_start"
             android:text="@string/article_description_label"
             android:textStyle="bold"
             android:textSize="@dimen/detail_desc_text_size"/>
 
-        <TextView
-            android:id="@+id/txtPrice"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/article_price_label"
-            android:textSize="@dimen/detail_price_text_size"/>
+            android:layout_marginStart="@dimen/detail_text_margin_start"
+            android:id="@+id/relative_layout_1">
 
-        <TextView
-            android:id="@+id/txtStore"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/article_store_label"
-            app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/detail_text_margin_bottom"
+                    android:text="@string/article_price_label"
+                    android:textSize="@dimen/detail_price_text_size"/>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtStore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/detail_text_margin_bottom"
+                    android:text="@string/article_store_label"
+                    app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/favorite_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_camera"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/favorite_content_description"/>
+
+        </RelativeLayout>
+
 
         <ImageView
             android:id="@+id/imgArticle"
-            android:layout_width="352dp"
-            android:layout_height="wrap_content" />
-
-        <ImageButton
-            android:id="@+id/favorite_button"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/detail_image_width"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_camera"/>
+            android:layout_marginBottom="@dimen/detail_text_margin_bottom"
+            android:layout_marginStart="@dimen/detail_text_margin_start"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/detail_text_margin_bottom"
+            android:layout_marginStart="@dimen/detail_text_margin_start"
+            android:scrollbars="vertical"
+            android:inputType="textMultiLine"/>
 
     </android.support.v7.widget.LinearLayoutCompat>
 

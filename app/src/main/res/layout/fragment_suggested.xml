@@ -27,10 +27,10 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:gravity="bottom"
-            android:padding="10dip"
+            android:padding="@dimen/slider_indicator_padding"
             app:centered="true"
-            app:fillColor="#df0623"
-            app:pageColor="#fff"
+            app:fillColor="@color/sliding_indicator_fill_color"
+            app:pageColor="@color/sliding_indicator_page_color"
             app:snap="false" />
     </RelativeLayout>
 </RelativeLayout>

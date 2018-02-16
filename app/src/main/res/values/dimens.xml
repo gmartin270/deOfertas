@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="search_box_width">500px</dimen>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -8,6 +9,10 @@
     <dimen name="nav_header_height">200dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <!-- Fragment Search -->
+    <dimen name="search_text_margin_bottom">4dp</dimen>
+    <dimen name="search_text_margin_start">4dp</dimen>men>
 
     <!-- Fragment Offers List -->
     <dimen name="layout_list_margin">8dp</dimen>
@@ -21,11 +26,20 @@
     <dimen name="item_image_height">125dp</dimen>
     <dimen name="item_favorite_image_dimen">25dp</dimen>
     <dimen name="item_image_margin">5dp</dimen>
-    <dimen name="item_desc_text_size">17dp</dimen>
-    <dimen name="item_price_text_size">14dp</dimen>
+    <dimen name="item_desc_text_size">17sp</dimen>
+    <dimen name="item_price_text_size">14sp</dimen>
 
     <!-- Detail Offer layout -->
     <dimen name="layout_detail_margin">8dp</dimen>
-    <dimen name="detail_desc_text_size">17dp</dimen>
-    <dimen name="detail_price_text_size">14dp</dimen>
+    <dimen name="detail_desc_text_size">17sp</dimen>
+    <dimen name="detail_price_text_size">14sp</dimen>
+    <dimen name="detail_image_width">150dp</dimen>
+    <dimen name="detail_text_margin_bottom">4dp</dimen>
+    <dimen name="detail_text_margin_start">4dp</dimen>men>
+
+    <!-- Suggested layout -->
+    <dimen name="slider_indicator_padding">10dp</dimen>
+
+    <!-- Slider item Image -->
+    <dimen name="slider_item_image_padding">4dp</dimen>
 </resources>

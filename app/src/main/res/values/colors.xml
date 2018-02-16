@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- Suggested layout -->
+    <color name="sliding_indicator_fill_color" >#df0623</color>
+    <color name="sliding_indicator_page_color" >#fff</color>
 </resources>
