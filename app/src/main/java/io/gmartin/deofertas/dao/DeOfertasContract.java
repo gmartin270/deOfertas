@@ -12,6 +12,7 @@ public class DeOfertasContract {
     public static abstract class OfferTable implements BaseColumns{
         public static final String TABLE_NAME = "offer";
         public static final String HASH_ID = "hash_id";
+        public static final String TITLE = "title";
         public static final String DESC = "desc";
         public static final String STORE_ID = "store_id";
         public static final String STORE_NAME = "store_name";
@@ -21,6 +22,7 @@ public class DeOfertasContract {
         public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + " ( " +
                 _ID + " INTEGER PRIMARY KEY, " +
                 HASH_ID + " TEXT, " +
+                TITLE + " TEXT " +
                 DESC + " TEXT, " +
                 STORE_ID + " INTEGER, " +
                 STORE_NAME + " TEXT, " +

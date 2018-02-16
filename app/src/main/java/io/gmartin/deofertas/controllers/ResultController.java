@@ -12,13 +12,20 @@ import java.util.List;
 
 import io.gmartin.deofertas.dao.OfferDBHelper;
 import io.gmartin.deofertas.models.Offer;
+import io.gmartin.deofertas.models.OfferImage;
 import io.gmartin.deofertas.models.Search;
 import io.gmartin.deofertas.models.Store;
 
 public class ResultController extends BaseController {
 
     private List<Offer> mOfferList;
+    private List<OfferImage> mOfferImageList;
     private OfferDBHelper mDB;
+    private ResultControllerListener mResultListener;
+
+    public interface ResultControllerListener {
+        void onImageDataReceived(List<OfferImage> offerImage);
+    }
 
     public ResultController(Context context){
         super(context);
@@ -27,6 +34,10 @@ public class ResultController extends BaseController {
 
         if (mContext instanceof BaseControllerListener) {
             mListener = (BaseControllerListener) mContext;
+        }
+
+        if (mContext instanceof ResultControllerListener) {
+            mResultListener = (ResultControllerListener) mContext;
         }
     }
 
@@ -75,48 +86,44 @@ public class ResultController extends BaseController {
         }
     }
 
-//    public void fetchOffersImages(Long offer_id){
-//        String endPoint = "/offerImage/" + offer_id.toString();
-//        String query;
-//
-//        try {
-//            RestClient.get(mURL + endPoint, new RestClient.Result() {
-//
-//                @Override
-//                public void onResult(Object result) {
-//                    mOfferList = new ArrayList<>();
-//                    JSONArray offersJSON = (JSONArray) result;
-//                    JSONObject offerJSON;
-//                    Gson gson = new Gson();
-//                    Offer offer;
-//
-//                    for(int i=0; i < offersJSON.length(); i++) {
-//                        try {
-//                            offerJSON = offersJSON.getJSONObject(i);
-//                            offer = gson.fromJson(offerJSON.toString(), Offer.class);
-//
-//                            if (getFavorite(offer.getId()) != null){
-//                                offer.setFavorite(true);
-//                            }
-//
-//                            mOfferList.add(offer);
-//                        } catch (Exception e) {
-//
-//                        }
-//                    }
-//
-//                    mListener.onDataReceived(mOfferList);
-//                }
-//
-//                @Override
-//                public void onError(String message) {
-//                    mListener.onErrorEvent(message);
-//                }
-//            });
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
+    public void fetchOfferImages(Long offer_id){
+        String endPoint = "/offerImage/";
+        String query = "?offer_id="  + offer_id.toString();
+
+        try {
+            RestClient.get(mURL + endPoint + query, new RestClient.Result() {
+
+                @Override
+                public void onResult(Object result) {
+                    mOfferImageList = new ArrayList<>();
+                    JSONArray offerImagesJSON = (JSONArray) result;
+                    JSONObject offerImageJSON;
+                    Gson gson = new Gson();
+                    OfferImage offerImage;
+
+                    for(int i=0; i < offerImagesJSON.length(); i++) {
+                        try {
+                            offerImageJSON = offerImagesJSON.getJSONObject(i);
+                            offerImage = gson.fromJson(offerImageJSON.toString(), OfferImage.class);
+
+                            mOfferImageList.add(offerImage);
+                        } catch (Exception e) {
+                            mListener.onErrorEvent(e.getMessage());
+                        }
+                    }
+
+                    mResultListener.onImageDataReceived(mOfferImageList);
+                }
+
+                @Override
+                public void onError(String message) {
+                    mListener.onErrorEvent(message);
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     private String makeQuery(Search search) {
         List<String> params = new ArrayList<>();

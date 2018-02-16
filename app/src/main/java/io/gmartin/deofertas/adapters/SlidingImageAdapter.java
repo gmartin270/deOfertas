@@ -19,6 +19,8 @@ import io.gmartin.deofertas.models.OfferImage;
 
 public class SlidingImageAdapter extends PagerAdapter {
 
+    //https://demonuts.com/2017/03/17/image-slider-with-slideshow-using-viewpager-android/
+
     private List<OfferImage> mOfferImages = new ArrayList<>();
     private LayoutInflater mInflater;
     private Context mContext;
@@ -41,15 +43,16 @@ public class SlidingImageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
-        View imageLayout = mInflater.inflate(R.layout.sliding_images_layout, view, false);
+        View imageLayout = mInflater.inflate(R.layout.sliding_image_layout, view, false);
 
         assert imageLayout != null;
         final ImageView imageView = imageLayout.findViewById(R.id.offer_img);
 
-        //imageView.setImageResource(mOfferImages.get(position).getImage_drawable());
-        byte[] image = mOfferImages.get(position).getImage();
-        Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-        imageView.setImageBitmap(bitmap);
+        if (mOfferImages != null && mOfferImages.get(position).getImageStr() != null) {
+            byte[] image = mOfferImages.get(position).getImage();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            imageView.setImageBitmap(bitmap);
+        }
 
         view.addView(imageLayout, 0);
 

@@ -41,6 +41,7 @@ public class OfferDBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(DeOfertasContract.OfferTable._ID, offer.getId());
         values.put(DeOfertasContract.OfferTable.HASH_ID, offer.getHashId());
+        values.put(DeOfertasContract.OfferTable.TITLE, offer.getTitle());
         values.put(DeOfertasContract.OfferTable.DESC, offer.getDesc());
         values.put(DeOfertasContract.OfferTable.STORE_ID, offer.getStoreId());
         values.put(DeOfertasContract.OfferTable.STORE_NAME, offer.getStoreName());
@@ -105,6 +106,7 @@ public class OfferDBHelper extends SQLiteOpenHelper {
         try {
             offer.setId(cursor.getLong(cursor.getColumnIndex(DeOfertasContract.OfferTable._ID)));
             offer.setHashId(cursor.getString(cursor.getColumnIndex(DeOfertasContract.OfferTable.HASH_ID)));
+            offer.setTitle(cursor.getString(cursor.getColumnIndex(DeOfertasContract.OfferTable.TITLE)));
             offer.setDesc(cursor.getString(cursor.getColumnIndex(DeOfertasContract.OfferTable.DESC)));
             offer.setStoreId(cursor.getLong(cursor.getColumnIndex(DeOfertasContract.OfferTable.STORE_ID)));
             offer.setStoreName(cursor.getString(cursor.getColumnIndex(DeOfertasContract.OfferTable.STORE_NAME)));
@@ -114,6 +116,7 @@ public class OfferDBHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
+
         return offer;
     }
 }
