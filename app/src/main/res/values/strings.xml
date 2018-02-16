@@ -22,6 +22,7 @@
     <string name="no_internet_connection">There is no Internet connection.</string>
     <string name="price_from_greater_to">The price range is invalid.</string>
     <string name="search_advanced_content_description">Open the advanced field of search.</string>
+    <string name="search_hint">Search offers on stores</string>
 
     <!-- Navigation draw -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -34,8 +35,10 @@
     <string name="menu_nav_favorites">Favorites</string>
     <string name="menu_nav_settings">Settings</string>
     <string name="menu_nav_results">Search results</string>
+    <string name="menu_nav_advanced_search">Advanced search</string>
 
     <!-- Detail fragment -->
     <string name="favorite_content_description">Add or delete favorite</string>
+
 
 </resources>

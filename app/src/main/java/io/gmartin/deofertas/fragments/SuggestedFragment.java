@@ -28,8 +28,7 @@ public class SuggestedFragment extends Fragment {
     }
 
     private Context mContext;
-    private View mRoot;
-    private static ViewPager mPager;
+    private ViewPager mPager;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
     private List<OfferImage> mOfferImages;
@@ -59,7 +58,7 @@ public class SuggestedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mRoot = inflater.inflate(R.layout.fragment_suggested, container, false);
+        View view = inflater.inflate(R.layout.fragment_suggested, container, false);
 
         mOfferImages = new ArrayList<>();
 
@@ -67,7 +66,7 @@ public class SuggestedFragment extends Fragment {
             mListener = (OnSuggestedInteractionListener) mContext;
         }
 
-        return mRoot;
+        return view;
     }
 
     @Override

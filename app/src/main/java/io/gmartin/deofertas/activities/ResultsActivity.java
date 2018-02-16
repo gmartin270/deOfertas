@@ -12,10 +12,8 @@ import java.util.List;
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.controllers.BaseController;
 import io.gmartin.deofertas.controllers.ResultController;
-import io.gmartin.deofertas.dao.OfferDBHelper;
 import io.gmartin.deofertas.fragments.DetailFragment;
 import io.gmartin.deofertas.fragments.ListFragment;
-import io.gmartin.deofertas.fragments.SearchFragment;
 import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.Search;
 

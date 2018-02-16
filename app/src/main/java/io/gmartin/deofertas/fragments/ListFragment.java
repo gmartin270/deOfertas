@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ProgressBar;
 
 import java.util.List;
@@ -19,7 +18,6 @@ import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.activities.ResultsActivity;
 import io.gmartin.deofertas.adapters.OfferAdapter;
 import io.gmartin.deofertas.models.Offer;
-
 
 public class ListFragment extends Fragment implements OfferAdapter.ItemClickListener {
 

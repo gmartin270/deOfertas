@@ -31,7 +31,6 @@ public class SearchFragment extends Fragment implements BaseController.BaseContr
     private AppCompatEditText mPriceTo;
     private AppCompatButton mSearchBtn;
     private AppCompatButton mAdvSearchBtn;
-    private Search mSearch;
     private MultiSelectionSpinner mStoreSpinner;
     private LinearLayoutCompat mAdvancedSearchLayout;
     private boolean mIsAdvancedSearch = false;
@@ -77,6 +76,8 @@ public class SearchFragment extends Fragment implements BaseController.BaseContr
 
         mSearchBox = mRoot.findViewById(R.id.search_box);
         mSearchBox.setSubmitButtonEnabled(true);
+        mSearchBox.setIconifiedByDefault(false);
+
         mPriceFrom = mRoot.findViewById(R.id.edit_price_from);
         mPriceTo = mRoot.findViewById(R.id.edit_price_to);
         mSearchBtn = mRoot.findViewById(R.id.button_search);
@@ -95,6 +96,13 @@ public class SearchFragment extends Fragment implements BaseController.BaseContr
             @Override
             public void onClick(View view) {
                 advancedSearchOffers();
+            }
+        });
+
+        mSearchBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchOffers();
             }
         });
 
@@ -123,18 +131,18 @@ public class SearchFragment extends Fragment implements BaseController.BaseContr
         Double priceTo = null;
         List<Store> storesSelected;
         List<Integer> storesIndexes;
-        mSearch = new Search();
+        Search search = new Search();
 
-        mSearch.setText(mSearchBox.getQuery().toString());
+        search.setText(mSearchBox.getQuery().toString());
 
         if (mPriceFrom.getText().toString().length() > 0) {
             priceFrom = Double.valueOf(mPriceFrom.getText().toString());
-            mSearch.setPriceFrom(priceFrom);
+            search.setPriceFrom(priceFrom);
         }
 
         if (mPriceTo.getText().toString().length() > 0) {
             priceTo = Double.valueOf(mPriceTo.getText().toString());
-            mSearch.setPriceTo(priceTo);
+            search.setPriceTo(priceTo);
         }
 
         if (mStoreSpinner.getCountItemsSelected() > 0) {
@@ -146,13 +154,13 @@ public class SearchFragment extends Fragment implements BaseController.BaseContr
                 storesSelected.add(mStoreList.get(index));
             }
 
-            mSearch.setStores(storesSelected);
+            search.setStores(storesSelected);
         }
 
         if (priceFrom != null && priceTo != null && priceFrom > priceTo) {
             Toast.makeText(mContext, getResources().getString(R.string.price_from_greater_to), Toast.LENGTH_LONG).show();
         } else {
-            mListener.onSearchButtonClick(mSearch);
+            mListener.onSearchButtonClick(search);
         }
     }
 

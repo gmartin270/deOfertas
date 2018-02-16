@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import java.util.List;
 
@@ -14,7 +13,6 @@ import io.gmartin.deofertas.controllers.ResultController;
 import io.gmartin.deofertas.fragments.SearchFragment;
 import io.gmartin.deofertas.fragments.SettingsFragment;
 import io.gmartin.deofertas.fragments.SuggestedFragment;
-import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.OfferImage;
 import io.gmartin.deofertas.models.Search;
 
