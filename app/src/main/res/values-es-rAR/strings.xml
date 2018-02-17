@@ -9,7 +9,7 @@
     <string name="api_client_error_connection">There is no Internet conection.</string>
 
     <!-- Search -->
-    <string name="search_default_text"></string>
+    <string name="search_default_text">Descripción</string>
     <string name="button_search_text">Buscar</string>
     <string name="button_advanced_search_text">Búsqueda Avanzada</string>
     <string name="button_basic_search_text">Búsqueda Básica</string>
@@ -20,15 +20,17 @@
     <string name="no_internet_connection">No hay conexión a Internet.</string>
     <string name="price_from_greater_to">El rango de precios es inválido.</string>
     <string name="search_advanced_content_description">Muestra los campos de búsqueda avanzada.</string>
+    <string name="search_hint">Busca ofertas en varias tiendas</string>
+    <string name="app_label">deOfertas.com</string>
 
     <!-- Navigation draw -->
     <string name="navigation_drawer_open">Abrir menú de navegación</string>
     <string name="navigation_drawer_close">Cerrar menú de navegación</string>
 
-    <string name="action_settings">Configuración</string>
+    <string name="action_search">Buscar ofertas</string>
 
     <string name="menu_nav_search">Búsqueda</string>
-    <string name="menu_nav_saved_search">Búsquedas guardadas</string>
+    <string name="menu_nav_init">Inicio</string>
     <string name="menu_nav_favorites">Favoritos</string>
     <string name="menu_nav_settings">Configuración</string>
     <string name="menu_nav_results">Resultados de búsqueda</string>

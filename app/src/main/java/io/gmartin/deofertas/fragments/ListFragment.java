@@ -17,6 +17,7 @@ import java.util.List;
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.activities.ResultsActivity;
 import io.gmartin.deofertas.adapters.OfferAdapter;
+import io.gmartin.deofertas.interfaces.IListActivity;
 import io.gmartin.deofertas.models.Offer;
 
 public class ListFragment extends Fragment implements OfferAdapter.ItemClickListener {
@@ -110,7 +111,7 @@ public class ListFragment extends Fragment implements OfferAdapter.ItemClickList
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        mAdapter.updateList(((ResultsActivity)mContext).getOfferList());
+        mAdapter.updateList(((IListActivity)mContext).getOfferList());
     }
 
     @Override
@@ -122,7 +123,7 @@ public class ListFragment extends Fragment implements OfferAdapter.ItemClickList
     @Override
     public void onResume() {
         super.onResume();
-        mAdapter.updateList(((ResultsActivity)mContext).getOfferList());
+        mAdapter.updateList(((IListActivity)mContext).getOfferList());
     }
 
     public void setOfferList(List<Offer> offers) {

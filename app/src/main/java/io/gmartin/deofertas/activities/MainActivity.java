@@ -3,6 +3,7 @@ package io.gmartin.deofertas.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -46,15 +47,23 @@ public class MainActivity extends NavigationActivity
         Intent intent = getIntent();
         if (intent != null) {
             mAction = intent.getStringExtra(NAVIGATION_INTENT_EXTRA);
+
+            if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+                handleSearch(intent);
+            }
         }
 
         Fragment fragment = null;
         mManager = getFragmentManager();
         FragmentTransaction transaction = mManager.beginTransaction();
 
-        if (mAction == null || mAction.equals(SEARCH_ACTION)) {
+        if (mAction == null || mAction.equals(SUGGEST_ACTION)) {
+            mAction = SUGGEST_ACTION;
+            fragment = mSuggestedFragment;
+        } else if (mAction.equals(SEARCH_ACTION)) {
             mAction = SEARCH_ACTION;
             fragment = mSearchFragment;
+            mToolbar.getMenu().removeItem(R.id.action_search);
         } else if (mAction.equals(SETTINGS_ACTION)) {
             fragment = mSettingsFragment;
             getSupportActionBar().setTitle(R.string.menu_nav_settings);
@@ -73,23 +82,15 @@ public class MainActivity extends NavigationActivity
     }
 
     @Override
-    public void onSuggestedButtonClick() {
-        mManager = getFragmentManager();
-        FragmentTransaction transaction = mManager.beginTransaction();
-        transaction.replace(mContainer, mSuggestedFragment);
-        transaction.commit();
-    }
-
-    @Override
     public void onDataRequested() {
-        if(mOfferImages == null) {
+        if (mOfferImages == null) {
             //mList.setProgressBarVisibility(View.VISIBLE);
             mResultController = new ResultController(this);
 
             //TODO: Implements Correctly suggests
             mResultController.fetchOfferImages(new Long(1));
 
-        }else{
+        } else {
             mSuggestedFragment.setOfferImages(mOfferImages);
         }
     }
@@ -104,5 +105,16 @@ public class MainActivity extends NavigationActivity
             //TODO: Implements progress bar for images.
             //mList.setProgressBarVisibility(View.GONE);
         }
+    }
+
+    private void handleSearch(Intent intentReceived) {
+
+        String query = intentReceived.getStringExtra(SearchManager.QUERY);
+        Search search = new Search();
+        search.setText(query);
+        Intent intent = new Intent(this, ResultsActivity.class);
+        intent.putExtra(SEARCH_INTENT_EXTRA, search);
+        intent.putExtra(NAVIGATION_INTENT_EXTRA, RESULTS_ACTION);
+        startActivity(intent);
     }
 }

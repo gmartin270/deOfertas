@@ -23,6 +23,8 @@ public class NavigationActivity extends AppCompatActivity
 
     protected static final String MAIN_ACTIVITY = "io.gmartin.deofertas.activities.main_activity";
     protected static final String RESULTS_ACTIVITY = "io.gmartin.deofertas.activities.results_activity";
+    protected static final String FAVORITES_ACTIVITY = "io.gmartin.deofertas.activities.favorites_activity";
+    protected static final String SUGGEST_ACTION = "io.gmartin.deofertas.activities.suggest_action";
     protected static final String SEARCH_ACTION = "io.gmartin.deofertas.activities.search_action";
     protected static final String RESULTS_ACTION = "io.gmartin.deofertas.activities.result_action";
     protected static final String FAVORITES_ACTION = "io.gmartin.deofertas.activities.favorites_action";
@@ -35,6 +37,7 @@ public class NavigationActivity extends AppCompatActivity
     private Boolean mIsPort = null;
     private FragmentManager mFragmentManager;
     protected Toolbar mToolbar;
+    protected Menu mMenu;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -78,8 +81,10 @@ public class NavigationActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        mMenu = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
         return true;
     }
 
@@ -90,9 +95,8 @@ public class NavigationActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            handleSettingNav();
+        if (id == R.id.action_search) {
+            onSearchRequested();
             return true;
         }
 
@@ -105,10 +109,9 @@ public class NavigationActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+
         if (id == R.id.nav_search) {
             handleSearchNav();
-        } else if (id == R.id.nav_saved_search) {
-
         } else if (id == R.id.nav_favorites) {
             handleFavoritesNav();
         } else if (id == R.id.nav_settings) {
@@ -126,6 +129,7 @@ public class NavigationActivity extends AppCompatActivity
     }
 
     private void handleSearchNav() {
+
         if (mActivity.equals(MAIN_ACTIVITY)) {
             if(!mAction.equals(SEARCH_ACTION)) {
                 mAction = SEARCH_ACTION;
@@ -164,18 +168,7 @@ public class NavigationActivity extends AppCompatActivity
     }
 
     private void handleFavoritesNav() {
-        if (mActivity.equals(RESULTS_ACTIVITY)) {
-            if(!mAction.equals(FAVORITES_ACTION)) {
-                mAction = FAVORITES_ACTION;
-
-                Intent intent = new Intent(this, ResultsActivity.class);
-                intent.putExtra(NAVIGATION_INTENT_EXTRA, FAVORITES_ACTION);
-                startActivity(intent);
-            }
-        } else {
-            Intent intent = new Intent(this, ResultsActivity.class);
-            intent.putExtra(NAVIGATION_INTENT_EXTRA, FAVORITES_ACTION);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(this, FavoritesActivity.class);
+        startActivity(intent);
     }
 }

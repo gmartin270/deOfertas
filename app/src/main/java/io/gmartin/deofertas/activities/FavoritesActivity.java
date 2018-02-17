@@ -18,11 +18,11 @@ import io.gmartin.deofertas.interfaces.IListActivity;
 import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.Search;
 
-public class ResultsActivity extends NavigationActivity
+public class FavoritesActivity extends NavigationActivity
                             implements ListFragment.OnOffersListInteractionListener,
                                        DetailFragment.OnDetailInteractionListener,
                                        BaseController.BaseControllerListener,
-                                       IListActivity {
+                                       IListActivity{
 
     private FragmentManager mManager;
     private ListFragment mList = new ListFragment();
@@ -40,12 +40,8 @@ public class ResultsActivity extends NavigationActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.result_main);
-        mActivity = RESULTS_ACTIVITY;
+        mActivity = FAVORITES_ACTIVITY;
         initUI();
-
-        Intent intent = getIntent();
-        mSearch = (Search) intent.getSerializableExtra(MainActivity.SEARCH_INTENT_EXTRA);
-        mAction = intent.getStringExtra(NAVIGATION_INTENT_EXTRA);
 
         mManager = getFragmentManager();
         FragmentTransaction transaction = mManager.beginTransaction();
@@ -102,13 +98,8 @@ public class ResultsActivity extends NavigationActivity
             mList.setProgressBarVisibility(View.VISIBLE);
             mController = new ResultController(this);
 
-            if (mAction.equals(RESULTS_ACTION)) {
-                mController.fetchOffers(mSearch);
-                getSupportActionBar().setTitle(R.string.menu_nav_results);
-            } else if (mAction.equals(FAVORITES_ACTION)) {
-                mController.getFavorites();
-                getSupportActionBar().setTitle(R.string.menu_nav_favorites);
-            }
+            mController.getFavorites();
+            getSupportActionBar().setTitle(R.string.menu_nav_favorites);
         }else{
             mList.setOfferList(mOffers);
         }
@@ -131,25 +122,5 @@ public class ResultsActivity extends NavigationActivity
     @Override
     public void onErrorEvent(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if(mOffers == null) {
-            mList.setProgressBarVisibility(View.VISIBLE);
-            mController = new ResultController(this);
-
-            if (mAction.equals(RESULTS_ACTION)) {
-                mController.fetchOffers(mSearch);
-                getSupportActionBar().setTitle(R.string.menu_nav_results);
-            } else if (mAction.equals(FAVORITES_ACTION)) {
-                mController.getFavorites();
-                getSupportActionBar().setTitle(R.string.menu_nav_favorites);
-            }
-        }else{
-            mList.setOfferList(mOffers);
-        }
     }
 }

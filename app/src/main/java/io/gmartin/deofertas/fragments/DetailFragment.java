@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.activities.ResultsActivity;
+import io.gmartin.deofertas.interfaces.IListActivity;
 import io.gmartin.deofertas.models.Offer;
 
 public class DetailFragment extends Fragment {
@@ -47,7 +48,7 @@ public class DetailFragment extends Fragment {
 
         mCloseBtn = mRoot.findViewById(R.id.btnClose);
 
-        if (((ResultsActivity)mContext).getIsPort()) {
+        if (((IListActivity)mContext).getIsPort()) {
             mCloseBtn.setVisibility(View.VISIBLE);
         } else {
             mCloseBtn.setVisibility(View.GONE);
