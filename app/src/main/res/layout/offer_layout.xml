@@ -39,7 +39,7 @@
                         android:id="@+id/favorite_image"
                         android:layout_width="@dimen/item_favorite_image_dimen"
                         android:layout_height="@dimen/item_favorite_image_dimen"
-                        android:src="@drawable/ic_menu_camera"
+                        android:src="@drawable/ic_favorite_black_24dp"
                         android:visibility="gone"/>
 
                     <android.support.v7.widget.AppCompatTextView

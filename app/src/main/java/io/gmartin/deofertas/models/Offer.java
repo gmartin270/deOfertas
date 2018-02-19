@@ -33,6 +33,9 @@ public class Offer {
     @SerializedName("image")
     private String imageStr;
 
+    @SerializedName("link")
+    private String link;
+
     public Long getId() {
         return id;
     }
@@ -103,5 +106,13 @@ public class Offer {
 
     public byte[] getImage() {
         return Base64.decode(imageStr, android.util.Base64.DEFAULT);
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

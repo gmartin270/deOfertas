@@ -4,7 +4,6 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +62,7 @@ public class ImagePagerFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_suggested, container, false);
+        View view = inflater.inflate(R.layout.fragment_image_pager, container, false);
         mPager = view.findViewById(R.id.pager);
         mIndicator = view.findViewById(R.id.indicator);
 

@@ -135,6 +135,10 @@ public class DetailFragment extends Fragment {
         price.setText(String.format("%.2f", mOffer.getPrice()));
         store.setText(mOffer.getStoreName());
 
+        if (mOffer.isFavorite()) {
+            mFavoriteButton.setImageResource(R.drawable.ic_favorite_black_24dp);
+        }
+
         images_layout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {

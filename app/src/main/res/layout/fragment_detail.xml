@@ -56,17 +56,11 @@
                 android:id="@+id/favorite_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_menu_camera"
+                android:src="@drawable/ic_favorite_border_black_24dp"
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@string/favorite_content_description"/>
 
         </RelativeLayout>
-
-        <android.support.v7.widget.LinearLayoutCompat
-            android:id="@+id/images_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtDescription"
@@ -76,6 +70,12 @@
             android:layout_marginStart="@dimen/detail_text_margin_start"
             android:scrollbars="vertical"
             android:inputType="textMultiLine"/>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/images_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
 
     </android.support.v7.widget.LinearLayoutCompat>
 
