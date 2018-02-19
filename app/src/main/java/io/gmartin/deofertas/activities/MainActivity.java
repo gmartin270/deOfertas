@@ -13,20 +13,19 @@ import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.controllers.ResultController;
 import io.gmartin.deofertas.fragments.SearchFragment;
 import io.gmartin.deofertas.fragments.SettingsFragment;
-import io.gmartin.deofertas.fragments.SuggestedFragment;
+import io.gmartin.deofertas.fragments.ImagePagerFragment;
 import io.gmartin.deofertas.models.OfferImage;
 import io.gmartin.deofertas.models.Search;
 
 public class MainActivity extends NavigationActivity
         implements SearchFragment.OnSearchInteractionListener,
-                   ResultController.ResultControllerListener,
-                   SuggestedFragment.OnSuggestedInteractionListener {
+                   ResultController.ResultControllerListener {
 
     public static final String SEARCH_INTENT_EXTRA = "io.gmartin.deofertas.activities.search_intent_extra";
     private FragmentManager mManager;
     private SearchFragment mSearchFragment = new SearchFragment();
     private SettingsFragment mSettingsFragment = new SettingsFragment();
-    private SuggestedFragment mSuggestedFragment = new SuggestedFragment();
+    private ImagePagerFragment mImagePagerFragment = new ImagePagerFragment();
     private int mContainer;
     private List<OfferImage> mOfferImages;
     private ResultController mResultController;
@@ -59,7 +58,8 @@ public class MainActivity extends NavigationActivity
 
         if (mAction == null || mAction.equals(SUGGEST_ACTION)) {
             mAction = SUGGEST_ACTION;
-            fragment = mSuggestedFragment;
+            fragment = mImagePagerFragment;
+            getSuggestions();
         } else if (mAction.equals(SEARCH_ACTION)) {
             mAction = SEARCH_ACTION;
             fragment = mSearchFragment;
@@ -82,25 +82,11 @@ public class MainActivity extends NavigationActivity
     }
 
     @Override
-    public void onDataRequested() {
-        if (mOfferImages == null) {
-            //mList.setProgressBarVisibility(View.VISIBLE);
-            mResultController = new ResultController(this);
-
-            //TODO: Implements Correctly suggests
-            mResultController.fetchOfferImages(new Long(1));
-
-        } else {
-            mSuggestedFragment.setOfferImages(mOfferImages);
-        }
-    }
-
-    @Override
     public void onImageDataReceived(List<OfferImage> offerImages) {
         mOfferImages = offerImages;
 
         if (mOfferImages != null && mOfferImages.size() > 0) {
-            mSuggestedFragment.setOfferImages(mOfferImages);
+            mImagePagerFragment.setOfferImages(mOfferImages);
 
             //TODO: Implements progress bar for images.
             //mList.setProgressBarVisibility(View.GONE);
@@ -116,5 +102,12 @@ public class MainActivity extends NavigationActivity
         intent.putExtra(SEARCH_INTENT_EXTRA, search);
         intent.putExtra(NAVIGATION_INTENT_EXTRA, RESULTS_ACTION);
         startActivity(intent);
+    }
+
+    private void getSuggestions() {
+        mResultController = new ResultController(this);
+
+        //TODO: Implements Correctly suggests
+        mResultController.fetchOfferImages(new Long(1));
     }
 }

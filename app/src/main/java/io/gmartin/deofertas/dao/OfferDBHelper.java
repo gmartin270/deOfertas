@@ -81,6 +81,7 @@ public class OfferDBHelper extends SQLiteOpenHelper {
             for (int i = 0; i < cursor.getCount(); i++) {
                 offer = rowToOffer(cursor);
                 offers.add(offer);
+                cursor.moveToNext();
             }
         }
 

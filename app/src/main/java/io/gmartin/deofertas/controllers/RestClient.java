@@ -41,8 +41,8 @@ public class RestClient {
     }
 
     public interface Result{
-        public void onResult(Object result);
-        public void onError(String message);
+        void onResult(Object result);
+        void onError(String message);
     }
 
     private static class RestTask extends AsyncTask<Config, Void, BGResult>{

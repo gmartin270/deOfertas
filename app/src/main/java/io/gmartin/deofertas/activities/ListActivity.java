@@ -15,12 +15,14 @@ import io.gmartin.deofertas.controllers.ResultController;
 import io.gmartin.deofertas.fragments.DetailFragment;
 import io.gmartin.deofertas.fragments.ListFragment;
 import io.gmartin.deofertas.models.Offer;
+import io.gmartin.deofertas.models.OfferImage;
 import io.gmartin.deofertas.models.Search;
 
 public abstract class ListActivity extends NavigationActivity
                             implements ListFragment.OnOffersListInteractionListener,
                                        DetailFragment.OnDetailInteractionListener,
-                                       BaseController.BaseControllerListener {
+                                       BaseController.BaseControllerListener,
+                                       ResultController.ResultControllerListener {
 
     private FragmentManager mManager;
     protected ListFragment mList = new ListFragment();
@@ -28,10 +30,6 @@ public abstract class ListActivity extends NavigationActivity
     protected List<Offer> mOffers;
     protected ResultController mController;
     protected Search mSearch;
-
-    public List<Offer> getOfferList(){
-        return mOffers;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,5 +111,16 @@ public abstract class ListActivity extends NavigationActivity
     @Override
     public void onErrorEvent(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onImageDataRequested(Long id) {
+        mController = new ResultController(this);
+        mController.fetchOfferImages(id);
+    }
+
+    @Override
+    public void onImageDataReceived(List<OfferImage> offerImages) {
+        mDetail.setOfferImages(offerImages);
     }
 }

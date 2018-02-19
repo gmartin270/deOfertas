@@ -62,13 +62,11 @@
 
         </RelativeLayout>
 
-
-        <ImageView
-            android:id="@+id/imgArticle"
-            android:layout_width="@dimen/detail_image_width"
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/images_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/detail_text_margin_bottom"
-            android:layout_marginStart="@dimen/detail_text_margin_start"/>
+            android:orientation="horizontal" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtDescription"

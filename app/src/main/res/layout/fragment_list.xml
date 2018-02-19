@@ -6,19 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<android.support.v7.widget.ListViewCompat
+    <android.support.v7.widget.ListViewCompat
         android:id="@+id/listOffers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/layout_list_margin"
         android:divider="@color/colorPrimary"
-        android:dividerHeight="1dp"/>-->
+        android:dividerHeight="1dp"/>
 
-    <android.support.v7.widget.RecyclerView
+    <!--<android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listOffers"
-        android:layout_margin="@dimen/layout_list_margin"/>
+        android:layout_margin="@dimen/layout_list_margin"/>-->
 
     <ProgressBar
         android:id="@+id/progressBar"

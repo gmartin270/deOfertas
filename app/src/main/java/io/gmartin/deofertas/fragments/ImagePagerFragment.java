@@ -1,8 +1,8 @@
 package io.gmartin.deofertas.fragments;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,30 +20,36 @@ import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.adapters.SlidingImageAdapter;
 import io.gmartin.deofertas.models.OfferImage;
 
-public class SuggestedFragment extends Fragment {
+public class ImagePagerFragment extends DialogFragment {
 
-    public interface OnSuggestedInteractionListener {
-        void onDataRequested();
-    }
-
-    private Context mContext;
+    private static Context mContext;
     private ViewPager mPager;
+    private CirclePageIndicator mIndicator;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
-    private List<OfferImage> mOfferImages;
-    private OnSuggestedInteractionListener mListener;
+    private static List<OfferImage> mOfferImages;
     private SlidingImageAdapter mAdapter;
+    private static ImagePagerFragment mInstance;
 
-    public SuggestedFragment() {
+    public static ImagePagerFragment getInstance(Context context, List<OfferImage> images) {
+        if (mInstance == null) {
+            mInstance = new ImagePagerFragment();
+        }
+
+        mContext = context;
+        mOfferImages = images;
+
+        return mInstance;
+    }
+
+    public ImagePagerFragment() {
         // Required empty public constructor
     }
 
     public void setOfferImages(List<OfferImage> offerImages) {
         mOfferImages = offerImages;
 
-        mPager = getActivity().findViewById(R.id.pager);
         mAdapter = new SlidingImageAdapter(getActivity(), mOfferImages);
-        //mAdapter.updateList(mOfferImages);
         init();
     }
 
@@ -59,36 +64,25 @@ public class SuggestedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_suggested, container, false);
+        mPager = view.findViewById(R.id.pager);
+        mIndicator = view.findViewById(R.id.indicator);
 
-        mOfferImages = new ArrayList<>();
-
-        if (mContext instanceof OnSuggestedInteractionListener) {
-            mListener = (OnSuggestedInteractionListener) mContext;
+        if(mOfferImages != null) {
+            setOfferImages(mOfferImages);
         }
 
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mListener.onDataRequested();
-
-
-    }
-
     private void init() {
         mPager.setAdapter(mAdapter);
 
-        CirclePageIndicator indicator = getActivity().findViewById(R.id.indicator);
-
-        indicator.setViewPager(mPager);
+        mIndicator.setViewPager(mPager);
 
         final float density = getResources().getDisplayMetrics().density;
 
         //Set circle indicator radius
-        indicator.setRadius(5 * density);
+        mIndicator.setRadius(5 * density);
 
         NUM_PAGES = mOfferImages.size();
 
@@ -112,7 +106,7 @@ public class SuggestedFragment extends Fragment {
         }, 3000, 3000);
 
         // Pager listener over indicator
-        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 currentPage = position;

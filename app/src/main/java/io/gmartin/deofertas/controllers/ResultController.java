@@ -183,11 +183,12 @@ public class ResultController extends BaseController {
         }
     }
 
-    public void getFavorites() {
+    public List<Offer> getFavorites() {
         try {
-            mListener.onDataReceived(mDB.readAllOffers());
+            return mDB.readAllOffers();
         } catch (Exception e) {
             mListener.onErrorEvent(e.getMessage());
+            return null;
         }
     }
 }
