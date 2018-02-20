@@ -67,6 +67,9 @@ public class MainActivity extends NavigationActivity
         } else if (mAction.equals(SETTINGS_ACTION)) {
             fragment = mSettingsFragment;
             getSupportActionBar().setTitle(R.string.menu_nav_settings);
+        } else if (mAction.equals(HOME_ACTION)) {
+            fragment = mImagePagerFragment;
+            getSupportActionBar().setTitle(R.string.menu_nav_home);
         }
 
         transaction.replace(mContainer, fragment);

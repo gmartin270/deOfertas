@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.fragments.ImagePagerFragment;
 import io.gmartin.deofertas.fragments.SearchFragment;
 import io.gmartin.deofertas.fragments.SettingsFragment;
 
@@ -29,6 +30,7 @@ public class NavigationActivity extends AppCompatActivity
     protected static final String RESULTS_ACTION = "io.gmartin.deofertas.activities.result_action";
     protected static final String FAVORITES_ACTION = "io.gmartin.deofertas.activities.favorites_action";
     protected static final String SETTINGS_ACTION = "io.gmartin.deofertas.activities.settings_action";
+    protected static final String HOME_ACTION = "io.gmartin.deofertas.activities.home_action";
     protected static final String NAVIGATION_INTENT_EXTRA = "io.gmartin.deofertas.activities.navigation_intent_extra";
     protected static final String ACTION = "action";
     protected static final String TITLE_EXTRA = "io.gmartin.deofertas.activities.title_extra";
@@ -116,6 +118,8 @@ public class NavigationActivity extends AppCompatActivity
             handleFavoritesNav();
         } else if (id == R.id.nav_settings) {
             handleSettingNav();
+        } else if (id == R.id.nav_home) {
+            handleHomeNav();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -170,5 +174,23 @@ public class NavigationActivity extends AppCompatActivity
     private void handleFavoritesNav() {
         Intent intent = new Intent(this, FavoritesActivity.class);
         startActivity(intent);
+    }
+
+    private void handleHomeNav() {
+        if (mActivity.equals(MAIN_ACTIVITY)) {
+            if(!mAction.equals(HOME_ACTION)) {
+                mAction = HOME_ACTION;
+                getSupportActionBar().setTitle(R.string.menu_nav_home);
+
+                ImagePagerFragment pager = new ImagePagerFragment();
+                FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                transaction.replace(R.id.container, pager);
+                transaction.commit();
+            }
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(NAVIGATION_INTENT_EXTRA, HOME_ACTION);
+            startActivity(intent);
+        }
     }
 }
