@@ -19,13 +19,12 @@ import io.gmartin.deofertas.fragments.ImagePagerFragment;
 import io.gmartin.deofertas.fragments.SearchFragment;
 import io.gmartin.deofertas.fragments.SettingsFragment;
 
-public class NavigationActivity extends AppCompatActivity
+public abstract class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     protected static final String MAIN_ACTIVITY = "io.gmartin.deofertas.activities.main_activity";
     protected static final String RESULTS_ACTIVITY = "io.gmartin.deofertas.activities.results_activity";
     protected static final String FAVORITES_ACTIVITY = "io.gmartin.deofertas.activities.favorites_activity";
-    protected static final String SUGGEST_ACTION = "io.gmartin.deofertas.activities.suggest_action";
     protected static final String SEARCH_ACTION = "io.gmartin.deofertas.activities.search_action";
     protected static final String RESULTS_ACTION = "io.gmartin.deofertas.activities.result_action";
     protected static final String FAVORITES_ACTION = "io.gmartin.deofertas.activities.favorites_action";
@@ -193,4 +192,6 @@ public class NavigationActivity extends AppCompatActivity
             startActivity(intent);
         }
     }
+
+    protected abstract void initFragment();
 }

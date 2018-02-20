@@ -6,20 +6,24 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
 
 import java.util.List;
 
 import io.gmartin.deofertas.R;
+import io.gmartin.deofertas.adapters.SlidingSuggestionAdapter;
 import io.gmartin.deofertas.controllers.ResultController;
+import io.gmartin.deofertas.controllers.SuggestionController;
 import io.gmartin.deofertas.fragments.SearchFragment;
 import io.gmartin.deofertas.fragments.SettingsFragment;
 import io.gmartin.deofertas.fragments.ImagePagerFragment;
 import io.gmartin.deofertas.models.OfferImage;
 import io.gmartin.deofertas.models.Search;
+import io.gmartin.deofertas.models.SuggestedOffer;
 
 public class MainActivity extends NavigationActivity
         implements SearchFragment.OnSearchInteractionListener,
-                   ResultController.ResultControllerListener {
+                   SuggestionController.SuggestionControllerListener {
 
     public static final String SEARCH_INTENT_EXTRA = "io.gmartin.deofertas.activities.search_intent_extra";
     private FragmentManager mManager;
@@ -27,7 +31,7 @@ public class MainActivity extends NavigationActivity
     private SettingsFragment mSettingsFragment = new SettingsFragment();
     private ImagePagerFragment mImagePagerFragment = new ImagePagerFragment();
     private int mContainer;
-    private List<OfferImage> mOfferImages;
+    private List<SuggestedOffer> mSuggestedOffers;
     private ResultController mResultController;
 
     @Override
@@ -56,24 +60,18 @@ public class MainActivity extends NavigationActivity
         mManager = getFragmentManager();
         FragmentTransaction transaction = mManager.beginTransaction();
 
-        if (mAction == null || mAction.equals(SUGGEST_ACTION)) {
-            mAction = SUGGEST_ACTION;
+        if (mAction == null || mAction.equals(HOME_ACTION)) {
             fragment = mImagePagerFragment;
-            getSuggestions();
         } else if (mAction.equals(SEARCH_ACTION)) {
-            mAction = SEARCH_ACTION;
             fragment = mSearchFragment;
-            mToolbar.getMenu().removeItem(R.id.action_search);
         } else if (mAction.equals(SETTINGS_ACTION)) {
             fragment = mSettingsFragment;
-            getSupportActionBar().setTitle(R.string.menu_nav_settings);
-        } else if (mAction.equals(HOME_ACTION)) {
-            fragment = mImagePagerFragment;
-            getSupportActionBar().setTitle(R.string.menu_nav_home);
         }
 
         transaction.replace(mContainer, fragment);
         transaction.commit();
+
+        initFragment();
     }
 
     @Override
@@ -82,18 +80,6 @@ public class MainActivity extends NavigationActivity
         intent.putExtra(SEARCH_INTENT_EXTRA, search);
         intent.putExtra(NAVIGATION_INTENT_EXTRA, RESULTS_ACTION);
         startActivity(intent);
-    }
-
-    @Override
-    public void onImageDataReceived(List<OfferImage> offerImages) {
-        mOfferImages = offerImages;
-
-        if (mOfferImages != null && mOfferImages.size() > 0) {
-            mImagePagerFragment.setOfferImages(mOfferImages);
-
-            //TODO: Implements progress bar for images.
-            //mList.setProgressBarVisibility(View.GONE);
-        }
     }
 
     private void handleSearch(Intent intentReceived) {
@@ -108,9 +94,38 @@ public class MainActivity extends NavigationActivity
     }
 
     private void getSuggestions() {
-        mResultController = new ResultController(this);
+        SuggestionController controller = new SuggestionController(this);
+        controller.fetchSuggestions();
+    }
 
-        //TODO: Implements Correctly suggests
-        mResultController.fetchOfferImages(new Long(1));
+    @Override
+    public void onSuggestionDataReceived(List<SuggestedOffer> suggestedOffers) {
+        mSuggestedOffers = suggestedOffers;
+
+        if (mSuggestedOffers != null && mSuggestedOffers.size() > 0) {
+            PagerAdapter adapter = new SlidingSuggestionAdapter(this, mSuggestedOffers);
+            mImagePagerFragment.setAdapter(adapter);
+
+            //TODO: Implements progress bar for images.
+            //mList.setProgressBarVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onLastSuggestionDataReceived(SuggestedOffer suggestedOffer) {
+
+    }
+
+    @Override
+    protected void initFragment() {
+        if (mAction == null || mAction.equals(HOME_ACTION)) {
+            mAction = HOME_ACTION;
+            getSuggestions();
+        } else if (mAction.equals(SEARCH_ACTION)) {
+            mAction = SEARCH_ACTION;
+            mToolbar.getMenu().removeItem(R.id.action_search);
+        } else if (mAction.equals(SETTINGS_ACTION)) {
+            getSupportActionBar().setTitle(R.string.menu_nav_settings);
+        }
     }
 }

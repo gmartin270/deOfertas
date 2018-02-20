@@ -18,6 +18,7 @@ public class SuggestionController extends BaseController {
     private SuggestionControllerListener mSuggestionControllerListener;
 
     public interface SuggestionControllerListener {
+        void onSuggestionDataReceived(List<SuggestedOffer> suggestedOffers);
         void onLastSuggestionDataReceived(SuggestedOffer suggestedOffer);
     }
 
@@ -55,7 +56,7 @@ public class SuggestionController extends BaseController {
                         }
                     }
 
-                    mListener.onDataReceived(suggestionsList);
+                    mSuggestionControllerListener.onSuggestionDataReceived(suggestionsList);
                 }
 
                 @Override

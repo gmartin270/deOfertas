@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,17 +28,16 @@ public class ImagePagerFragment extends DialogFragment {
     private CirclePageIndicator mIndicator;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
-    private static List<OfferImage> mOfferImages;
-    private SlidingImageAdapter mAdapter;
+    private static PagerAdapter mAdapter;
     private static ImagePagerFragment mInstance;
 
-    public static ImagePagerFragment getInstance(Context context, List<OfferImage> images) {
+    public static ImagePagerFragment getInstance(Context context, PagerAdapter adapter) {
         if (mInstance == null) {
             mInstance = new ImagePagerFragment();
         }
 
         mContext = context;
-        mOfferImages = images;
+        mAdapter = adapter;
 
         return mInstance;
     }
@@ -46,10 +46,15 @@ public class ImagePagerFragment extends DialogFragment {
         // Required empty public constructor
     }
 
-    public void setOfferImages(List<OfferImage> offerImages) {
+    /*public void setOfferImages(List<OfferImage> offerImages) {
         mOfferImages = offerImages;
 
         mAdapter = new SlidingImageAdapter(getActivity(), mOfferImages);
+        init();
+    }*/
+
+    public void setAdapter(PagerAdapter adapter){
+        mAdapter = adapter;
         init();
     }
 
@@ -67,8 +72,8 @@ public class ImagePagerFragment extends DialogFragment {
         mPager = mView.findViewById(R.id.pager);
         mIndicator = mView.findViewById(R.id.indicator);
 
-        if(mOfferImages != null) {
-            setOfferImages(mOfferImages);
+        if(mAdapter != null && mAdapter.getCount() > 0) {
+            init();
         }
 
         return mView;
@@ -84,7 +89,7 @@ public class ImagePagerFragment extends DialogFragment {
         //Set circle indicator radius
         mIndicator.setRadius(5 * density);
 
-        NUM_PAGES = mOfferImages.size();
+        NUM_PAGES = mAdapter.getCount();
 
         // Auto start of viewpager
         final Handler handler = new Handler();

@@ -19,11 +19,13 @@ import java.util.List;
 
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.activities.ListActivity;
+import io.gmartin.deofertas.adapters.SlidingImageAdapter;
 import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.OfferImage;
 
 public class DetailFragment extends Fragment {
 
+    private final static String DIALOG = "dialog";
     private View mRoot;
     private Offer mOffer = null;
     private OnDetailInteractionListener mListener;
@@ -152,8 +154,9 @@ public class DetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 try {
-                    DialogFragment newFragment = ImagePagerFragment.getInstance(mContext, mOfferImages);
-                    newFragment.show(getChildFragmentManager(), "dialog");
+                    SlidingImageAdapter adapter = new SlidingImageAdapter(mContext, mOfferImages);
+                    DialogFragment imagePagerFragment = ImagePagerFragment.getInstance(mContext, adapter);
+                    imagePagerFragment.show(getChildFragmentManager(), DIALOG);
 
                 }catch (Exception e){
 

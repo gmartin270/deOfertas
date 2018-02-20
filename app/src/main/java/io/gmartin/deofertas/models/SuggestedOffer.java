@@ -14,10 +14,10 @@ public class SuggestedOffer {
     @SerializedName("offer_id")
     private Long offer_id;
 
-    @SerializedName("suggestion_date")
+    @SerializedName("suggestion_date_str")
     private Date suggestionDate;
 
-    @SerializedName("image")
+    @SerializedName("suggested_image_str")
     private String imageStr;
 
     public Long getId() {

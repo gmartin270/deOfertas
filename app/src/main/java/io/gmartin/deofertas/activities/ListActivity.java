@@ -123,4 +123,9 @@ public abstract class ListActivity extends NavigationActivity
     public void onImageDataReceived(List<OfferImage> offerImages) {
         mDetail.setOfferImages(offerImages);
     }
+
+    @Override
+    protected void initFragment() {
+
+    }
 }
