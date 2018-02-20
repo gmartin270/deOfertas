@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import io.gmartin.deofertas.activities.ListActivity;
 import io.gmartin.deofertas.adapters.SlidingImageAdapter;
 import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.OfferImage;
+import io.gmartin.deofertas.utils.Conversions;
 
 public class DetailFragment extends Fragment {
 
@@ -48,6 +50,15 @@ public class DetailFragment extends Fragment {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
                 ImageView imageView = new ImageView(mContext);
                 imageView.setImageBitmap(bitmap);
+
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                int marginTop = Conversions.dpToPx(mContext.getResources().getDimension(R.dimen.detail_image_margin_top), mContext);
+                int marginBottom = Conversions.dpToPx(mContext.getResources().getDimension(R.dimen.detail_image_margin_bottom), mContext);
+                int marginLeft = Conversions.dpToPx(mContext.getResources().getDimension(R.dimen.detail_image_margin_left), mContext);
+                int marginRight = Conversions.dpToPx(mContext.getResources().getDimension(R.dimen.detail_image_margin_right), mContext);
+                lp.setMargins(marginLeft, marginTop, marginRight, marginBottom);
+                imageView.setLayoutParams(lp);
+
                 images_layout.addView(imageView);
             }
         }
