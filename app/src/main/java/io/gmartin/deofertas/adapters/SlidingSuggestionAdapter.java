@@ -52,6 +52,13 @@ public class SlidingSuggestionAdapter extends PagerAdapter {
             byte[] image = mSuggestedOffers.get(position).getImage();
             Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
             imageView.setImageBitmap(bitmap);
+
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }
 
         view.addView(imageLayout, 0);

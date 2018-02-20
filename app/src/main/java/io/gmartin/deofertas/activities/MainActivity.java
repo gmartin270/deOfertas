@@ -7,11 +7,13 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
+import android.widget.Toast;
 
 import java.util.List;
 
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.adapters.SlidingSuggestionAdapter;
+import io.gmartin.deofertas.controllers.BaseController;
 import io.gmartin.deofertas.controllers.ResultController;
 import io.gmartin.deofertas.controllers.SuggestionController;
 import io.gmartin.deofertas.fragments.SearchFragment;
@@ -22,7 +24,8 @@ import io.gmartin.deofertas.models.Search;
 import io.gmartin.deofertas.models.SuggestedOffer;
 
 public class MainActivity extends NavigationActivity
-        implements SearchFragment.OnSearchInteractionListener,
+        implements BaseController.BaseControllerListener,
+                   SearchFragment.OnSearchInteractionListener,
                    SuggestionController.SuggestionControllerListener {
 
     public static final String SEARCH_INTENT_EXTRA = "io.gmartin.deofertas.activities.search_intent_extra";
@@ -109,6 +112,16 @@ public class MainActivity extends NavigationActivity
             //TODO: Implements progress bar for images.
             //mList.setProgressBarVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onErrorEvent(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onDataReceived(Object data) {
+
     }
 
     @Override

@@ -1,11 +1,9 @@
 package io.gmartin.deofertas.controllers;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
@@ -72,7 +70,7 @@ public class RestClient {
 
                 result.result = IOUtils.toString(conn.getInputStream());
             }catch (IOException e) {
-                result.error = e.getMessage();
+                result.error = mContext.getResources().getString(R.string.no_internet_connection);
             }finally {
                 if(writer != null) {
                     try {
