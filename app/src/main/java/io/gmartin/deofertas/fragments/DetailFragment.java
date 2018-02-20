@@ -96,6 +96,13 @@ public class DetailFragment extends Fragment {
             public void onClick(View view) {
                 try {
                     mOffer.setFavorite(!mOffer.isFavorite());
+
+                    if (mOffer.isFavorite()) {
+                        mFavoriteButton.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    } else {
+                        mFavoriteButton.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    }
+
                     mListener.onFavoriteButtonClick(mOffer);
                 }catch (Exception e){
 
@@ -137,6 +144,8 @@ public class DetailFragment extends Fragment {
 
         if (mOffer.isFavorite()) {
             mFavoriteButton.setImageResource(R.drawable.ic_favorite_black_24dp);
+        } else {
+            mFavoriteButton.setImageResource(R.drawable.ic_favorite_border_black_24dp);
         }
 
         images_layout.setOnClickListener(new View.OnClickListener(){

@@ -37,8 +37,10 @@
     <dimen name="detail_text_margin_bottom">4dp</dimen>
     <dimen name="detail_text_margin_start">4dp</dimen>
 
-    <!-- Suggested layout -->
+    <!-- Image Pager layout -->
     <dimen name="slider_indicator_padding">10dp</dimen>
+    <dimen name="slider_height">150dp</dimen>
+    <dimen name="slider_width">150dp</dimen>
 
     <!-- Slider item Image -->
     <dimen name="slider_item_image_padding">4dp</dimen>

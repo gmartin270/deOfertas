@@ -31,7 +31,7 @@
 
     <string name="action_search">Search offers</string>
 
-    <string name="menu_nav_search">Search</string>
+    <string name="menu_nav_search">Advanced Search</string>
     <string name="menu_nav_init">Init</string>
     <string name="menu_nav_favorites">Favorites</string>
     <string name="menu_nav_settings">Settings</string>

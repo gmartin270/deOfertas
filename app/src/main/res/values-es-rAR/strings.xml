@@ -29,7 +29,7 @@
 
     <string name="action_search">Buscar ofertas</string>
 
-    <string name="menu_nav_search">Búsqueda</string>
+    <string name="menu_nav_search">Búsqueda avanzada</string>
     <string name="menu_nav_init">Inicio</string>
     <string name="menu_nav_favorites">Favoritos</string>
     <string name="menu_nav_settings">Configuración</string>

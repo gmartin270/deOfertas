@@ -22,6 +22,7 @@ import io.gmartin.deofertas.models.OfferImage;
 public class ImagePagerFragment extends DialogFragment {
 
     private static Context mContext;
+    private View mView;
     private ViewPager mPager;
     private CirclePageIndicator mIndicator;
     private static int currentPage = 0;
@@ -62,15 +63,15 @@ public class ImagePagerFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_image_pager, container, false);
-        mPager = view.findViewById(R.id.pager);
-        mIndicator = view.findViewById(R.id.indicator);
+        mView = inflater.inflate(R.layout.fragment_image_pager, container, false);
+        mPager = mView.findViewById(R.id.pager);
+        mIndicator = mView.findViewById(R.id.indicator);
 
         if(mOfferImages != null) {
             setOfferImages(mOfferImages);
         }
 
-        return view;
+        return mView;
     }
 
     private void init() {
@@ -121,5 +122,25 @@ public class ImagePagerFragment extends DialogFragment {
 
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (getDialog() == null) {
+            return;
+        }
+
+        int dialogWidth = dpToPx(mView.getResources().getDimension(R.dimen.slider_width));
+        int dialogHeight = dpToPx(mView.getResources().getDimension(R.dimen.slider_height));
+        getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
+    }
+
+    public static int dpToPx(float dp) {
+        float density = mContext.getResources()
+                .getDisplayMetrics()
+                .density;
+        return Math.round(dp * density);
     }
 }
