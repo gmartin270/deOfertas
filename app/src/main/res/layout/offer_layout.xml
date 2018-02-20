@@ -57,6 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/item_margin_bottom"
+                    android:layout_marginLeft="@dimen/item_margin_left"
                     android:textSize="@dimen/item_price_text_size"
                     android:text="@string/article_price_label" />
 
@@ -64,6 +65,7 @@
                     android:id="@+id/txtStore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/item_margin_left"
                     android:text="@string/article_store_label" />
 
             </android.support.v7.widget.LinearLayoutCompat>
