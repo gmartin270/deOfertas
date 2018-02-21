@@ -7,99 +7,106 @@
     android:layout_margin="@dimen/layout_detail_margin"
     tools:context="io.gmartin.deofertas.fragments.DetailFragment">
 
-    <android.support.v7.widget.LinearLayoutCompat
-        android:id="@+id/data_layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txtTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/detail_text_margin_bottom"
-            android:layout_marginStart="@dimen/detail_text_margin_start"
-            android:text="@string/article_description_label"
-            android:textStyle="bold"
-            android:textSize="@dimen/detail_desc_text_size"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/detail_text_margin_start"
-            android:id="@+id/relative_layout_1">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtPrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/detail_text_margin_bottom"
-                    android:text="@string/article_price_label"
-                    android:textSize="@dimen/detail_price_text_size"/>
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtStore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/detail_text_margin_bottom"
-                    android:text="@string/article_store_label"
-                    app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_alignParentEnd="true">
-
-                <ImageButton
-                    android:id="@+id/favorite_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_favorite_border_black_24dp"
-                    android:contentDescription="@string/favorite_content_description"/>
-
-                <ImageButton
-                    android:id="@+id/buy_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_shopping_cart_black_24dp"
-                    android:contentDescription="@string/favorite_content_description"/>
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/txtDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/detail_text_margin_bottom"
-            android:layout_marginStart="@dimen/detail_text_margin_start"
-            android:scrollbars="vertical"
-            android:inputType="textMultiLine"/>
+        android:orientation="vertical"
+        android:scrollbars="vertical">
 
         <android.support.v7.widget.LinearLayoutCompat
-            android:id="@+id/images_layout"
+            android:id="@+id/data_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" />
+            android:orientation="vertical">
 
-    </android.support.v7.widget.LinearLayoutCompat>
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/detail_text_margin_bottom"
+                android:layout_marginStart="@dimen/detail_text_margin_start"
+                android:text="@string/article_description_label"
+                android:textStyle="bold"
+                android:textSize="@dimen/detail_desc_text_size"/>
 
-    <Button
-        android:id="@+id/btnClose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/article_close_button_label"
-        android:visibility="visible"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/detail_text_margin_start"
+                android:id="@+id/relative_layout_1">
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/detail_text_margin_bottom"
+                        android:text="@string/article_price_label"
+                        android:textSize="@dimen/detail_price_text_size"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtStore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/detail_text_margin_bottom"
+                        android:text="@string/article_store_label"
+                        app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentEnd="true">
+
+                    <ImageButton
+                        android:id="@+id/favorite_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_favorite_border_black_24dp"
+                        android:contentDescription="@string/favorite_content_description"/>
+
+                    <ImageButton
+                        android:id="@+id/buy_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_shopping_cart_black_24dp"
+                        android:contentDescription="@string/favorite_content_description"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/detail_description_margin_top"
+                android:layout_marginBottom="@dimen/detail_text_margin_bottom"
+                android:layout_marginStart="@dimen/detail_text_margin_start"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"/>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/images_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <Button
+            android:id="@+id/btnClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/article_close_button_label"
+            android:visibility="visible"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"/>
+    </LinearLayout>
 </RelativeLayout>
 

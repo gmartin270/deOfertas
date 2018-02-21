@@ -54,7 +54,8 @@ public class DetailFragment extends Fragment {
                 ImageView imageView = new ImageView(mContext);
                 imageView.setImageBitmap(bitmap);
 
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                int width = Conversions.dpToPx(mContext.getResources().getDimension(R.dimen.detail_image_preview_width), mContext);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
                 int marginTop = Conversions.dpToPx(mContext.getResources().getDimension(R.dimen.detail_image_margin_top), mContext);
                 int marginBottom = Conversions.dpToPx(mContext.getResources().getDimension(R.dimen.detail_image_margin_bottom), mContext);
                 int marginLeft = Conversions.dpToPx(mContext.getResources().getDimension(R.dimen.detail_image_margin_left), mContext);
@@ -160,15 +161,19 @@ public class DetailFragment extends Fragment {
     }
 
     private void updateOffer(){
+        mListener.onImageDataRequested(mOffer.getId());
+
         TextView title = mRoot.findViewById(R.id.txtTitle);
         TextView store = mRoot.findViewById(R.id.txtStore);
         TextView price = mRoot.findViewById(R.id.txtPrice);
+        TextView description = mRoot.findViewById(R.id.txtDescription);
         LinearLayoutCompat images_layout = mRoot.findViewById(R.id.images_layout);
         images_layout.removeAllViews();
 
         title.setText(mOffer.getTitle());
         price.setText(String.format("%.2f", mOffer.getPrice()));
         store.setText(mOffer.getStoreName());
+        description.setText(mOffer.getDesc());
 
         if (mOffer.isFavorite()) {
             mFavoriteButton.setImageResource(R.drawable.ic_favorite_black_24dp);
