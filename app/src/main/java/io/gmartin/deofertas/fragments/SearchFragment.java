@@ -100,34 +100,42 @@ public class SearchFragment extends Fragment implements BaseController.BaseContr
         List<Integer> storesIndexes;
         Search search = new Search();
 
-        search.setText(mSearchBox.getText().toString());
-
-        if (mPriceFrom.getText().toString().length() > 0) {
-            priceFrom = Double.valueOf(mPriceFrom.getText().toString());
-            search.setPriceFrom(priceFrom);
-        }
-
-        if (mPriceTo.getText().toString().length() > 0) {
-            priceTo = Double.valueOf(mPriceTo.getText().toString());
-            search.setPriceTo(priceTo);
-        }
-
-        if (mStoreSpinner.getCountItemsSelected() > 0) {
-            storesIndexes = mStoreSpinner.getSelectedIndexes();
-
-            storesSelected = new ArrayList<>();
-
-            for (Integer index : storesIndexes) {
-                storesSelected.add(mStoreList.get(index));
+        try {
+            if (mSearchBox.getText().length() == 0) {
+                throw new Exception(getResources().getString(R.string.search_void_description));
+            } else {
+                search.setText(mSearchBox.getText().toString());
             }
 
-            search.setStores(storesSelected);
-        }
+            if (mPriceFrom.getText().toString().length() > 0) {
+                priceFrom = Double.valueOf(mPriceFrom.getText().toString());
+                search.setPriceFrom(priceFrom);
+            }
 
-        if (priceFrom != null && priceTo != null && priceFrom > priceTo) {
-            Toast.makeText(mContext, getResources().getString(R.string.price_from_greater_to), Toast.LENGTH_LONG).show();
-        } else {
-            mListener.onSearchButtonClick(search);
+            if (mPriceTo.getText().toString().length() > 0) {
+                priceTo = Double.valueOf(mPriceTo.getText().toString());
+                search.setPriceTo(priceTo);
+            }
+
+            if (mStoreSpinner.getCountItemsSelected() > 0) {
+                storesIndexes = mStoreSpinner.getSelectedIndexes();
+
+                storesSelected = new ArrayList<>();
+
+                for (Integer index : storesIndexes) {
+                    storesSelected.add(mStoreList.get(index));
+                }
+
+                search.setStores(storesSelected);
+            }
+
+            if (priceFrom != null && priceTo != null && priceFrom > priceTo) {
+                throw new Exception(getResources().getString(R.string.search_price_from_greater_to));
+            } else {
+                mListener.onSearchButtonClick(search);
+            }
+        } catch (Exception e) {
+            Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

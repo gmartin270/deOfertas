@@ -2,7 +2,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
         android:key="pref_URL_API"
-        android:title="URL API"
-        android:summary="URL que permite ubicar el origen de datos."
-        android:defaultValue="http://192.168.0.159:8080/deofertas" />
+        android:title="@string/settings_url_api_title"
+        android:summary="@string/settings_url_api_summary"
+        android:defaultValue="@string/settings_url_api_default" />
+
+    <ListPreference
+        android:key="pref_freq_notifications"
+        android:title="Notification frequency"
+        android:entries="@array/frequency_entries"
+        android:entryValues="@array/frequency_values"
+        android:defaultValue="2"/>
 </PreferenceScreen>

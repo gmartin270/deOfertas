@@ -29,7 +29,7 @@ public class OfferDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DeOfertasContract.OfferTable.TABLE_CREATE);
-        db.execSQL(DeOfertasContract.OfferImageTable.TABLE_CREATE);
+        //db.execSQL(DeOfertasContract.OfferImageTable.TABLE_CREATE);
     }
 
     @Override
@@ -46,6 +46,7 @@ public class OfferDBHelper extends SQLiteOpenHelper {
         values.put(DeOfertasContract.OfferTable.STORE_ID, offer.getStoreId());
         values.put(DeOfertasContract.OfferTable.STORE_NAME, offer.getStoreName());
         values.put(DeOfertasContract.OfferTable.PRICE, offer.getPrice());
+        values.put(DeOfertasContract.OfferTable.IMAGE, offer.getImage());
 
         db.insert(DeOfertasContract.OfferTable.TABLE_NAME, null, values);
         db.close();
@@ -115,6 +116,7 @@ public class OfferDBHelper extends SQLiteOpenHelper {
             offer.setStoreId(cursor.getLong(cursor.getColumnIndex(DeOfertasContract.OfferTable.STORE_ID)));
             offer.setStoreName(cursor.getString(cursor.getColumnIndex(DeOfertasContract.OfferTable.STORE_NAME)));
             offer.setPrice(cursor.getDouble(cursor.getColumnIndex(DeOfertasContract.OfferTable.PRICE)));
+            offer.setImageBlob(cursor.getBlob(cursor.getColumnIndex(DeOfertasContract.OfferTable.IMAGE)));
             offer.setFavorite(true);
 
         } catch (Exception e) {

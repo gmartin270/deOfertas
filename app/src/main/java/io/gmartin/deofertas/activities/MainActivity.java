@@ -4,8 +4,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.view.PagerAdapter;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import io.gmartin.deofertas.fragments.ImagePagerFragment;
 import io.gmartin.deofertas.models.OfferImage;
 import io.gmartin.deofertas.models.Search;
 import io.gmartin.deofertas.models.SuggestedOffer;
+import io.gmartin.deofertas.services.SuggestionsService;
 
 public class MainActivity extends NavigationActivity
         implements BaseController.BaseControllerListener,
@@ -35,11 +39,29 @@ public class MainActivity extends NavigationActivity
     private ImagePagerFragment mImagePagerFragment = new ImagePagerFragment();
     private int mContainer;
     private List<SuggestedOffer> mSuggestedOffers;
-    private ResultController mResultController;
+    private SuggestionsService.APIBinder mBinder;
+
+    ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mBinder = (SuggestionsService.APIBinder)service;
+            //mBinder.getLastSuggestions();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            //mBinder = null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            mIsServiceRun = savedInstanceState.getBoolean(IS_SERVICE_RUN, false);
+        }
+
         setContentView(R.layout.activity_main);
         mActivity = MAIN_ACTIVITY;
         initUI();
@@ -53,6 +75,7 @@ public class MainActivity extends NavigationActivity
         Intent intent = getIntent();
         if (intent != null) {
             mAction = intent.getStringExtra(NAVIGATION_INTENT_EXTRA);
+            mIsServiceRun = intent.getBooleanExtra(IS_SERVICE_RUN, false);
 
             if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
                 handleSearch(intent);
@@ -75,6 +98,17 @@ public class MainActivity extends NavigationActivity
         transaction.commit();
 
         initFragment();
+
+        //Launch the background service:
+        /*Intent serviceIntent = new Intent(this, SuggestionsService.class);
+        startService(serviceIntent);*/
+
+        if (!mIsServiceRun) {
+            Intent i = new Intent(this, SuggestionsService.class);
+            startService(i);
+            bindService(i, mConnection, BIND_AUTO_CREATE);
+            mIsServiceRun = true;
+        }
     }
 
     @Override

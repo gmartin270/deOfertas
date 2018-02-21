@@ -75,7 +75,7 @@ public class OfferAdapter extends BaseAdapter {
         title.setText(offer.getTitle());
         price.setText(String.format("$%.2f", offer.getPrice()));
 
-        if (mOfferList.get(i).getImageStr() != null && mOfferList.get(i).getImageStr().length() > 0) {
+        if (mOfferList.get(i).getImage() != null) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(mOfferList.get(i).getImage(), 0, mOfferList.get(i).getImage().length);
             offerImage.setImageBitmap(bitmap);
         } else {

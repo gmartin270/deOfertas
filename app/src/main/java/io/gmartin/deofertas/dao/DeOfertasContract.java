@@ -18,6 +18,7 @@ public class DeOfertasContract {
         public static final String STORE_NAME = "store_name";
         public static final String PRICE = "price";
         public static final String FAVORITE = "favorite";
+        public static final String IMAGE = "image";
 
         public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + " ( " +
                 _ID + " INTEGER PRIMARY KEY, " +
@@ -27,10 +28,11 @@ public class DeOfertasContract {
                 STORE_ID + " INTEGER, " +
                 STORE_NAME + " TEXT, " +
                 PRICE + " REAL, " +
-                FAVORITE + " INTEGER );";
+                FAVORITE + " INTEGER, " +
+                IMAGE + " BLOB );";
     }
 
-    public static abstract class OfferImageTable implements BaseColumns{
+    /*public static abstract class OfferImageTable implements BaseColumns{
         public static final String TABLE_NAME = "offer_images";
         public static final String OFFER_ID = "offer_id";
         public static final String IMAGE_NAME = "image_name";
@@ -39,5 +41,5 @@ public class DeOfertasContract {
                 _ID + " INTEGER PRIMARY KEY, " +
                 OFFER_ID + " INTEGER, " +
                 IMAGE_NAME + " TEXT );";
-    }
+    }*/
 }

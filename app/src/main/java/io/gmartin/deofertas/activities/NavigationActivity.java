@@ -18,13 +18,16 @@ import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.fragments.ImagePagerFragment;
 import io.gmartin.deofertas.fragments.SearchFragment;
 import io.gmartin.deofertas.fragments.SettingsFragment;
+import io.gmartin.deofertas.interfaces.IOrientationLayout;
 
 public abstract class NavigationActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+                   IOrientationLayout {
 
     protected static final String MAIN_ACTIVITY = "io.gmartin.deofertas.activities.main_activity";
     protected static final String RESULTS_ACTIVITY = "io.gmartin.deofertas.activities.results_activity";
     protected static final String FAVORITES_ACTIVITY = "io.gmartin.deofertas.activities.favorites_activity";
+    protected static final String SUGGESTION_ACTIVITY = "io.gmartin.deofertas.activities.suggestion_activity";
     protected static final String SEARCH_ACTION = "io.gmartin.deofertas.activities.search_action";
     protected static final String RESULTS_ACTION = "io.gmartin.deofertas.activities.result_action";
     protected static final String FAVORITES_ACTION = "io.gmartin.deofertas.activities.favorites_action";
@@ -32,6 +35,7 @@ public abstract class NavigationActivity extends AppCompatActivity
     protected static final String HOME_ACTION = "io.gmartin.deofertas.activities.home_action";
     protected static final String NAVIGATION_INTENT_EXTRA = "io.gmartin.deofertas.activities.navigation_intent_extra";
     protected static final String ACTION = "action";
+    protected static final String IS_SERVICE_RUN = "is_service_run";
     protected static final String TITLE_EXTRA = "io.gmartin.deofertas.activities.title_extra";
     protected String mAction;
     protected String mActivity;
@@ -39,10 +43,12 @@ public abstract class NavigationActivity extends AppCompatActivity
     private FragmentManager mFragmentManager;
     protected Toolbar mToolbar;
     protected Menu mMenu;
+    protected boolean mIsServiceRun = false;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString(ACTION, mAction);
+        outState.putBoolean(IS_SERVICE_RUN, mIsServiceRun);
         super.onSaveInstanceState(outState);
     }
 
@@ -51,6 +57,7 @@ public abstract class NavigationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             mAction = savedInstanceState.getString(ACTION);
+            mIsServiceRun = savedInstanceState.getBoolean(IS_SERVICE_RUN, false);
         }
 
         mFragmentManager = getFragmentManager();
@@ -146,6 +153,7 @@ public abstract class NavigationActivity extends AppCompatActivity
         } else {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra(NAVIGATION_INTENT_EXTRA, SEARCH_ACTION);
+            intent.putExtra(IS_SERVICE_RUN, true);
             startActivity(intent);
         }
     }
@@ -166,6 +174,7 @@ public abstract class NavigationActivity extends AppCompatActivity
         } else {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra(NAVIGATION_INTENT_EXTRA, SETTINGS_ACTION);
+            intent.putExtra(IS_SERVICE_RUN, true);
             startActivity(intent);
         }
     }
@@ -189,6 +198,7 @@ public abstract class NavigationActivity extends AppCompatActivity
         } else {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra(NAVIGATION_INTENT_EXTRA, HOME_ACTION);
+            intent.putExtra(IS_SERVICE_RUN, true);
             startActivity(intent);
         }
     }

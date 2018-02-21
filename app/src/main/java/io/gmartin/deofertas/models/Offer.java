@@ -4,7 +4,9 @@ import android.util.Base64;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Offer {
+import java.io.Serializable;
+
+public class Offer implements Serializable {
 
     @SerializedName("id")
     private Long id;
@@ -32,6 +34,8 @@ public class Offer {
 
     @SerializedName("image")
     private String imageStr;
+
+    private byte[] imageBlob;
 
     @SerializedName("link")
     private String link;
@@ -105,7 +109,13 @@ public class Offer {
     }
 
     public byte[] getImage() {
-        return Base64.decode(imageStr, android.util.Base64.DEFAULT);
+        if (imageStr != null && imageStr.length() > 0) {
+            return Base64.decode(imageStr, android.util.Base64.DEFAULT);
+        } else if (imageBlob != null && imageBlob.length > 0) {
+            return getImageBlob();
+        } else {
+            return null;
+        }
     }
 
     public String getLink() {
@@ -114,5 +124,13 @@ public class Offer {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public byte[] getImageBlob() {
+        return imageBlob;
+    }
+
+    public void setImageBlob(byte[] imageBlob) {
+        this.imageBlob = imageBlob;
     }
 }

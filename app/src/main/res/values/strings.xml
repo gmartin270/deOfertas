@@ -20,7 +20,8 @@
     <string name="label_stores">Stores</string>
     <string name="no_data_result">The search has not produced any results.</string>
     <string name="no_internet_connection">There is no Internet connection.</string>
-    <string name="price_from_greater_to">The price range is invalid.</string>
+    <string name="search_void_description">You didn\'t enter any description</string>
+    <string name="search_price_from_greater_to">The price range is invalid.</string>
     <string name="search_advanced_content_description">Open the advanced field of search.</string>
     <string name="search_hint">Search offers on stores</string>
     <string name="app_label">deOfertas.com</string>
@@ -42,5 +43,13 @@
     <string name="favorite_content_description">Add or delete favorite</string>
     <string name="title_activity_main2">Main2Activity</string>
 
+    <!-- Suggestions service -->
+    <string name="suggestions_new_offer">New offer available</string>
 
+    <!-- Settings -->
+    <string name="settings_url_api_title">deOfertas server URL</string>
+    <string name="settings_url_api_summary">URL address for deOfertas server</string>
+    <string name="settings_url_api_default">http://192.168.0.159:8080/deofertas</string>
+    <string name="settings_frequency_notification_title">Notification frequency</string>
+    <string name="settings_frequency_notification_summary">Amount of minutes between notification</string>
 </resources>

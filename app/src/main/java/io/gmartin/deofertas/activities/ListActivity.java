@@ -14,6 +14,7 @@ import io.gmartin.deofertas.controllers.BaseController;
 import io.gmartin.deofertas.controllers.ResultController;
 import io.gmartin.deofertas.fragments.DetailFragment;
 import io.gmartin.deofertas.fragments.ListFragment;
+import io.gmartin.deofertas.interfaces.IOrientationLayout;
 import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.OfferImage;
 import io.gmartin.deofertas.models.Search;
@@ -22,7 +23,8 @@ public abstract class ListActivity extends NavigationActivity
                             implements ListFragment.OnOffersListInteractionListener,
                                        DetailFragment.OnDetailInteractionListener,
                                        BaseController.BaseControllerListener,
-                                       ResultController.ResultControllerListener {
+                                       ResultController.ResultControllerListener,
+                                       IOrientationLayout{
 
     private FragmentManager mManager;
     protected ListFragment mList = new ListFragment();

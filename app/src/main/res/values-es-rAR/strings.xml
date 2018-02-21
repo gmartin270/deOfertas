@@ -18,7 +18,8 @@
     <string name="label_stores">Tiendas</string>
     <string name="no_data_result">La búsqueda no ha obtenido ningún resultado.</string>
     <string name="no_internet_connection">No hay conexión a Internet.</string>
-    <string name="price_from_greater_to">El rango de precios es inválido.</string>
+    <string name="search_void_description">No ha ingresado ninguna descripción</string>
+    <string name="search_price_from_greater_to">El rango de precios es inválido.</string>
     <string name="search_advanced_content_description">Muestra los campos de búsqueda avanzada.</string>
     <string name="search_hint">Busca ofertas en varias tiendas</string>
     <string name="app_label">deOfertas.com</string>
@@ -39,4 +40,7 @@
     <!-- Detail fragment -->
     <string name="favorite_content_description">Add or delete favorite</string>
 
+    <!-- Settings -->
+    <string name="settings_url_api_title">URL de servidor deOfertas</string>
+    <string name="settings_url_api_summary">Dirección URL del servidor deOfertas</string>
 </resources>

@@ -4,9 +4,10 @@ import android.util.Base64;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SuggestedOffer {
+public class SuggestedOffer implements Serializable{
 
     @SerializedName("id")
     private Long id;
@@ -19,6 +20,9 @@ public class SuggestedOffer {
 
     @SerializedName("suggested_image_str")
     private String imageStr;
+
+    @SerializedName("offer")
+    private Offer offer;
 
     public Long getId() {
         return id;
@@ -54,5 +58,13 @@ public class SuggestedOffer {
 
     public void setSuggestionDate(Date suggestionDate) {
         this.suggestionDate = suggestionDate;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
     }
 }

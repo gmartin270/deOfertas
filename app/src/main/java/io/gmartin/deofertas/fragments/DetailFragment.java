@@ -21,6 +21,7 @@ import java.util.List;
 import io.gmartin.deofertas.R;
 import io.gmartin.deofertas.activities.ListActivity;
 import io.gmartin.deofertas.adapters.SlidingImageAdapter;
+import io.gmartin.deofertas.interfaces.IOrientationLayout;
 import io.gmartin.deofertas.models.Offer;
 import io.gmartin.deofertas.models.OfferImage;
 import io.gmartin.deofertas.utils.Conversions;
@@ -85,7 +86,7 @@ public class DetailFragment extends Fragment {
 
         mCloseBtn = mRoot.findViewById(R.id.btnClose);
 
-        if (((ListActivity)mContext).getIsPort()) {
+        if (((IOrientationLayout)mContext).getIsPort()) {
             mCloseBtn.setVisibility(View.VISIBLE);
         } else {
             mCloseBtn.setVisibility(View.GONE);
@@ -168,7 +169,6 @@ public class DetailFragment extends Fragment {
                     SlidingImageAdapter adapter = new SlidingImageAdapter(mContext, mOfferImages);
                     DialogFragment imagePagerFragment = ImagePagerFragment.getInstance(mContext, adapter);
                     imagePagerFragment.show(getChildFragmentManager(), DIALOG);
-
                 }catch (Exception e){
 
                 }
