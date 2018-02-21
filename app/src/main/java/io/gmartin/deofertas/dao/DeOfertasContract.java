@@ -19,6 +19,7 @@ public class DeOfertasContract {
         public static final String PRICE = "price";
         public static final String FAVORITE = "favorite";
         public static final String IMAGE = "image";
+        public static final String LINK = "link";
 
         public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + " ( " +
                 _ID + " INTEGER PRIMARY KEY, " +
@@ -29,7 +30,8 @@ public class DeOfertasContract {
                 STORE_NAME + " TEXT, " +
                 PRICE + " REAL, " +
                 FAVORITE + " INTEGER, " +
-                IMAGE + " BLOB );";
+                IMAGE + " BLOB, " +
+                LINK + " TEXT );";
     }
 
     /*public static abstract class OfferImageTable implements BaseColumns{

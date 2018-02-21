@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Binder;
@@ -15,6 +16,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Parcelable;
 import android.os.Process;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 
 import java.io.Serializable;
@@ -36,6 +39,7 @@ public class SuggestionsService extends Service
 
     private final static int MAIN_ACTIVITY_REQUEST = 1;
     private final static String SERVICE_START_ARGUMENTS = "ServiceStartArguments";
+    private final static String LAST_SUGGESTION_ID = "io.gmartin.deofertas.service.last_suggestion_id";
     public final static int NOTIFICATION_ID = 1;
     public final static String SUGGESTION_DATA = "io.gmartin.deofertas.service.suggestion_data";
 
@@ -44,6 +48,7 @@ public class SuggestionsService extends Service
     private Timer mTimer = new Timer();
     private NotificationManager mNotificationManager;
     private NotificationCompat.Builder mBuilder;
+    private SharedPreferences mPreferences;
 
     private final class ServiceHandler extends Handler {
         public ServiceHandler(Looper looper) {
@@ -77,9 +82,14 @@ public class SuggestionsService extends Service
     public class APIBinder extends Binder {}
 
     public void getLastSuggestions() {
+        long lastId = 0;
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        lastId = mPreferences.getLong(LAST_SUGGESTION_ID, 0);
+
         SuggestionController suggestionController = new SuggestionController(SuggestionsService.this);
 
-        suggestionController.fetchLastSuggestion();
+        suggestionController.fetchLastSuggestion(lastId);
     }
 
     @Override
@@ -101,7 +111,7 @@ public class SuggestionsService extends Service
                 msg.arg1 = startId;
                 mServiceHandler.sendMessage(msg);
             }
-        }, 0, 10000);
+        }, 0, 60000);
 
         return START_STICKY;
     }
@@ -109,6 +119,10 @@ public class SuggestionsService extends Service
     @Override
     public void onLastSuggestionDataReceived(SuggestedOffer suggestedOffer) {
         if(suggestedOffer != null && suggestedOffer.getId() != null) {
+            SharedPreferences.Editor edit = mPreferences.edit();
+            edit.putLong(LAST_SUGGESTION_ID, suggestedOffer.getId());
+            edit.apply();
+
             Intent intent = new Intent(SuggestionsService.this, SuggestionsActivity.class);
             intent.putExtra(SUGGESTION_DATA, suggestedOffer.getOffer());
 

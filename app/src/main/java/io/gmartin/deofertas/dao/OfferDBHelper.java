@@ -47,6 +47,7 @@ public class OfferDBHelper extends SQLiteOpenHelper {
         values.put(DeOfertasContract.OfferTable.STORE_NAME, offer.getStoreName());
         values.put(DeOfertasContract.OfferTable.PRICE, offer.getPrice());
         values.put(DeOfertasContract.OfferTable.IMAGE, offer.getImage());
+        values.put(DeOfertasContract.OfferTable.LINK, offer.getLink());
 
         db.insert(DeOfertasContract.OfferTable.TABLE_NAME, null, values);
         db.close();
@@ -117,6 +118,7 @@ public class OfferDBHelper extends SQLiteOpenHelper {
             offer.setStoreName(cursor.getString(cursor.getColumnIndex(DeOfertasContract.OfferTable.STORE_NAME)));
             offer.setPrice(cursor.getDouble(cursor.getColumnIndex(DeOfertasContract.OfferTable.PRICE)));
             offer.setImageBlob(cursor.getBlob(cursor.getColumnIndex(DeOfertasContract.OfferTable.IMAGE)));
+            offer.setLink(cursor.getString(cursor.getColumnIndex(DeOfertasContract.OfferTable.LINK)));
             offer.setFavorite(true);
 
         } catch (Exception e) {

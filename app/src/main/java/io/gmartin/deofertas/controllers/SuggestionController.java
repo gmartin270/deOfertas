@@ -69,8 +69,8 @@ public class SuggestionController extends BaseController {
         }
     }
 
-    public void fetchLastSuggestion(){
-        String endPoint = "/suggestion/last?suggestion_id=11";
+    public void fetchLastSuggestion(long id){
+        String endPoint = "/suggestion/last?suggestion_id=" + id;
 
         try {
             RestClient.get(mURL + endPoint, new RestClient.Result() {

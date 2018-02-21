@@ -2,8 +2,10 @@ package io.gmartin.deofertas.fragments;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -121,6 +123,18 @@ public class DetailFragment extends Fragment {
                 }catch (Exception e){
 
                 }
+            }
+        });
+
+        ImageButton buyButton = mRoot.findViewById(R.id.buy_button);
+
+        buyButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                String url = mOffer.getLink();
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
             }
         });
 
